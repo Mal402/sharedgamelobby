@@ -493,9 +493,33 @@
   opacity: .5;
 }
 
-.current_seat_0 .player_dock .dock_pos_0, .current_seat_1 .player_dock .dock_pos_1,
-.current_seat_2 .player_dock .dock_pos_2, .current_seat_3 .player_dock .dock_pos_3 {
+.current_seat_0 .player_dock .dock_pos_0, 
+.current_seat_1 .player_dock .dock_pos_1,
+.current_seat_2 .player_dock .dock_pos_2, 
+.current_seat_3 .player_dock .dock_pos_3 {
   opacity: 1;
+}
+
+.current_users_turn.current_seat_0 .player_dock .dock_pos_0, 
+.current_users_turn.current_seat_1 .player_dock .dock_pos_1,
+.current_users_turn.current_seat_2 .player_dock .dock_pos_2, 
+.current_users_turn.current_seat_3 .player_dock .dock_pos_3 {
+  animation: currentplayershake 1.5s infinite linear;
+}
+
+@keyframes currentplayershake {
+  0% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(5deg);
+  }
+  67% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 button.game, a.game {

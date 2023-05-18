@@ -558,6 +558,11 @@ export default class GameBaseApp extends BaseApp {
     else
       document.body.classList.remove('current_user_seated');
 
+    if (this.uid === this.gameData['seat' + this.gameData.currentSeat])
+      document.body.classList.add('current_users_turn');
+    else
+      document.body.classList.remove('current_users_turn');
+
     if (this.seatsFull === this.gameData.numberOfSeats) {
       this.seats_full_display.innerHTML = `${this.seatsFull} / ${this.gameData.numberOfSeats} Ready!`;
       this.match_start.removeAttribute('disabled');

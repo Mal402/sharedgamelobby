@@ -1,0 +1,261 @@
+.right_panel {
+  display: flex;
+  font-size: 1.25em;
+}
+
+.picker_wrapper {
+  overflow: visible;
+}
+
+.selected.tag_description {}
+
+.tag_filter_lock {
+  width: 50px;
+  margin-right: 5px;
+  z-index: 2;
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+.display_image_wrapper {
+  height: 13em;
+  text-align: center;
+  padding-top: .25em;
+  padding-bottom: .25em;
+  width: 200px;
+  position: relative;
+}
+
+.display_image {
+  height: 350px;
+  position: relative;
+  transition: top .6s;
+  display: block;
+  margin: auto;
+}
+
+i.lock_closed {
+  display: none;
+}
+
+.selected i.lock_closed {
+  display: initial;
+}
+
+.selected i.lock_open {
+  display: none;
+}
+
+.tagthreshold {
+  font-size: .75em;
+  color: rgb(100, 100, 100);
+  padding-left: .5em;
+}
+
+.beer_picker {
+  display: none;
+}
+
+.brew_image_holder {
+  min-width: 50px;
+  text-align: center;
+}
+
+.brewery_name {
+  height: 30px;
+}
+
+.brewery_inline {
+  max-height: 30px;
+}
+
+#find_similar {
+  font-size: 1.1em;
+  padding: .5em .35em;
+}
+
+#up_button,
+#down_button {
+  font-size: 1em;
+  padding: .5em .35em;
+  float: left;
+}
+
+#down_button {
+  float: right;
+  margin-right: 10px;
+}
+
+.beer_review_button_button, .beer_clear_button_button, .beer_save_button_button, .beer_cancel_button_button {
+  font-size: 1.25em;
+  padding: .5em .75em;
+  margin-bottom: .35em;
+  margin-top: .125em;
+}
+
+.beer_review_button_button {
+  width: 11em;
+  font-size: 26px;
+}
+
+.beer_likability {
+  font-size: 1.25em;
+  padding: 1em;
+  font-weight: bold;
+  color: red;
+}
+
+.found_div {
+  padding: .15em;
+  display: inline-block;
+  width: 4em;
+}
+
+.home_name_wrapper {
+  text-align: left;
+  padding-left: 10px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, .2);
+  position: relative;
+  pointer-events: none;
+  transition: transform .4s ease-in, opacity .35s ease-in;
+}
+
+.night_mode .home_name_wrapper {
+  background: rgba(0, 100, 120, .2);
+}
+
+.brewery_name_wrapper {
+  padding: .75em;
+  padding-top: 0;
+}
+
+.home_name_wrapper h1 {
+  padding: 0;
+  margin: 0;
+  height: 60px;
+}
+
+.home_name_wrapper h2 {
+  padding: 0 0 10px 0;
+  margin: 0;
+  font-size: 1em;
+  height: 2em;
+}
+
+.distinctness_bar_wrapper {
+  border-bottom-left-radius: .25em;
+  border-bottom-right-radius: .25em;
+  overflow: hidden;
+}
+
+.bitterness_bar_wrapper,
+.distinctness_bar_wrapper {
+  height: 2em;
+  font-size: 1.5em;
+  box-sizing: border-box;
+  margin: 0 1.5em;
+  position: relative;
+  line-height: 2em;
+}
+
+.distinctness_bar_wrapper .max_range {}
+
+.bitterness_bar_wrapper .max_range {}
+
+.bitter_range {
+  width: 0%;
+  background: rgba(0, 127, 0);
+  color: rgb(255, 255, 255);
+  left: 0px;
+  top: 0px;
+  height: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 1s ease-out;
+  text-align: left;
+}
+
+.distinctness_range {
+  width: 0%;
+  background: rgba(255, 0, 255);
+  color: rgb(0, 0, 0);
+  left: 0px;
+  top: 0px;
+  height: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  text-align: left;
+  white-space: nowrap;
+  transition: width 1s ease-out;
+}
+
+.max_range {
+  background: rgba(0, 0, 0, .5);
+  color: white;
+  width: 100%;
+  height: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.abv_display {
+  display: inline-block;
+  width: 4em;
+  height: 3em;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 0, .8);
+  z-index: 100;
+  padding-top: .9em;
+  text-align: center;
+  box-sizing: border-box;
+  color: black;
+  font-weight: bold;
+  transition: background-color .8s ease-out;
+}
+
+.abv_display span {
+  font-size: .8em;
+}
+
+.beer_review_beerstyle {
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.tag_filter_item {
+  display: flex;
+  position: relative;
+  text-align: left;
+}
+
+.tag_description,
+.tag_inner {
+  flex: 1;
+  padding: 12px 8px;
+  font-size: 1.1em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tag_description {
+  transition: background 1s ease-out, border 1s ease-out;
+}
+
+.tag_inner {
+  transition: background 1s ease-out, border 1s ease-out, width 1s ease-out;
+}
+
+.tag_inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

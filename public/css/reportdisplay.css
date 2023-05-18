@@ -1,0 +1,181 @@
+.local_abv_display, .baseline_abv_display {
+  display: inline-block;
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 0, .8);
+  z-index: 100;
+  line-height: 3em;
+  text-align: center;
+  box-sizing: border-box;
+  color: black;
+  font-weight: bold;
+}
+
+.local_abv_display span, .baseline_abv_display span {
+  font-size: .8em;
+}
+
+.local_beer_description {
+  font-size: 1.25em;
+  padding: 6px;
+  text-align: justify;
+}
+
+.local_beer_name_display, .baseline_beer_name_display {
+  display: block;
+  height: 60px;
+  margin: 8px;
+}
+
+.baseline_beer_brewery_name {
+  display: block;
+}
+
+.compare_display_image {
+  height: 200px;
+}
+
+.compare_beer_select_panel {
+  display: flex;
+  flex-direction: row;
+}
+
+.compare_beer_display_panel {
+  display: flex;
+  flex-direction: row;
+}
+
+.local_tags_labels, .baseline_tags_labels {
+  text-align: right;
+  padding-right: 4px;
+}
+
+.local_tags_labels div, .baseline_tags_labels div {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.baseline_image_wrapper, .local_image_wrapper {
+  flex: 1;
+  text-align: center;
+}
+
+.brewery_name_wrapper {
+  padding: .75em;
+  padding-top: 0;
+  margin: 0;
+}
+
+.brew_image_holder {
+  min-width: 50px;
+  text-align: center;
+}
+
+.brewery_name {
+  height: 30px;
+}
+
+.brewery_inline {
+  max-height: 30px;
+}
+
+@property --p {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+.pie {
+  --percentage: 20;
+  --border-thickness: 8px;
+  --main-color: "";
+  --width: 65px;
+  width: var(--width);
+  aspect-ratio: 1;
+  position: relative;
+  display: inline-grid;
+  margin: 5px;
+  place-content: center;
+  font-size: 24px;
+  margin: 0;
+  border-radius: 0;
+}
+
+.pie:before,
+.pie:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.pie:before {
+  inset: 0;
+  background:
+    radial-gradient(farthest-side, var(--main-color) 98%, #0000) top/var(--border-thickness) var(--border-thickness) no-repeat,
+    conic-gradient(var(--main-color) calc(var(--percentage)*1%), #0000 0);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--border-thickness)), #000 calc(100% - var(--border-thickness)));
+  mask: radial-gradient(farthest-side, #0000 calc(99% - var(--border-thickness)), #000 calc(100% - var(--border-thickness)));
+}
+
+.pie:after {
+  inset: calc(50% - var(--border-thickness)/2);
+  background: var(--main-color);
+  transform: rotate(calc(var(--percentage)*3.6deg)) translateY(calc(50% - var(--width)/2));
+}
+
+.animate {
+  animation: p 1s .5s both;
+}
+
+.no-round:before {
+  background-size: 0 0, auto;
+}
+
+.no-round:after {
+  content: none;
+}
+
+@keyframes p {
+  from {
+    --percentage: 0
+  }
+}
+
+.compare_stats_container {
+  display: flex;
+  width: 196px;
+  justify-content: space-between;
+}
+
+.compare_stats_container .bitter::after {
+  content: "Bitter";
+  position: relative;
+  background: inherit;
+  transform: none;
+  font-size: 16px;
+}
+
+.compare_stats_container .distinct::after {
+  content: "Distinct";
+  position: relative;
+  background: inherit;
+  transform: none;
+  font-size: 16px;
+}
+
+.compare_stats_container .overall::after {
+  content: "Overall";
+  position: relative;
+  background: inherit;
+  transform: none;
+  font-size: 16px;
+}
+
+.compare_stats_container .abv::after{
+  content: "ABV";
+  position: relative;
+  background: inherit;
+  transform: none;
+  font-size: 16px;
+}

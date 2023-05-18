@@ -1,0 +1,786 @@
+{
+	"719": {
+		"longName": "Brewery 719",
+		"name": "Brewery 719",
+		"locationDescription": "On E 3rd St.",
+		"phone": "13087612719",
+		"location": {
+			"_longitude": "-102.860273",
+			"_latitude": "42.09714301"
+		},
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F719pageimage.jpg?alt=media",
+		"description": "At Brewery 719 we understand and appreciate a hard days work, especially when it comes to a craft brew from the heartland. Our work is a labor of love and we reap the fruits of our labor every day.",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F719image.jpg?alt=media",
+		"breweryAddress": "817 E 3rd St, Alliance, NE ",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2F719mapimage_100x100.png?alt=media",
+		"URL": "http://brewery719.com/",
+		"brewerySlug": "719",
+		"breweryZip": "69301",
+		"location12": {
+			"_latitude": "42.09714301",
+			"_longitude": "-102.860273"
+		},
+		"beers": []
+	},
+	"backswing": {
+		"description": "For the true beer drinker and beer novice alike, Backswing Brewing offers a break from the pretentiousness of craft beer by meticulously crafting easy-drinking, true-to-style beer.",
+		"longName": "Backswing Brewing Co.",
+		"when": "2021-07-31T06:20:45.462Z",
+		"breweryZip": "68522",
+		"location": {
+			"_latitude": "40.79228875",
+			"_longitude": "-96.72739833"
+		},
+		"brewerySlug": "backswing",
+		"phone": "14024135576",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fbackswingimage.jpg?alt=media",
+		"breweryAddress": "500 W South St #8, Lincoln, NE",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fbackswingmapimage_100x100.png?alt=media",
+		"rating": 5.5,
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fbackswingpageimage.jpg?alt=media",
+		"locationDescription": "Southwest Lincoln by Sherman Field",
+		"location12": {
+			"_latitude": "40.79228875",
+			"_longitude": "-96.87398329"
+		},
+		"name": "Backswing",
+		"URL": "http://www.backswingbrewing.com/",
+		"beers": [
+			"backswing:apple-wheat",
+			"backswing:backspin",
+			"backswing:brown",
+			"backswing:bugeater",
+			"backswing:citra-kolsch",
+			"backswing:ipa",
+			"backswing:oatmeal-stout",
+			"backswing:scottish",
+			"backswing:wheat"
+		]
+	},
+	"baseline": {
+		"location": {
+			"_longitude": -96.7125794147279,
+			"_latitude": 40.817938325369
+		},
+		"location12": {
+			"_latitude": 40.817938325369,
+			"_longitude": -96.7125794147279
+		},
+		"name": "",
+		"image": "",
+		"Baseline Name": "Baseline Brews",
+		"baseline": {
+			"breweryAddress": "420 Pinnacle Arena Dr, Lincoln, NE",
+			"longitude12": -96.7125794147279,
+			"URL": "",
+			"brewerySlug": "baseline",
+			"locationDescription": "Home Office",
+			"breweryZip": 68508,
+			"phone": "",
+			"pageImage": "",
+			"longitude": -96.7125794147279,
+			"latitude": 40.817938325369,
+			"location": {
+				"_longitude": -96.7125794147279,
+				"_latitude": 40.817938325369
+			},
+			"image": "",
+			"mapImage": "",
+			"location12": {
+				"_latitude": 40.817938325369,
+				"_longitude": -96.7125794147279
+			},
+			"description": "These are the popular beers that we use as a baseline to review craft beers from.",
+			"name": "Baseline or Premium breweries",
+			"latitude12": 40.817938325369
+		},
+		"breweryZip": 68508,
+		"pageImage": "",
+		"longitude": -96.7125794147279,
+		"description": "These are the popular beers that we use as a baseline to review craft beers from.",
+		"baselineSlug": "baseline",
+		"latitude12": 40.817938325369,
+		"mapImage": "",
+		"phone": "",
+		"brewerySlug": "",
+		"URL": "",
+		"latitude": 40.817938325369,
+		"breweryAddress": "420 Pinnacle Arena Dr, Lincoln, NE",
+		"locationDescription": "Home Office",
+		"longitude12": -96.7125794147279,
+		"beers": [
+			"baseline:ab-becks",
+			"baseline:bb-hazers-gonna-haze",
+			"baseline:bb-mosaic-ipa",
+			"baseline:bb-no-worries",
+			"baseline:bb-phantom-bride",
+			"baseline:bluemoon",
+			"baseline:boulevard-wheat",
+			"baseline:breckenridge-avalanche",
+			"baseline:breckenridge-vanilla-porter",
+			"baseline:bud-light",
+			"baseline:bud-weiser",
+			"baseline:cigar-city-jai-alai-ipa",
+			"baseline:corona-extra",
+			"baseline:dale-pale-ale",
+			"baseline:deschutes-fresh-haze-ipa",
+			"baseline:deschutes-fresh-squeezed-ipa",
+			"baseline:founders-all-day-ipa",
+			"baseline:gd-yeti-imperial-stout",
+			"baseline:goose-island-ipa",
+			"baseline:goose-island-next-coast-ipa",
+			"baseline:guinness-draught",
+			"baseline:harp-lager",
+			"baseline:heineken",
+			"baseline:lagunitas-ipa",
+			"baseline:leinie-summer-shandy",
+			"baseline:michelob-ultra",
+			"baseline:miller-hl",
+			"baseline:modelo",
+			"baseline:nb-fat-tire",
+			"baseline:nb-vd-exp-ipa-5",
+			"baseline:nb-vd-hop-avenger",
+			"baseline:nb-vd-ipa",
+			"baseline:nb-vd-juicy-haze-ipa",
+			"baseline:new-castle-brown",
+			"baseline:pbr",
+			"baseline:rolling-rock",
+			"baseline:sa-wicked-hazy-ipa",
+			"baseline:sd-boston-lager",
+			"baseline:sierra-atomic-torpedo",
+			"baseline:sierra-dankful-ipa",
+			"baseline:sierra-pale-ale",
+			"baseline:sierra-torpedo",
+			"baseline:stella-artois-lager"
+		]
+	},
+	"bottlerocket": {
+		"location12": {
+			"_longitude": "-97.0975841",
+			"_latitude": "40.90634735"
+		},
+		"phone": "14026414314",
+		"brewerySlug": "bottlerocket",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fbottlerocketmapimage_100x100.png?alt=media",
+		"breweryZip": "68434",
+		"name": "Bottle Rocket",
+		"locationDescription": "Right off Main St & S 5th.",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fbottlerocketpageimage.jpg?alt=media",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fbottlerocketimage.jpg?alt=media",
+		"longName": "Bottle Rocket Brewing Co.",
+		"breweryAddress": "230 S. 5th Street, Seward, NE ",
+		"URL": "http://www.bottlerocketbrewing.com/",
+		"location": {
+			"_longitude": "-97.0975841",
+			"_latitude": "40.90634735"
+		},
+		"description": "Bottle Rocket has a  mission is to brew superior craft beer for patrons in Seward and throughout the Midwest.",
+		"beers": [
+			"bottlerocket:blonde",
+			"bottlerocket:blueberry-bomb",
+			"bottlerocket:golden-stout",
+			"bottlerocket:m-80",
+			"bottlerocket:thefourth",
+			"bottlerocket:wickedspark"
+		]
+	},
+	"brickway": {
+		"latitude": "41.2545511482328",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fbrickwayimage.jpg?alt=media",
+		"location": {
+			"_longitude": "-95.93138631",
+			"_latitude": "41.25455115"
+		},
+		"breweryURL": "https://www.drinkbrickway.com/",
+		"longName": "Brickway Brewery & Distillery",
+		"breweryAddress": "1116 Jackson St, Omaha, NE ",
+		"location12": {
+			"_latitude": "41.25455115",
+			"_longitude": "-95.93138631"
+		},
+		"rating": 5,
+		"name": "Brickway",
+		"longitude": "-95.931386312231",
+		"when": "2021-07-31T20:15:14.376Z",
+		"description": "Since 2013, Brickway Brewery & Distillery has been brewing staple beers and whisky in the Historic Old Market District. ",
+		"locationDescription": "Omaha Historic Old Market District",
+		"phone": "",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fbrickwaypageimage.jpg?alt=media",
+		"breweryZip": "68102",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fbrickwaymapimage_100x100.png?alt=media",
+		"URL": "https://www.drinkbrickway.com/",
+		"brewerySlug": "brickway",
+		"beers": [
+			"brickway:ginger",
+			"brickway:hef",
+			"brickway:jalapeno",
+			"brickway:juicyipa",
+			"brickway:oktoberfest",
+			"brickway:pils",
+			"brickway:raspberry-hef",
+			"brickway:stout"
+		]
+	},
+	"code": {
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fcodemapimage_100x100.png?alt=media",
+		"description": "Located in the Telegraph District in Lincoln, Nebraska, Code Beer is laid-back place to try great new brews. ",
+		"locationDescription": "Telegraph District in downtown Lincoln. ",
+		"rating": 4.75,
+		"when": "2021-08-05T00:38:02.029Z",
+		"location12": {
+			"_longitude": "-96.89353672",
+			"_latitude": "40.78123582"
+		},
+		"longName": "Code Brewing Co.",
+		"location": {
+			"_longitude": "-96.69353672",
+			"_latitude": "40.81235818"
+		},
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fcodeimage.jpg?alt=media",
+		"breweryZip": "68510",
+		"name": "Code",
+		"phone": "14023185888",
+		"breweryAddress": "200 S Antelope Valley Pkwy, Lincoln, NE",
+		"brewerySlug": "code",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fcodepageimage.jpg?alt=media",
+		"URL": "http://codebeer.co/",
+		"beers": [
+			"code:berrylemon",
+			"code:continuous",
+			"code:elmo"
+		]
+	},
+	"cosmiceye": {
+		"URL": "http://www.cosmiceye.beer/",
+		"name": "Cosmic",
+		"brewerySlug": "cosmiceye",
+		"rating": 4,
+		"when": "2021-08-01T06:31:33.323Z",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fcosmiceyepageimage.jpg?alt=media",
+		"breweryZip": "68505",
+		"breweryAddress": "6800 P St #300, Lincoln, NE",
+		"phone": "15315002739",
+		"description": "Cosmic Eye is a family owned brewery and tap room located at 6800 P ST Lincoln, NE.",
+		"locationDescription": "Near Gateway Mall",
+		"location12": {
+			"_latitude": "40.81946777",
+			"_longitude": "-96.92712268"
+		},
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fcosmiceyeimage.jpg?alt=media",
+		"longName": "Cosmic Eye Brewing",
+		"location": {
+			"_longitude": "-96.62712268",
+			"_latitude": "40.81546777"
+		},
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fcosmiceyemapimage_100x100.png?alt=media",
+		"beers": [
+			"cosmiceye:basilisk",
+			"cosmiceye:call-of-wolf-mama",
+			"cosmiceye:deadmansrun",
+			"cosmiceye:eyes",
+			"cosmiceye:festbier",
+			"cosmiceye:floyd",
+			"cosmiceye:forgetting",
+			"cosmiceye:friend-death",
+			"cosmiceye:laser-2",
+			"cosmiceye:open-hearted",
+			"cosmiceye:sir-limes-a-lot",
+			"cosmiceye:straightsun",
+			"cosmiceye:unlock-the-time-dragon"
+		]
+	},
+	"empyrean": {
+		"abc": 123,
+		"longitude": "-96.7107958698269",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fempyreanmapimage_100x100.png?alt=media",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fempyreanimage.jpg?alt=media",
+		"phone": "",
+		"breweryURL": "https://empyreanbrewingco.com/",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fempyreanpageimage.jpg?alt=media",
+		"location": {
+			"_latitude": "40.81492906",
+			"_longitude": "-96.7108065"
+		},
+		"longName": "Empyrean Brewing Co.",
+		"latitude": "40.8153335969417",
+		"description": "Empyrean Brewing Co. bgan in 1991 with a dream that they could hand-craft full-flavored beer. The dream became Nebraska’s first microbrewery, Empyrean Brewing Co.",
+		"breweryZip": "68508",
+		"name": "Empyrean",
+		"when": "2021-07-31T16:46:02.635Z",
+		"breweryAddress": "730 Q St, Lincoln, NE",
+		"locationDescription": "Downtown Lincoln, Nebraska",
+		"location12": {
+			"_longitude": "-96.7108065",
+			"_latitude": "40.51449291"
+		},
+		"URL": "https://empyreanbrewingco.com/",
+		"brewerySlug": "empyrean",
+		"rating": 4.5,
+		"beers": [
+			"empyrean:aries-marzen",
+			"empyrean:burning-skye-scottish",
+			"empyrean:chaco-canyon-gold",
+			"empyrean:dark-side",
+			"empyrean:long-route",
+			"empyrean:luna-sea",
+			"empyrean:mind-over-mango",
+			"empyrean:pitched-blue",
+			"empyrean:sun-slinger",
+			"empyrean:super-nova",
+			"empyrean:third-stone-brown",
+			"empyrean:watch-man-ipa",
+			"empyrean:zookeeper-pink-guava"
+		]
+	},
+	"firststreet": {
+		"description": "First Street Brewing Co. is located in the heart of Downtown Hastings, Nebraska. We believe in making great beer that exemplifies truly regional flavors. ",
+		"breweryZip": "68901",
+		"breweryAddress": "119 N. Saint Joseph Ave., Hastings, NE",
+		"locationDescription": "On 1st and Joseph Ave.",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Ffirststreetmapimage_100x100.png?alt=media",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Ffirststreetimage.jpg?alt=media",
+		"location12": {
+			"_longitude": "-98.38778301",
+			"_latitude": "40.58450359"
+		},
+		"phone": "14028342400",
+		"location": {
+			"_longitude": "-98.38778301",
+			"_latitude": "40.58450359"
+		},
+		"name": "1st Street",
+		"longName": "1st Street Brewing Co.",
+		"URL": "http://www.firststreetbrewing.com/",
+		"brewerySlug": "firststreet",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Ffirststreetpageimage.jpg?alt=media",
+		"beers": []
+	},
+	"flyover": {
+		"locationDescription": "On Broadway.",
+		"breweryAddress": "1824 Broadway, Scottsbluff, NE ",
+		"location12": {
+			"_longitude": "-103.6629787",
+			"_latitude": "41.86511532"
+		},
+		"phone": "13085750335",
+		"name": "Flyover",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fflyovermapimage_100x100.png?alt=media",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fflyoverimage.jpg?alt=media",
+		"longName": "Flyover Brewing Co.",
+		"description": "The first brewery in the Nebraska Panhandle, Flyover Brewing Company takes pride in brewing. Brewed by an award winning professional brewer with years of experience in the craft, the brewery produces both true to style lagers and ales along with innovative locally themed brews.",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fflyoverpageimage.jpg?alt=media",
+		"location": {
+			"_latitude": "41.86511532",
+			"_longitude": "-103.6629787"
+		},
+		"breweryZip": "69361",
+		"URL": "https://www.flyoverbrewingcompany.com/",
+		"brewerySlug": "flyover",
+		"beers": [
+			"flyover:blackbird",
+			"flyover:hellcat",
+			"flyover:npa"
+		]
+	},
+	"infusion": {
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Finfusionpageimage.jpg?alt=media",
+		"description": "Infusion Brewery now occupies the former home of Olson’s Meat Market in Downtown Benson. When the building became available, Bill Baburek, owner of Omaha’s Crescent Moon, decided to turn his dream of opening a craft brewery into reality.",
+		"brewerySlug": "infusion",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Finfusionimage.jpg?alt=media",
+		"location12": {
+			"_latitude": "41.2858379",
+			"_longitude": "-96.00801658"
+		},
+		"phone": "",
+		"breweryZip": "68104",
+		"longName": "Infusion Brewing Co.",
+		"location": {
+			"_longitude": "-96.00801658",
+			"_latitude": "41.2854379"
+		},
+		"when": "2021-07-31T20:14:21.195Z",
+		"name": "Infusion",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Finfusionmapimage_100x100.png?alt=media",
+		"rating": 5,
+		"breweryURL": "http://infusionbrewing.com/",
+		"locationDescription": "Historic Benson Neighborhood of Omaha",
+		"URL": "http://infusionbrewing.com/",
+		"breweryAddress": "6115 Maple St, Omaha, NE ",
+		"latitude": "41.2854379014261",
+		"longitude": "-96.008016580483",
+		"beers": [
+			"infusion:brown",
+			"infusion:cucumber-lime",
+			"infusion:pineapple-mango",
+			"infusion:pineapplecoconut",
+			"infusion:pistachio",
+			"infusion:radial",
+			"infusion:squatcho",
+			"infusion:vanilla-bean",
+			"infusion:vbb-mexican",
+			"infusion:vbb-pumpkin",
+			"infusion:wild-white-peach"
+		]
+	},
+	"kinkaider": {
+		"longName": "Kinkaider Brewing Co.",
+		"latitude": "40.8155551815484",
+		"location12": {
+			"_longitude": "-99.16085705",
+			"_latitude": "41.42385812"
+		},
+		"phone": "",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fkinkaidermapimage_100x100.png?alt=media",
+		"brewerySlug": "kinkaider",
+		"breweryAddress": "43860 Paulsen Rd, Broken Bow, NE",
+		"name": "Kinkaider",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fkinkaiderpageimage.jpg?alt=media",
+		"when": "2021-07-31T20:13:21.652Z",
+		"longitude": "-96.7113992506193",
+		"breweryURL": "https://www.kinkaider.com/",
+		"rating": 5,
+		"locationDescription": "Broken Bow",
+		"breweryZip": "68822",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fkinkaiderimage.jpg?alt=media",
+		"URL": "https://www.kinkaider.com/",
+		"description": "We are a Farm Craft Brewery with locations is Lincoln, Grand Island, and Broken Bow. Stop by our 3 locations and enjoy our award-winning beers!",
+		"location": {
+			"_longitude": "-99.66085705",
+			"_latitude": "41.42345812"
+		},
+		"beers": [
+			"kinkaider:4-county",
+			"kinkaider:bangarang",
+			"kinkaider:dan-the-wiser",
+			"kinkaider:dan-wiser-peach",
+			"kinkaider:devils-gap-j",
+			"kinkaider:dragon",
+			"kinkaider:frame-the-butcher",
+			"kinkaider:hail",
+			"kinkaider:herd-blackberry",
+			"kinkaider:herd-law",
+			"kinkaider:hirams-bones",
+			"kinkaider:j-raspberry",
+			"kinkaider:oktoberfest",
+			"kinkaider:radler",
+			"kinkaider:snow-beast",
+			"kinkaider:snozzberry",
+			"kinkaider:star-snake-dank",
+			"kinkaider:tropicale"
+		]
+	},
+	"krosstrain": {
+		"longitude": "-96.075646215287",
+		"location": {
+			"_latitude": "41.17193633",
+			"_longitude": "-96.07564622"
+		},
+		"when": "2021-07-31T20:14:57.549Z",
+		"locationDescription": "On Portal Road in La Vista, NE",
+		"breweryZip": "68128",
+		"latitude": "41.1719363317325",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fkrosstrainmapimage_100x100.png?alt=media",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fkrosstrainimage.jpg?alt=media",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fkrosstrainpageimage.jpg?alt=media",
+		"breweryURL": "https://krosstrainbrewing.com/",
+		"rating": 5.5,
+		"URL": "https://krosstrainbrewing.com/",
+		"brewerySlug": "krosstrain",
+		"breweryAddress": "10411 Portal Rd #102, La Vista, NE ",
+		"name": "Kros Strain",
+		"description": "Two dudes with a passion for brewing great beers, founders Bobby Kros and Scott Strain, started Kros Strain Brewing. Known to innovate, the pair will tinker with recipes, until it’s not just “good enough” – but until it’s freaking great.",
+		"longName": "Kros Strain Brewing Co.",
+		"phone": "",
+		"location12": {
+			"_longitude": "-96.17564622",
+			"_latitude": "41.17133633"
+		},
+		"beers": [
+			"krosstrain:dad-jokes",
+			"krosstrain:ddh",
+			"krosstrain:fairy-nectar",
+			"krosstrain:helles-creek",
+			"krosstrain:hopstreaker",
+			"krosstrain:krossteiner",
+			"krosstrain:nilla",
+			"krosstrain:rules-dont-apply",
+			"krosstrain:southern",
+			"krosstrain:tan-limes",
+			"krosstrain:web-of-lies"
+		]
+	},
+	"lazyhorse": {
+		"location12": {
+			"_longitude": "-97.46136964",
+			"_latitude": "40.37336656"
+		},
+		"phone": "14022952550",
+		"locationDescription": "Ohiowa, Nebraska",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Flazyhorsemapimage_100x100.png?alt=media",
+		"description": "Nested in the Nebraska Heartland, come enjoy its rural beauty and unique selection of beers.",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Flazyhorseimage.jpg?alt=media",
+		"breweryAddress": "211 Rd 20, Ohiowa, NE ",
+		"longName": "Lazy Horse Vineyard and Brewing",
+		"brewerySlug": "lazyhorse",
+		"location": {
+			"_latitude": "40.37336656",
+			"_longitude": "-97.46136964"
+		},
+		"breweryZip": "68416",
+		"name": "Lazy Horse",
+		"URL": "http://www.lazyhorsevineyard.com/",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Flazyhorsepageimage.PNG?alt=media",
+		"beers": [
+			"lazyhorse:blood-orange",
+			"lazyhorse:milk-stout",
+			"lazyhorse:reckless-ipa",
+			"lazyhorse:salted-caramel"
+		]
+	},
+	"luckybucket": {
+		"location12": {
+			"_latitude": "41.16991408",
+			"_longitude": "-96.09940134"
+		},
+		"location": {
+			"_latitude": "41.16991408",
+			"_longitude": "-96.09940134"
+		},
+		"name": "Lucky Bucket",
+		"brewerySlug": "luckybucket",
+		"locationDescription": "On Centennial Road in La Vista, NE",
+		"longitude": "-96.0994013375716",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fluckybucketimage.jpg?alt=media",
+		"latitude": "41.1699140792721",
+		"breweryAddress": "11941 Centennial Rd, La Vista, NE",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fluckybucketmapimage_100x100.png?alt=media",
+		"longName": "Lucky Bucket Brewing Co.",
+		"breweryZip": "68128",
+		"phone": "",
+		"description": "Hoppy libations, barrel aged ales, bold stouts, tart sour beers – you name it, ucky Bucket brews it!",
+		"rating": 6,
+		"breweryURL": "http://www.luckybucketbrewing.com/",
+		"URL": "http://www.luckybucketbrewing.com/",
+		"when": "2021-07-31T20:15:03.518Z",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fluckybucketimage.jpg?alt=media",
+		"beers": [
+			"luckybucket:belly-flop",
+			"luckybucket:blondeale",
+			"luckybucket:evil",
+			"luckybucket:groover",
+			"luckybucket:jug",
+			"luckybucket:oktoberfest ",
+			"luckybucket:prohibition",
+			"luckybucket:snowsuit",
+			"luckybucket:tropicwonder",
+			"luckybucket:wickedjoe"
+		]
+	},
+	"nebrew": {
+		"rating": 4,
+		"name": "Nebraska Brewing",
+		"locationDescription": "On 108th Street in La Vista, NE",
+		"location": {
+			"_latitude": "41.18888859",
+			"_longitude": "-96.08182928"
+		},
+		"location12": {
+			"_longitude": "-96.08182928",
+			"_latitude": "41.18818859"
+		},
+		"description": "With a foundation in homebrewing in 1992, Paul Kavulak set about to experiment within a hobby that would prove to change the landscape of Nebraska Craft Beer.",
+		"latitude": "41.1888885942654",
+		"phone": "",
+		"brewerySlug": "nebrew",
+		"breweryZip": "68128",
+		"longName": "Nebraska Brewing Co.",
+		"breweryURL": "http://www.nebraskabrewingco.com/",
+		"breweryAddress": "6950 S 108th St, La Vista, NE ",
+		"URL": "http://www.nebraskabrewingco.com/",
+		"longitude": "-96.0818292837955",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fnebrewmapimage_100x100.png?alt=media",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fnebrewpageimage.jpg?alt=media",
+		"when": "2021-07-31T20:19:02.543Z",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fnebrewimage.jpg?alt=media",
+		"beers": [
+			"nebrew:brunette",
+			"nebrew:cardinal",
+			"nebrew:eos",
+			"nebrew:ipa",
+			"nebrew:pils",
+			"nebrew:tacoveza"
+		]
+	},
+	"pintnine": {
+		"longName": "Pint Nine Brewing Co.",
+		"location12": {
+			"_longitude": "-96.17593032",
+			"_latitude": "41.13194676"
+		},
+		"name": "Pint Nine",
+		"locationDescription": "On Portal Road in La Vista, NE",
+		"brewerySlug": "pintnine",
+		"phone": "14023591418",
+		"breweryZip": "68128",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fpintninemapimage_100x100.png?alt=media",
+		"URL": "https://pintninebrewing.com/",
+		"location": {
+			"_latitude": "41.17194676",
+			"_longitude": "-96.07593032"
+		},
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fpintnineimage.jpg?alt=media",
+		"breweryAddress": "10411 Portal Road, Suite 104 Papillion, NE ",
+		"rating": 5,
+		"when": "2021-08-03T21:57:23.760Z",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fpintninepageimage.jpg?alt=media",
+		"description": "Located in La Vista, Pint Nine is commited to tradition and innovation.",
+		"beers": [
+			"pintnine:brightside",
+			"pintnine:cloudjumper",
+			"pintnine:false-idol",
+			"pintnine:ipa",
+			"pintnine:osocoffee",
+			"pintnine:suckerspunch"
+		]
+	},
+	"prairiepride": {
+		"phone": "13088505375",
+		"URL": "http://prairiepride.beer/",
+		"breweryZip": "68801",
+		"name": "Prairie Pride",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fprairiepridepageimage.jpg?alt=media",
+		"longName": "Prairie Pride Brewing Co.",
+		"location12": {
+			"_latitude": "40.92665174",
+			"_longitude": "-98.33986698"
+		},
+		"description": "We believe, with great pride, that craft beer is an attitude and that flavor favors the bold. That bold attitude is what led us to imagine the Hopffalo as the perfect symbol for our mutual pride of place and love of craft beer.",
+		"locationDescription": "On E South St. ",
+		"brewerySlug": "prairiepride",
+		"location": {
+			"_latitude": "40.92665174",
+			"_longitude": "-98.33986698"
+		},
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fprairiepridemapimage_100x100.png?alt=media",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fprairieprideimage.jpg?alt=media",
+		"breweryAddress": "115 E South Front St, Suite 1 Grand Island, NE",
+		"beers": []
+	},
+	"thunderhead": {
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fthunderheadpageimage.jpg?alt=media",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fthunderheadimage.jpg?alt=media",
+		"brewerySlug": "thunderhead",
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fthunderheadmapimage_100x100.png?alt=media",
+		"location12": {
+			"_latitude": "40.47714937",
+			"_longitude": "-99.13743517"
+		},
+		"longName": "Thunderhead Brewing Co.",
+		"URL": "https://www.thunderheadbrewing.com/",
+		"breweryZip": "68924",
+		"breweryAddress": "201 F Ave, Axtell, NE ",
+		"location": {
+			"_latitude": "40.47714937",
+			"_longitude": "-99.13743517"
+		},
+		"locationDescription": "On F Ave in Axtell, NE.",
+		"description": "Founded in 1999, Thunderhead Brewing is a small brewmaster owned brewery dedicated to producing high quality ales and lagers.",
+		"phone": "13082371558",
+		"name": "Thunderhead",
+		"beers": [
+			"thunderhead:cornstalker",
+			"thunderhead:cropduster",
+			"thunderhead:golden-frau",
+			"thunderhead:hopaluia",
+			"thunderhead:jalapeno",
+			"thunderhead:leatherhead",
+			"thunderhead:prairiepeach",
+			"thunderhead:schabens",
+			"thunderhead:thunder-punch",
+			"thunderhead:thunder-punch-cherry",
+			"thunderhead:thunder-punch-lime"
+		]
+	},
+	"whiteelm": {
+		"locationDescription": "Right off Van Dorn.",
+		"rating": 4,
+		"breweryZip": "68502",
+		"breweryAddress": "720 Van Dorn St, Lincoln, NE",
+		"name": "White Elm",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fwhiteelmimage.jpg?alt=media",
+		"location": {
+			"_latitude": "40.78513586",
+			"_longitude": "-96.71061794"
+		},
+		"longName": "White Elm Brewing Co.",
+		"URL": "http://www.whiteelmbrewing.com/",
+		"location12": {
+			"_latitude": "41.18113586",
+			"_longitude": "-96.71061794"
+		},
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fwhiteelmmapimage_100x100.png?alt=media",
+		"brewerySlug": "whiteelm",
+		"description": "White Elm Brewing Company strives to bring modern takes on rustic ales to southeast Nebraska. ",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fwhiteelmpageimage.jpg?alt=media",
+		"phone": "14022616078",
+		"when": "2021-08-04T02:20:01.863Z",
+		"beers": [
+			"whiteelm:atypical-deviation",
+			"whiteelm:chocolate",
+			"whiteelm:deadlines",
+			"whiteelm:harrow",
+			"whiteelm:inverted",
+			"whiteelm:inverted-mosaic",
+			"whiteelm:malverde",
+			"whiteelm:mega-cd",
+			"whiteelm:paradigm-shift",
+			"whiteelm:pma",
+			"whiteelm:prost",
+			"whiteelm:rollo",
+			"whiteelm:skinny-leg",
+			"whiteelm:small-batch"
+		]
+	},
+	"zipline": {
+		"longName": "Zipline Brewing Co",
+		"image": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fziplineimage.jpg?alt=media",
+		"pageImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2Fziplinepageimage.jpg?alt=media",
+		"description": "Zipline Brewing Co. crafts artisan ales and lagers with high quality precision in Lincoln, Nebraska. Born from the founders’ innate sense of adventure and their desire to connect with the thrill-seeking spirit in all craft beer fans.",
+		"location12": {
+			"_longitude": "-96.55116007",
+			"_latitude": "40.81144102"
+		},
+		"name": "Zipline",
+		"phone": "14024751001",
+		"location": {
+			"_latitude": "40.81194102",
+			"_longitude": "-96.75116007"
+		},
+		"breweryZip": "68522",
+		"when": "2021-08-03T14:24:32.929Z",
+		"brewerySlug": "zipline",
+		"locationDescription": "Heart of Lincoln, NE",
+		"rating": 4.666666666666667,
+		"mapImage": "https://firebasestorage.googleapis.com/v0/b/promotion-3abec.appspot.com/o/media%2Fbreweries%2Fimages%2F_resized%2Fziplinemapimage_100x100.png?alt=media",
+		"URL": "https://ziplinebrewing.com/",
+		"breweryAddress": "2100 Magnum Cir #1, Lincoln, NE",
+		"beers": [
+			"zipline:cloudlifter-hazy-ipa",
+			"zipline:cloudlifter-tropical-hazy-ipa",
+			"zipline:copper-alt",
+			"zipline:daaang-ipa",
+			"zipline:dear-old",
+			"zipline:dope-ipa",
+			"zipline:easy-lift",
+			"zipline:festbier",
+			"zipline:german-style-kolsch",
+			"zipline:gold-lager",
+			"zipline:hazy-ipa",
+			"zipline:ipa",
+			"zipline:local-time",
+			"zipline:milk-stout",
+			"zipline:nz",
+			"zipline:oatmeal-porter"
+		]
+	}
+}

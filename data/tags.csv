@@ -1,0 +1,50 @@
+tag,category,synonyms
+bready,basic,"biscuit, biscuity, chewy, thick, mousse-like, sticks and stems"
+carbonated,basic,
+crisp,basic,"bright, thin, refreshing, juicy"
+dry,basic,"clears fast, "
+fluffy,basic,"pulpy, chewy"
+malty,basic,
+smooth,basic,
+soft,basic,thicker than smooth but not as thick as bready or fluffy
+tame,basic,"light, bland, lite, bright"
+sweet,basic,
+wheat,basic,
+woody,basic,
+floral,bitter,
+grapefruit,bitter,citrus
+herbal,bitter,
+hoppy,bitter,
+jalapeno,bitter,
+pine,bitter,
+resinous,bitter,"sticky, enduring bitter flavor, flavor lingers on the tonque, earthy"
+skunk,bitter,"domestic american beer, heineken"
+tropical,bitter,"juicy, citrus, fruity"
+alcohol,distinct,
+apple,distinct,
+banana,distinct,
+berry,distinct,
+caramel,distinct,
+cherry,distinct,
+chocolate,distinct,
+cinnamon,distinct,
+clove,distinct,
+coffee,distinct,
+grape,distinct,
+honey,distinct,
+lemon,distinct,
+melon,distinct,citrus
+milk,distinct,
+nutty,distinct,
+orange,distinct,"citrus, fruity"
+peach,distinct,"apricots, mango, fruity"
+pear,distinct,
+pepper,distinct,
+pineapple,distinct,citrus
+plum,distinct,
+roasted,distinct,
+smoky,distinct,
+spicy,distinct,
+tart,distinct,fruity
+tea,distinct,
+vanilla,distinct,

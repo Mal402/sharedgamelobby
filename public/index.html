@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Games 2D</title>
+  <meta property="og:site_name" content="Games 2D" />
+
+  <meta name="description" content="Match beer cards and Guess beer names are the games" />
+  <meta name="keywords" content="local,beer,craft,brewery,Lincoln,Nebraska" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <link rel="shortcut icon" href="/images/logo64.png">
+  <meta name='mobile-web-app-capable' content='yes'>
+  <meta name='apple-mobile-web-app-capable' content='yes'>
+  <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+
+  <link rel='icon' sizes='192x192' href='https://locate.beer/images/logo192.png'>
+  <link rel='apple-touch-icon' href='https://locate.beer/images/logo152.png'>
+  <meta name='msapplication-square310x310logo' content='https://locate.beer/images/logo310.png'>
+  <link rel='apple-touch-icon' href='https://locate.beer/images/logo192.png'>
+  <link rel="icon" sizes="192x192" href="https://locate.beer/images/logo192.png">
+
+  <meta property="og:url" content="https://games2dd.web.app/" />
+  <meta property="og:title" content="Games 2D" />
+  <meta property="og:type" content="website" />
+
+  <meta property="og:image" content="https://locate.beer/images/logo512.png" />
+  <meta property="og:description" content="Play Guess or Match with your friends using beer names!" />
+  <meta property="pagedate" content="01/01/2030" />
+
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/gamebase.css" />
+  <link rel="stylesheet" href="/css/games.css" />
+  <!-- Firebase links -->
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/init.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script>
+    window.addEventListener('load', async (event) => {
+      let module = await import('/models/gamesapp.js');
+
+      window.GamesApp = new module.GamesApp();
+    });
+  </script>
+</head>
+
+
+<body class="basic_beer_body hangbeer_page show_games_view show_profile_games">
+  <div class="basic_page_wrapper app_panel">
+    <div class="base_menu_panel_wrapper">
+      <div class="base_menu_panel">
+        <a class="gamelist_header_toggle_button" href="#">
+          <i class="material-icons">add</i>
+        </a>
+        <a class="game_feed_toggle_button" href="#">
+          <i class="material-icons">search</i>
+        </a>
+        <a class="night_mode_toggle" href="/">
+          <i class="material-icons mode_day">light_mode</i>
+          <i class="material-icons mode_night">mode_night</i>
+        </a>
+        <a class="profile_menu_anchor" href="/profile">
+          <i class="material-icons">person</i>
+        </a>        
+        <button class="feed_expand_all">
+          <span class="icon">&#9660;</span>
+        </button>
+      </div>
+    </div>
+    <div class="game_lobby">
+      <br><br><br><br>
+      <a href="/overview" style="font-size: 25px;padding:10px">
+        About these games...
+      </a>
+      <br>
+      <div class="game_signin_create_panel">
+        <div class="new_game_view">
+          <div class="basic_options">
+            <div style="display:flex;flex-direction:row">
+              <button class="new_game_type_wrapper game selected" value="match">
+                <div class="new_game_type_image" style="background-image:url(/images/logo_match.png)"></div>
+                <div class="new_game_type_name">Match!</div>
+              </button>
+              <button class="new_game_type_wrapper game" value="guess">
+                <div class="new_game_type_image" style="background-image:url(/images/logo_guess.png)"></div>
+                <div class="new_game_type_name">Guess?</div>
+              </button>
+            </div>
+
+            <div style="display:none">
+              <span class="span_label">Type</span>
+              <select class="gametype_select">
+                <option value="guess">Guess?</option>
+                <option selected value="match">Match!</option>
+              </select>
+              <br>
+            </div>
+            <span class="span_label">Visibility</span>
+            <select class="visibility_select">
+              <option selected>public</option>
+              <option>private</option>
+            </select>
+            <br>
+            <span class="span_label">Seats</span>
+            <select class="seat_count_select">
+              <option value="1">1 seat</option>
+              <option selected value="2">2 seats</option>
+              <option value="3">3 seats</option>
+              <option value="4">4 seats</option>
+            </select>
+            <br>
+            <span class="span_label">Messaging</span>
+            <select class="message_level_select">
+              <option value="seated">Seated</option>
+              <option value="all">All</option>
+            </select>
+            <br>
+            <span class="span_label">Seat Limit</span>
+            <select class="seats_per_user_select">
+              <option value="none">None</option>
+              <option value="one">One</option>
+            </select>
+            <br>
+            <div class="match_additional_options">
+              <span class="span_label">Card Deck</span>
+              <select class="card_deck_select">
+                <option value="empyrean">Empyrean</option>
+                <option value="zipline">Zipline</option>
+              </select>
+              <br>
+              <span class="span_label">Scoring</span>
+              <select class="scoring_system_select">
+                <option value="simple">Simple</option>
+                <option value="stable">Stable</option>
+                <option value="regular" selected>Regular</option>
+              </select>
+              <br>
+            </div>
+            <div style="text-align:center;padding: 1em">
+              <button class="create_new_game_btn game primary">Create Game</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="games_view_wrapper">
+          <div class="game_history_view"></div>
+          <div class="join_game_view">
+            <div style="line-height: 40px;font-size: 25px;padding: 5px;">
+              <span>Code</span>
+              <input class="game_code_start" style="font-size:25px;width:150px;flex:1">
+              <button class="join_game_btn" style="font-size:25px">Join</button>
+            </div>
+            <div style="font-size: 28px;margin-top: 50px;">
+              <a href="/privacy.html">Privacy</a>
+              &nbsp;
+              <a href="/about">About</a>
+            </div>
+          </div>
+          <div class="public_games_wrapper">
+            <div class="public_game_view"></div>
+          </div>
+        </div>
+      </div>
+      <div class="signed_out_game_options">
+        <h3>Please <a href="/profile">Sign In</a> to play</h3>
+      </div>
+    </div>
+    <div style="flex:1"></div>
+
+  </div>
+  <style id="laststyleblock"></style>
+</body>
+
+</html>

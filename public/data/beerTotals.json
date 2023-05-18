@@ -1,0 +1,1257 @@
+{
+    "beers": {
+        "thunderhead:prairiepeach": {
+            "wheat": 0.208,
+            "bready": 0.208,
+            "bitter": 3.5,
+            "count": 1,
+            "tart": 0.292,
+            "sortedTags": [
+                "peach",
+                "tart",
+                "bready",
+                "wheat"
+            ],
+            "distinct": 7,
+            "overall": 6.5,
+            "peach": 0.292,
+            "tagList": "peach:0.29,tart:0.29,bready:0.21,wheat:0.21,"
+        },
+        "baseline:lagunitas-ipa": {
+            "caramel": 0.301,
+            "distinct": 6.5,
+            "tagList": "caramel:0.30,resinous:0.24,fluffy:0.23,soft:0.23,",
+            "fluffy": 0.231,
+            "count": 1,
+            "bitter": 5.1,
+            "sortedTags": [
+                "caramel",
+                "resinous",
+                "fluffy",
+                "soft"
+            ],
+            "soft": 0.231,
+            "resinous": 0.236,
+            "overall": 5.5
+        },
+        "baseline:deschutes-fresh-haze-ipa": {
+            "tropical": 0.231,
+            "bitter": 4.5,
+            "count": 1,
+            "overall": 6.5,
+            "malty": 0.256,
+            "sortedTags": [
+                "dry",
+                "malty",
+                "tame",
+                "tropical"
+            ],
+            "tame": 0.256,
+            "tagList": "dry:0.26,malty:0.26,tame:0.26,tropical:0.23,",
+            "dry": 0.256,
+            "distinct": 3.5
+        },
+        "lazyhorse:milk-stout": {
+            "sortedTags": [
+                "alcohol",
+                "coffee",
+                "vanilla",
+                "bready",
+                "sweet"
+            ],
+            "distinct": 7.5,
+            "tagList": "alcohol:0.23,coffee:0.23,vanilla:0.23,bready:0.15,sweet:0.15,",
+            "bitter": 7,
+            "alcohol": 0.231,
+            "overall": 3,
+            "coffee": 0.231,
+            "count": 1,
+            "sweet": 0.154,
+            "bready": 0.154,
+            "vanilla": 0.231
+        },
+        "baseline:breckenridge-vanilla-porter": {
+            "chocolate": 0.265,
+            "tagList": "chocolate:0.27,coffee:0.27,vanilla:0.27,smooth:0.20,",
+            "smooth": 0.204,
+            "coffee": 0.265,
+            "count": 1,
+            "overall": 8,
+            "vanilla": 0.265,
+            "distinct": 6.5,
+            "bitter": 1.6,
+            "sortedTags": [
+                "chocolate",
+                "coffee",
+                "vanilla",
+                "smooth"
+            ]
+        },
+        "nebrew:tacoveza": {
+            "sortedTags": [
+                "dry",
+                "sweet",
+                "tame",
+                "skunk"
+            ],
+            "distinct": 2,
+            "tame": 0.294,
+            "dry": 0.294,
+            "tagList": "dry:0.29,sweet:0.29,tame:0.29,skunk:0.12,",
+            "count": 1,
+            "skunk": 0.118,
+            "sweet": 0.294,
+            "overall": 7,
+            "bitter": 2
+        },
+        "baseline:nb-vd-juicy-haze-ipa": {
+            "tropical": 0.217,
+            "sortedTags": [
+                "alcohol",
+                "carbonated",
+                "resinous",
+                "tropical"
+            ],
+            "overall": 5,
+            "bitter": 5,
+            "count": 1,
+            "alcohol": 0.348,
+            "tagList": "alcohol:0.35,carbonated:0.22,resinous:0.22,tropical:0.22,",
+            "distinct": 8,
+            "resinous": 0.217,
+            "carbonated": 0.217
+        },
+        "baseline:bb-mosaic-ipa": {
+            "pineapple": 0.182,
+            "tropical": 0.273,
+            "distinct": 4,
+            "count": 1,
+            "overall": 8.75,
+            "bitter": 6,
+            "resinous": 0.273,
+            "grapefruit": 0.273,
+            "tagList": "grapefruit:0.27,resinous:0.27,tropical:0.27,pineapple:0.18,",
+            "sortedTags": [
+                "grapefruit",
+                "resinous",
+                "tropical",
+                "pineapple"
+            ]
+        },
+        "brickway:raspberry-hef": {
+            "sortedTags": [
+                "berry",
+                "bready",
+                "crisp",
+                "malty",
+                "sweet",
+                "pine"
+            ],
+            "tagList": "berry:0.23,bready:0.17,crisp:0.17,malty:0.17,sweet:0.17,pine:0.10,",
+            "overall": 6,
+            "bready": 0.167,
+            "berry": 0.233,
+            "distinct": 7,
+            "sweet": 0.167,
+            "bitter": 3,
+            "pine": 0.1,
+            "crisp": 0.167,
+            "malty": 0.167,
+            "count": 1
+        },
+        "baseline:cigar-city-jai-alai-ipa": {
+            "crisp": 0.227,
+            "overall": 6,
+            "tagList": "herbal:0.29,pine:0.29,crisp:0.23,orange:0.18,",
+            "distinct": 4,
+            "orange": 0.182,
+            "sortedTags": [
+                "herbal",
+                "pine",
+                "crisp",
+                "orange"
+            ],
+            "count": 1,
+            "herbal": 0.295,
+            "bitter": 6.5,
+            "pine": 0.295
+        },
+        "cosmiceye:forgetting": {
+            "tagList": "herbal:0.26,pine:0.26,resinous:0.26,dry:0.22,",
+            "overall": 7,
+            "bitter": 6,
+            "dry": 0.217,
+            "resinous": 0.261,
+            "pine": 0.261,
+            "distinct": 5,
+            "count": 1,
+            "herbal": 0.261,
+            "sortedTags": [
+                "herbal",
+                "pine",
+                "resinous",
+                "dry"
+            ]
+        },
+        "baseline:nb-vd-hop-avenger": {
+            "bitter": 4.2,
+            "overall": 5.5,
+            "alcohol": 0.317,
+            "distinct": 8,
+            "sortedTags": [
+                "alcohol",
+                "pineapple",
+                "malty",
+                "tropical"
+            ],
+            "pineapple": 0.317,
+            "count": 1,
+            "tropical": 0.167,
+            "malty": 0.198,
+            "tagList": "alcohol:0.32,pineapple:0.32,malty:0.20,tropical:0.17,"
+        },
+        "baseline:sierra-torpedo": {
+            "bitter": 6.5,
+            "tagList": "herbal:0.28,resinous:0.28,caramel:0.22,fluffy:0.22,",
+            "distinct": 5,
+            "count": 1,
+            "resinous": 0.283,
+            "overall": 6.7,
+            "sortedTags": [
+                "herbal",
+                "resinous",
+                "caramel",
+                "fluffy"
+            ],
+            "herbal": 0.283,
+            "caramel": 0.217,
+            "fluffy": 0.217
+        },
+        "baseline:bb-hazers-gonna-haze": {
+            "tagList": "lemon:0.33,dry:0.28,grapefruit:0.19,herbal:0.19,",
+            "herbal": 0.194,
+            "lemon": 0.333,
+            "dry": 0.278,
+            "overall": 6.5,
+            "count": 1,
+            "grapefruit": 0.194,
+            "distinct": 6,
+            "sortedTags": [
+                "lemon",
+                "dry",
+                "grapefruit",
+                "herbal"
+            ],
+            "bitter": 3.5
+        },
+        "baseline:guinness-draught": {
+            "count": 1,
+            "distinct": 6,
+            "malty": 0.227,
+            "tagList": "coffee:0.27,roasted:0.27,fluffy:0.23,malty:0.23,",
+            "fluffy": 0.227,
+            "coffee": 0.273,
+            "bitter": 4.5,
+            "sortedTags": [
+                "coffee",
+                "roasted",
+                "fluffy",
+                "malty"
+            ],
+            "roasted": 0.273,
+            "overall": 7
+        },
+        "baseline:leinie-summer-shandy": {
+            "carbonated": 0.192,
+            "sortedTags": [
+                "lemon",
+                "tart",
+                "carbonated",
+                "crisp"
+            ],
+            "tart": 0.308,
+            "count": 1,
+            "overall": 6,
+            "bitter": 1.1,
+            "distinct": 8,
+            "lemon": 0.308,
+            "tagList": "lemon:0.31,tart:0.31,carbonated:0.19,crisp:0.19,",
+            "crisp": 0.192
+        },
+        "empyrean:chaco-canyon-gold": {
+            "skunk": 0.113,
+            "honey": 0.349,
+            "overall": 6,
+            "count": 1,
+            "tagList": "honey:0.35,bready:0.27,crisp:0.27,skunk:0.11,",
+            "sortedTags": [
+                "honey",
+                "bready",
+                "crisp",
+                "skunk"
+            ],
+            "distinct": 6.5,
+            "bitter": 2.1,
+            "bready": 0.269,
+            "crisp": 0.269
+        },
+        "baseline:new-castle-brown": {
+            "bready": 0.278,
+            "count": 1,
+            "roasted": 0.222,
+            "malty": 0.278,
+            "bitter": 2.8,
+            "tagList": "bready:0.28,malty:0.28,caramel:0.22,roasted:0.22,",
+            "distinct": 4,
+            "overall": 5,
+            "sortedTags": [
+                "bready",
+                "malty",
+                "caramel",
+                "roasted"
+            ],
+            "caramel": 0.222
+        },
+        "empyrean:third-stone-brown": {
+            "smooth": 0.227,
+            "tame": 0.227,
+            "bitter": 1.3,
+            "tagList": "roasted:0.27,tart:0.27,smooth:0.23,tame:0.23,",
+            "count": 1,
+            "overall": 6,
+            "tart": 0.273,
+            "sortedTags": [
+                "roasted",
+                "tart",
+                "smooth",
+                "tame"
+            ],
+            "distinct": 6,
+            "roasted": 0.273
+        },
+        "baseline:ab-becks": {
+            "skunk": 0.149,
+            "tagList": "fluffy:0.35,malty:0.35,skunk:0.15,lemon:0.14,",
+            "count": 1,
+            "distinct": 2,
+            "malty": 0.355,
+            "overall": 5.8,
+            "bitter": 2.1,
+            "fluffy": 0.355,
+            "sortedTags": [
+                "fluffy",
+                "malty",
+                "skunk",
+                "lemon"
+            ],
+            "lemon": 0.142
+        },
+        "nebrew:brunette": {
+            "caramel": 0.25,
+            "count": 1,
+            "bitter": 3,
+            "distinct": 5,
+            "overall": 6,
+            "soft": 0.25,
+            "tame": 0.25,
+            "sortedTags": [
+                "caramel",
+                "roasted",
+                "soft",
+                "tame"
+            ],
+            "tagList": "caramel:0.25,roasted:0.25,soft:0.25,tame:0.25,",
+            "roasted": 0.25
+        },
+        "luckybucket:groover": {
+            "herbal": 0.25,
+            "overall": 6,
+            "count": 1,
+            "distinct": 6,
+            "carbonated": 0.25,
+            "bitter": 5,
+            "pine": 0.25,
+            "sortedTags": [
+                "carbonated",
+                "herbal",
+                "malty",
+                "pine"
+            ],
+            "tagList": "carbonated:0.25,herbal:0.25,malty:0.25,pine:0.25,",
+            "malty": 0.25
+        },
+        "backswing:wheat": {
+            "wheat": 0.299,
+            "sortedTags": [
+                "malty",
+                "soft",
+                "wheat",
+                "orange"
+            ],
+            "malty": 0.299,
+            "tagList": "malty:0.30,soft:0.30,wheat:0.30,orange:0.10,",
+            "count": 1,
+            "overall": 5.5,
+            "bitter": 1.8,
+            "soft": 0.299,
+            "orange": 0.102,
+            "distinct": 1.7
+        },
+        "kinkaider:star-snake-dank": {
+            "count": 2,
+            "tagList": "pine:0.31,fluffy:0.19,herbal:0.15,alcohol:0.13,dry:0.11,soft:0.11,",
+            "pine": 0.3075,
+            "distinct": 5.5,
+            "soft": 0.1085,
+            "fluffy": 0.1925,
+            "bitter": 7.5,
+            "dry": 0.1085,
+            "overall": 7,
+            "sortedTags": [
+                "pine",
+                "fluffy",
+                "herbal",
+                "alcohol",
+                "dry",
+                "soft"
+            ],
+            "alcohol": 0.1305,
+            "herbal": 0.152
+        },
+        "baseline:goose-island-ipa": {
+            "grapefruit": 0.256,
+            "count": 1,
+            "overall": 7.25,
+            "hoppy": 0.256,
+            "sortedTags": [
+                "grapefruit",
+                "hoppy",
+                "pine",
+                "dry"
+            ],
+            "pine": 0.256,
+            "tagList": "grapefruit:0.26,hoppy:0.26,pine:0.26,dry:0.23,",
+            "distinct": 4,
+            "bitter": 5.5,
+            "dry": 0.233
+        },
+        "baseline:deschutes-fresh-squeezed-ipa": {
+            "sortedTags": [
+                "pine",
+                "resinous",
+                "fluffy",
+                "malty"
+            ],
+            "fluffy": 0.227,
+            "distinct": 5,
+            "pine": 0.273,
+            "tagList": "pine:0.27,resinous:0.27,fluffy:0.23,malty:0.23,",
+            "count": 1,
+            "malty": 0.227,
+            "resinous": 0.273,
+            "overall": 7.5,
+            "bitter": 6
+        },
+        "baseline:heineken": {
+            "overall": 8.75,
+            "distinct": 3,
+            "skunk": 0.133,
+            "crisp": 0.289,
+            "bitter": 2.3,
+            "tagList": "crisp:0.29,dry:0.29,sweet:0.29,skunk:0.13,",
+            "count": 1,
+            "dry": 0.289,
+            "sortedTags": [
+                "crisp",
+                "dry",
+                "sweet",
+                "skunk"
+            ],
+            "sweet": 0.289
+        },
+        "krosstrain:hopstreaker": {
+            "tropical": 0.235,
+            "sortedTags": [
+                "crisp",
+                "grapefruit",
+                "pine",
+                "tropical"
+            ],
+            "tagList": "crisp:0.29,grapefruit:0.23,pine:0.23,tropical:0.23,",
+            "crisp": 0.294,
+            "pine": 0.235,
+            "count": 1,
+            "distinct": 6,
+            "grapefruit": 0.235,
+            "bitter": 4,
+            "overall": 7
+        },
+        "empyrean:burning-skye-scottish": {
+            "bitter": 1.3,
+            "dry": 0.25,
+            "overall": 6,
+            "count": 1,
+            "distinct": 5,
+            "smoky": 0.25,
+            "sweet": 0.25,
+            "sortedTags": [
+                "dry",
+                "smoky",
+                "smooth",
+                "sweet"
+            ],
+            "smooth": 0.25,
+            "tagList": "dry:0.25,smoky:0.25,smooth:0.25,sweet:0.25,"
+        },
+        "cosmiceye:unlock-the-time-dragon": {
+            "tagList": "pine:0.30,bready:0.13,soft:0.13,dry:0.06,grapefruit:0.06,smooth:0.06,tame:0.06,floral:0.06,fluffy:0.05,malty:0.05,peach:0.03,",
+            "overall": 7.25,
+            "distinct": 3.25,
+            "grapefruit": 0.0625,
+            "fluffy": 0.05,
+            "smooth": 0.0625,
+            "bitter": 6,
+            "bready": 0.132,
+            "soft": 0.132,
+            "pine": 0.296,
+            "malty": 0.05,
+            "peach": 0.03,
+            "dry": 0.0625,
+            "count": 4,
+            "floral": 0.06,
+            "tame": 0.0625,
+            "sortedTags": [
+                "pine",
+                "bready",
+                "soft",
+                "dry",
+                "grapefruit",
+                "smooth",
+                "tame",
+                "floral",
+                "fluffy",
+                "malty",
+                "peach"
+            ]
+        },
+        "baseline:nb-vd-ipa": {
+            "tropical": 0.278,
+            "sortedTags": [
+                "carbonated",
+                "grapefruit",
+                "tropical",
+                "alcohol"
+            ],
+            "carbonated": 0.278,
+            "grapefruit": 0.278,
+            "overall": 6,
+            "tagList": "carbonated:0.28,grapefruit:0.28,tropical:0.28,alcohol:0.17,",
+            "alcohol": 0.167,
+            "count": 1,
+            "bitter": 5,
+            "distinct": 3
+        },
+        "baseline:bb-no-worries": {
+            "resinous": 0.125,
+            "bitter": 2.25,
+            "overall": 3,
+            "distinct": 2,
+            "count": 2,
+            "orange": 0.111,
+            "sortedTags": [
+                "smooth",
+                "resinous",
+                "tropical",
+                "orange"
+            ],
+            "tropical": 0.125,
+            "tagList": "smooth:0.14,resinous:0.13,tropical:0.13,orange:0.11,",
+            "smooth": 0.139
+        },
+        "kinkaider:dragon": {
+            "distinct": 6,
+            "melon": 0.316,
+            "sortedTags": [
+                "melon",
+                "pear",
+                "soft",
+                "herbal"
+            ],
+            "overall": 5,
+            "soft": 0.263,
+            "bitter": 2,
+            "herbal": 0.105,
+            "pear": 0.316,
+            "tagList": "melon:0.32,pear:0.32,soft:0.26,herbal:0.10,",
+            "count": 1
+        },
+        "baseline:sa-wicked-hazy-ipa": {
+            "tropical": 0.212,
+            "overall": 7.7,
+            "tame": 0.303,
+            "orange": 0.242,
+            "tagList": "tame:0.30,orange:0.24,pineapple:0.24,tropical:0.21,",
+            "sortedTags": [
+                "tame",
+                "orange",
+                "pineapple",
+                "tropical"
+            ],
+            "distinct": 4,
+            "count": 1,
+            "pineapple": 0.242,
+            "bitter": 3.5
+        },
+        "baseline:sierra-dankful-ipa": {
+            "hoppy": 0.25,
+            "pine": 0.25,
+            "distinct": 6,
+            "count": 1,
+            "tagList": "alcohol:0.27,hoppy:0.25,pine:0.25,soft:0.23,",
+            "sortedTags": [
+                "alcohol",
+                "hoppy",
+                "pine",
+                "soft"
+            ],
+            "alcohol": 0.273,
+            "bitter": 5.5,
+            "overall": 5.5,
+            "soft": 0.227
+        },
+        "baseline:gd-yeti-imperial-stout": {
+            "overall": 7,
+            "smooth": 0.333,
+            "distinct": 7,
+            "tagList": "coffee:0.47,smooth:0.33,resinous:0.20,",
+            "count": 1,
+            "bitter": 3,
+            "coffee": 0.467,
+            "sortedTags": [
+                "coffee",
+                "smooth",
+                "resinous"
+            ],
+            "resinous": 0.2
+        },
+        "whiteelm:inverted-mosaic": {
+            "tagList": "pine:0.27,resinous:0.27,alcohol:0.23,orange:0.23,",
+            "distinct": 5,
+            "resinous": 0.273,
+            "alcohol": 0.227,
+            "bitter": 6,
+            "overall": 6,
+            "sortedTags": [
+                "pine",
+                "resinous",
+                "alcohol",
+                "orange"
+            ],
+            "count": 1,
+            "pine": 0.273,
+            "orange": 0.227
+        },
+        "zipline:ipa": {
+            "grapefruit": 0.295,
+            "smoky": 0.03933333333333333,
+            "sortedTags": [
+                "grapefruit",
+                "pine",
+                "fluffy",
+                "floral",
+                "crisp",
+                "dry",
+                "tart",
+                "smoky"
+            ],
+            "fluffy": 0.17366666666666666,
+            "tagList": "grapefruit:0.29,pine:0.20,fluffy:0.17,floral:0.09,crisp:0.08,dry:0.08,tart:0.05,smoky:0.04,",
+            "dry": 0.07566666666666667,
+            "pine": 0.204,
+            "crisp": 0.07566666666666667,
+            "tart": 0.04533333333333334,
+            "floral": 0.09100000000000001,
+            "count": 3,
+            "overall": 7.966666666666666,
+            "distinct": 3,
+            "bitter": 6
+        },
+        "zipline:daaang-ipa": {
+            "tagList": "alcohol:0.30,grapefruit:0.26,hoppy:0.26,carbonated:0.18,",
+            "bitter": 7,
+            "alcohol": 0.296,
+            "overall": 6.4,
+            "hoppy": 0.259,
+            "grapefruit": 0.259,
+            "sortedTags": [
+                "alcohol",
+                "grapefruit",
+                "hoppy",
+                "carbonated"
+            ],
+            "distinct": 8,
+            "carbonated": 0.185,
+            "count": 1
+        },
+        "baseline:harp-lager": {
+            "dry": 0.227,
+            "carbonated": 0.227,
+            "floral": 0.227,
+            "overall": 5,
+            "tagList": "tart:0.32,carbonated:0.23,dry:0.23,floral:0.23,",
+            "count": 1,
+            "tart": 0.318,
+            "distinct": 7,
+            "bitter": 5,
+            "sortedTags": [
+                "tart",
+                "carbonated",
+                "dry",
+                "floral"
+            ]
+        },
+        "luckybucket:evil": {
+            "count": 1,
+            "roasted": 0.276,
+            "tagList": "caramel:0.28,chocolate:0.28,roasted:0.28,sweet:0.17,",
+            "chocolate": 0.276,
+            "sweet": 0.172,
+            "bitter": 3,
+            "caramel": 0.276,
+            "distinct": 8,
+            "overall": 6,
+            "sortedTags": [
+                "caramel",
+                "chocolate",
+                "roasted",
+                "sweet"
+            ]
+        },
+        "baseline:goose-island-next-coast-ipa": {
+            "bitter": 4,
+            "alcohol": 0.198,
+            "pine": 0.247,
+            "distinct": 3.2,
+            "tagList": "smooth:0.31,pine:0.25,tropical:0.25,alcohol:0.20,",
+            "count": 1,
+            "sortedTags": [
+                "smooth",
+                "pine",
+                "tropical",
+                "alcohol"
+            ],
+            "smooth": 0.309,
+            "overall": 5,
+            "tropical": 0.247
+        },
+        "whiteelm:skinny-leg": {
+            "crisp": 0.09562499999999999,
+            "sweet": 0.017375,
+            "bitter": 7.0125,
+            "distinct": 4.5,
+            "resinous": 0.09375,
+            "floral": 0.135375,
+            "woody": 0.038250000000000006,
+            "overall": 8.2375,
+            "alcohol": 0.008875,
+            "honey": 0.025,
+            "carbonated": 0.032,
+            "fluffy": 0.04325,
+            "dry": 0.022375,
+            "sortedTags": [
+                "grapefruit",
+                "floral",
+                "crisp",
+                "resinous",
+                "lemon",
+                "pine",
+                "bready",
+                "fluffy",
+                "woody",
+                "carbonated",
+                "honey",
+                "pear",
+                "soft",
+                "dry",
+                "sweet",
+                "alcohol"
+            ],
+            "bready": 0.052875000000000005,
+            "lemon": 0.09037500000000001,
+            "pine": 0.065875,
+            "soft": 0.025,
+            "tagList": "grapefruit:0.23,floral:0.14,crisp:0.10,resinous:0.09,lemon:0.09,pine:0.07,bready:0.05,fluffy:0.04,woody:0.04,carbonated:0.03,honey:0.03,pear:0.03,soft:0.03,dry:0.02,sweet:0.02,alcohol:0.01,",
+            "pear": 0.025,
+            "count": 8,
+            "grapefruit": 0.229125
+        },
+        "krosstrain:fairy-nectar": {
+            "distinct": 8,
+            "floral": 0.25,
+            "tropical": 0.25,
+            "hoppy": 0.25,
+            "sortedTags": [
+                "floral",
+                "grapefruit",
+                "hoppy",
+                "tropical"
+            ],
+            "bitter": 5,
+            "count": 2,
+            "grapefruit": 0.25,
+            "overall": 9,
+            "tagList": "floral:0.25,grapefruit:0.25,hoppy:0.25,tropical:0.25,"
+        },
+        "kinkaider:4-county": {
+            "tea": 0.231,
+            "overall": 6.5,
+            "sortedTags": [
+                "malty",
+                "resinous",
+                "tropical",
+                "tea"
+            ],
+            "malty": 0.256,
+            "distinct": 4.5,
+            "tropical": 0.256,
+            "resinous": 0.256,
+            "count": 1,
+            "tagList": "malty:0.26,resinous:0.26,tropical:0.26,tea:0.23,",
+            "bitter": 5
+        },
+        "nebrew:cardinal": {
+            "carbonated": 0.278,
+            "bitter": 4,
+            "count": 2,
+            "malty": 0.278,
+            "sortedTags": [
+                "carbonated",
+                "malty",
+                "skunk",
+                "tropical"
+            ],
+            "overall": 6,
+            "tagList": "carbonated:0.28,malty:0.28,skunk:0.22,tropical:0.22,",
+            "distinct": 5,
+            "tropical": 0.222,
+            "skunk": 0.222
+        },
+        "baseline:sierra-atomic-torpedo": {
+            "sortedTags": [
+                "alcohol",
+                "floral",
+                "pine",
+                "resinous"
+            ],
+            "tagList": "alcohol:0.29,floral:0.24,pine:0.24,resinous:0.24,",
+            "overall": 6,
+            "distinct": 6,
+            "count": 1,
+            "alcohol": 0.286,
+            "pine": 0.238,
+            "bitter": 5,
+            "resinous": 0.238,
+            "floral": 0.238
+        },
+        "baseline:bb-phantom-bride": {
+            "sortedTags": [
+                "herbal",
+                "tropical",
+                "fluffy",
+                "orange"
+            ],
+            "count": 1,
+            "distinct": 4,
+            "bitter": 6,
+            "tropical": 0.286,
+            "orange": 0.19,
+            "overall": 8,
+            "herbal": 0.286,
+            "tagList": "herbal:0.29,tropical:0.29,fluffy:0.24,orange:0.19,",
+            "fluffy": 0.238
+        },
+        "brickway:stout": {
+            "chocolate": 0.25,
+            "tagList": "chocolate:0.25,coffee:0.25,roasted:0.25,vanilla:0.25,",
+            "sortedTags": [
+                "chocolate",
+                "coffee",
+                "roasted",
+                "vanilla"
+            ],
+            "coffee": 0.25,
+            "count": 1,
+            "vanilla": 0.25,
+            "bitter": 1.9,
+            "overall": 6.5,
+            "roasted": 0.25,
+            "distinct": 7.7
+        },
+        "kinkaider:frame-the-butcher": {
+            "floral": 0.06825,
+            "distinct": 5.5,
+            "resinous": 0.1695,
+            "tagList": "resinous:0.17,pine:0.16,bready:0.13,alcohol:0.11,spicy:0.08,smoky:0.08,crisp:0.08,floral:0.07,woody:0.07,dry:0.06,",
+            "pine": 0.15975,
+            "dry": 0.05675,
+            "bready": 0.12625,
+            "sortedTags": [
+                "resinous",
+                "pine",
+                "bready",
+                "alcohol",
+                "spicy",
+                "smoky",
+                "crisp",
+                "floral",
+                "woody",
+                "dry"
+            ],
+            "bitter": 6.125,
+            "overall": 6,
+            "woody": 0.0675,
+            "alcohol": 0.1095,
+            "spicy": 0.08325,
+            "count": 4,
+            "crisp": 0.07825,
+            "smoky": 0.081
+        },
+        "zipline:oatmeal-porter": {
+            "bitter": 3.6,
+            "distinct": 7.5,
+            "overall": 6.5,
+            "soft": 0.2,
+            "count": 1,
+            "tagList": "chocolate:0.30,coffee:0.30,smooth:0.20,soft:0.20,",
+            "coffee": 0.3,
+            "chocolate": 0.3,
+            "sortedTags": [
+                "chocolate",
+                "coffee",
+                "smooth",
+                "soft"
+            ],
+            "smooth": 0.2
+        },
+        "baseline:founders-all-day-ipa": {
+            "distinct": 3.5,
+            "sortedTags": [
+                "crisp",
+                "grapefruit",
+                "hoppy",
+                "pine"
+            ],
+            "pine": 0.239,
+            "tagList": "crisp:0.28,grapefruit:0.24,hoppy:0.24,pine:0.24,",
+            "grapefruit": 0.239,
+            "crisp": 0.284,
+            "overall": 7.8,
+            "count": 1,
+            "hoppy": 0.239,
+            "bitter": 4.2
+        },
+        "luckybucket:jug": {
+            "malty": 0.192,
+            "chocolate": 0.269,
+            "sortedTags": [
+                "caramel",
+                "chocolate",
+                "roasted",
+                "malty"
+            ],
+            "roasted": 0.269,
+            "caramel": 0.269,
+            "distinct": 7,
+            "tagList": "caramel:0.27,chocolate:0.27,roasted:0.27,malty:0.19,",
+            "bitter": 1,
+            "count": 1,
+            "overall": 5
+        },
+        "zipline:cloudlifter-tropical-hazy-ipa": {
+            "crisp": 0.222,
+            "tropical": 0.244,
+            "overall": 6.5,
+            "tart": 0.311,
+            "sortedTags": [
+                "tart",
+                "tropical",
+                "crisp",
+                "malty"
+            ],
+            "distinct": 7,
+            "tagList": "tart:0.31,tropical:0.24,crisp:0.22,malty:0.22,",
+            "malty": 0.222,
+            "bitter": 5.5,
+            "count": 1
+        },
+        "infusion:vanilla-bean": {
+            "count": 2,
+            "distinct": 6.25,
+            "bitter": 2,
+            "dry": 0.139,
+            "floral": 0.074,
+            "vanilla": 0.40700000000000003,
+            "pine": 0.0555,
+            "crisp": 0.139,
+            "sortedTags": [
+                "vanilla",
+                "sweet",
+                "crisp",
+                "dry",
+                "floral",
+                "pine"
+            ],
+            "sweet": 0.185,
+            "tagList": "vanilla:0.41,sweet:0.18,crisp:0.14,dry:0.14,floral:0.07,pine:0.06,",
+            "overall": 7.25
+        },
+        "baseline:nb-vd-exp-ipa-5": {
+            "dry": 0.249,
+            "distinct": 6,
+            "tropical": 0.204,
+            "tagList": "alcohol:0.30,carbonated:0.25,dry:0.25,tropical:0.20,",
+            "bitter": 4.1,
+            "overall": 4,
+            "count": 1,
+            "sortedTags": [
+                "alcohol",
+                "carbonated",
+                "dry",
+                "tropical"
+            ],
+            "alcohol": 0.299,
+            "carbonated": 0.249
+        },
+        "zipline:hazy-ipa": {
+            "lemon": 0.268,
+            "dry": 0.282,
+            "overall": 5,
+            "pine": 0.169,
+            "tagList": "carbonated:0.28,dry:0.28,lemon:0.27,pine:0.17,",
+            "sortedTags": [
+                "carbonated",
+                "dry",
+                "lemon",
+                "pine"
+            ],
+            "count": 1,
+            "carbonated": 0.282,
+            "bitter": 3,
+            "distinct": 4.75
+        },
+        "baseline:sierra-pale-ale": {
+            "bitter": 3.8,
+            "distinct": 3,
+            "pine": 0.232,
+            "malty": 0.305,
+            "tropical": 0.232,
+            "floral": 0.232,
+            "count": 1,
+            "overall": 6.4,
+            "tagList": "malty:0.30,floral:0.23,pine:0.23,tropical:0.23,",
+            "sortedTags": [
+                "malty",
+                "floral",
+                "pine",
+                "tropical"
+            ]
+        },
+        "zipline:dear-old": {
+            "wheat": 0.25,
+            "bitter": 1.8,
+            "malty": 0.25,
+            "tame": 0.25,
+            "overall": 5.5,
+            "count": 1,
+            "distinct": 3.5,
+            "sortedTags": [
+                "malty",
+                "sweet",
+                "tame",
+                "wheat"
+            ],
+            "sweet": 0.25,
+            "tagList": "malty:0.25,sweet:0.25,tame:0.25,wheat:0.25,"
+        },
+        "kinkaider:bangarang": {
+            "distinct": 4,
+            "tropical": 0.174,
+            "melon": 0.29,
+            "soft": 0.362,
+            "sortedTags": [
+                "soft",
+                "melon",
+                "pine",
+                "tropical"
+            ],
+            "count": 1,
+            "pine": 0.174,
+            "overall": 6.5,
+            "tagList": "soft:0.36,melon:0.29,pine:0.17,tropical:0.17,",
+            "bitter": 2.4
+        },
+        "cosmiceye:eyes": {
+            "sortedTags": [
+                "grapefruit",
+                "resinous",
+                "tropical",
+                "fluffy"
+            ],
+            "resinous": 0.256,
+            "tagList": "grapefruit:0.26,resinous:0.26,tropical:0.26,fluffy:0.23,",
+            "overall": 7.4,
+            "grapefruit": 0.256,
+            "tropical": 0.256,
+            "distinct": 6,
+            "count": 1,
+            "bitter": 5.5,
+            "fluffy": 0.233
+        },
+        "empyrean:watch-man-ipa": {
+            "distinct": 5.5,
+            "count": 1,
+            "bready": 0.226,
+            "sortedTags": [
+                "herbal",
+                "resinous",
+                "lemon",
+                "bready"
+            ],
+            "tagList": "herbal:0.26,resinous:0.26,lemon:0.25,bready:0.23,",
+            "lemon": 0.249,
+            "herbal": 0.262,
+            "overall": 7,
+            "bitter": 5.8,
+            "resinous": 0.262
+        },
+        "infusion:vbb-pumpkin": {
+            "melon": 0.178,
+            "vanilla": 0.178,
+            "bready": 0.111,
+            "count": 1,
+            "banana": 0.178,
+            "caramel": 0.178,
+            "sortedTags": [
+                "banana",
+                "caramel",
+                "clove",
+                "melon",
+                "vanilla",
+                "bready"
+            ],
+            "bitter": 3,
+            "distinct": 8,
+            "tagList": "banana:0.18,caramel:0.18,clove:0.18,melon:0.18,vanilla:0.18,bready:0.11,",
+            "overall": 8.5,
+            "clove": 0.178
+        },
+        "cosmiceye:deadmansrun": {
+            "grapefruit": 0.0625,
+            "bitter": 3.75,
+            "woody": 0.0895,
+            "dry": 0.0895,
+            "distinct": 4.25,
+            "lemon": 0.107,
+            "overall": 7.75,
+            "crisp": 0.0895,
+            "tagList": "sweet:0.33,grape:0.17,lemon:0.11,crisp:0.09,dry:0.09,woody:0.09,grapefruit:0.06,pine:0.06,",
+            "sweet": 0.3335,
+            "sortedTags": [
+                "sweet",
+                "grape",
+                "lemon",
+                "crisp",
+                "dry",
+                "woody",
+                "grapefruit",
+                "pine"
+            ],
+            "count": 2,
+            "pine": 0.0625,
+            "grape": 0.1665
+        },
+        "zipline:dope-ipa": {
+            "tropical": 0.256,
+            "tagList": "pine:0.26,resinous:0.26,tropical:0.26,orange:0.23,",
+            "sortedTags": [
+                "pine",
+                "resinous",
+                "tropical",
+                "orange"
+            ],
+            "pine": 0.256,
+            "orange": 0.233,
+            "distinct": 5,
+            "count": 1,
+            "overall": 7.4,
+            "resinous": 0.256,
+            "bitter": 5.5
+        },
+        "nebrew:ipa": {
+            "bitter": 7,
+            "pine": 0.292,
+            "resinous": 0.292,
+            "crisp": 0.208,
+            "overall": 5,
+            "sortedTags": [
+                "pine",
+                "resinous",
+                "crisp",
+                "malty"
+            ],
+            "count": 1,
+            "tagList": "pine:0.29,resinous:0.29,crisp:0.21,malty:0.21,",
+            "malty": 0.208,
+            "distinct": 3
+        },
+        "nebrew:eos": {
+            "sweet": 0.207,
+            "count": 1,
+            "overall": 5.8,
+            "sortedTags": [
+                "banana",
+                "tart",
+                "sweet",
+                "wheat"
+            ],
+            "banana": 0.293,
+            "distinct": 7.1,
+            "tagList": "banana:0.29,tart:0.29,sweet:0.21,wheat:0.21,",
+            "bitter": 1.3,
+            "wheat": 0.207,
+            "tart": 0.293
+        },
+        "baseline:breckenridge-avalanche": {
+            "tagList": "crisp:0.39,dry:0.39,caramel:0.23,",
+            "count": 1,
+            "dry": 0.385,
+            "bitter": 1.9,
+            "overall": 6,
+            "distinct": 3,
+            "sortedTags": [
+                "crisp",
+                "dry",
+                "caramel"
+            ],
+            "caramel": 0.231,
+            "crisp": 0.385
+        },
+        "backswing:ipa": {
+            "hoppy": 0.27,
+            "malty": 0.159,
+            "sortedTags": [
+                "alcohol",
+                "caramel",
+                "hoppy",
+                "malty"
+            ],
+            "caramel": 0.286,
+            "bitter": 8.5,
+            "alcohol": 0.286,
+            "overall": 3.8,
+            "tagList": "alcohol:0.29,caramel:0.29,hoppy:0.27,malty:0.16,",
+            "distinct": 9,
+            "count": 1
+        }
+    }
+}

@@ -1,0 +1,503 @@
+.hangbeer_page .basic_page_wrapper.app_panel {
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.turnphase_spin .wheel_wrapper {
+  pointer-events: auto;
+}
+
+.turnphase_spin .keyboard_container,
+.turnphase_spin .buy_vowel_button {
+  display: none;
+}
+
+.turnphase_letter .buy_vowel_button,
+.turnphase_buyVowel .keyboard_container,
+.turnphase_letter .keyboard_container {
+  display: grid;
+}
+
+.turnphase_spin .correct,
+.action_desc {
+  visibility: hidden;
+}
+
+
+
+/* if 1 player */
+.runningseatcount_1 .if_1 {
+  display: none;
+}
+
+.hide_display {
+  display: none;
+}
+
+.hide_used {
+  visibility: hidden;
+}
+
+.hide_visibility {
+  visibility: hidden;
+}
+
+.loaded .game_loading_display {
+  display: none;
+}
+
+.game_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 390px;
+}
+
+.hangbeer_char {
+  margin: 3px 2px;
+  display: inline-block;
+  color: #272832;
+  box-shadow: 0px 1px 2px #ad9a7b;
+  touch-action: none;
+  background-color: #eddabb;
+  width: 1.1em;
+  border-radius: 3px;
+  position: relative;
+  font-size: 24px;
+  background: rgb(216,189,114);
+  background: linear-gradient(90deg, rgba(216,189,114,1) 50%, rgba(250,225,166,1) 100%);
+  border: 1px solid rgb(250, 230, 175);
+	border-bottom-color: rgb(200, 175, 100);
+}
+
+.hangbeer_char:nth-child(3n+2) {
+  background: rgb(216,189,114);
+  background: linear-gradient(120deg, rgba(216,189,114,1) 50%, rgba(250,225,166,1) 100%);
+}
+
+
+.animation_hop {
+  animation: hop 1s;
+}
+
+@keyframes hop {
+  0%,100% {
+    transform: translateY(0)
+  }
+  50% {
+    transform: translateY(-20px)
+  }
+}
+
+.hangbeer_word {
+  white-space: nowrap;
+  display: inline-block;
+  padding: 5px 3px;
+}
+
+.word_progress_display {
+  padding: 30px 4px;
+}
+
+.hangbeer_page button, .hangbeer_page input {
+  font-size: 1.25em;
+}
+
+
+.game_table_view {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hangbeer_animate {
+  display: flex;
+  place-content: center;
+}
+
+.start_game {
+  padding-bottom: 12px;
+}
+
+.ready_mode_container {
+  display: flex;
+  place-content: center;
+  flex-direction: column;
+  position: relative;
+  display: flex;
+  place-content: center;
+  flex-direction: column;
+}
+
+.slider-wrapper {
+  margin: 1em;
+  position: relative;
+  overflow: hidden;
+}
+
+.slides-container {
+  height: 20vh;
+  width: auto;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: scroll;
+  scroll-behavior: smooth;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  flex: 1 0 100%;
+  background-color: #49b293;
+}
+
+.slide_content {
+  padding: 10px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.slides-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.slides-container::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.slide-arrow {
+  position: absolute;
+  display: flex;
+  bottom: 5%;
+  margin: auto;
+  background-color: white;
+  border: none;
+  width: 2rem;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.35;
+  transition: opacity 100ms;
+}
+
+.slide-arrow:hover,
+.slide-arrow:focus {
+  opacity: 1;
+}
+
+.slide-arrow-prev {
+  left: 0;
+  padding-left: 0.95rem;
+  border-radius: 0 2rem 2rem 0;
+}
+
+.slide-arrow-next {
+  right: 0;
+  padding-left: 0.55rem;
+  border-radius: 2rem 0 0 2rem;
+}
+
+
+/* keyboard  */
+
+.keyboard_container {
+  display: grid;
+  grid-template-columns: repeat(40, minmax(auto, 3.25em));
+  grid-auto-rows: 2.5em;
+  gap: 16px 4px;
+  justify-content: center;
+}
+
+
+.keyboard_container .keys {
+  position: relative;
+  font-weight: bold;
+  place-content: center;
+  border: 0;
+  padding: 0;
+  grid-column: span 4;
+  cursor: pointer;
+  color: rgb(240, 240, 240);
+  font-size: 28px;
+  border-radius: 6px;
+  user-select: none;
+  text-transform: uppercase;
+  font-family: arial;
+  border: 2px solid rgb(90, 90, 90);
+  transition: all 0.4s ease;
+  color: rgb(110, 110, 110);
+	background: rgb(236, 236, 236);
+  border-top: 1px solid rgb(90, 90, 90);
+	border-radius: 4px;
+  pointer-events: auto;
+	box-shadow: rgb(0 0 0 / 40%) 0px 2px 4px, rgb(0 0 0 / 30%) 0px 4px 10px -3px, rgb(0 0 0 / 20%) 0px -2px 0px inset;
+  }
+
+.keyboard_container .vowel {
+  background-color: rgb(90,90,90);
+  color: rgb(110, 110, 110);
+  pointer-events: none;
+  box-shadow: none;
+  top: 2px;
+  left: 1px;
+}
+
+.turnphase_buyVowel .keyboard_container .vowel {
+	background: rgb(236, 236, 236);
+  color: rgb(110, 110, 110);
+  pointer-events: auto;
+  box-shadow: rgb(0 0 0 / 40%) 0px 2px 4px, rgb(0 0 0 / 30%) 0px 4px 10px -3px, rgb(0 0 0 / 20%) 0px -2px 0px inset;
+}
+
+.turnphase_buyVowel .const_key {
+  background-color: rgb(90,90,90);
+  color: rgb(110, 110, 110);
+  pointer-events: none;
+  box-shadow: none;
+  top: 2px;
+  left: 1px;
+}
+
+.keyboard_container .key.big {
+  grid-column: span 6;
+}
+
+
+/* end of keyboard */
+.player_dock {
+  align-self: flex-start;
+}
+
+.player_action_button {
+  display: flex;
+  justify-content: space-evenly;
+  color: #000;
+  flex-direction: row;
+  padding: 18px 4px 10px 4px;
+}
+
+.player_action_desc {
+  display: flex;
+  place-content: center;
+  color: white;
+  font-size: 20px;
+  padding: 8px 4px;
+}
+
+
+.player_total_for_turn {
+  font-size: 1.25em;
+}
+
+.spin_value {
+  border: 2px outset cyan;
+  border-radius: 10px;
+  background: lightgray;
+  padding: 2px 4px;
+}
+
+.turnphase_buyVowel .spin_value {
+  color: gray;
+  background: gray;
+  border: 2px outset red;
+}
+
+.buy_vowel_button {
+  position: relative;
+  font-weight: bold;
+  place-content: center;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 6px;
+  text-transform: uppercase;
+  font-family: inherit;
+  border: 2px solid rgb(90, 90, 90);
+  transition: all 0.4s ease;
+  color: rgb(110, 110, 110);
+	background: rgb(236, 236, 236);
+  border-top: 1px solid rgb(90, 90, 90);
+  box-shadow: rgb(0 0 0 / 40%) 0px 2px 4px, rgb(0 0 0 / 30%) 0px 4px 10px -3px, rgb(0 0 0 / 20%) 0px -2px 0px inset;
+}
+
+.turnphase_buyVowel .buy_vowel_button {
+  box-shadow: none;
+  top: 2px;
+  left: 1px;
+}
+
+.guess_card {
+  display: flex;
+  place-content: center;
+  height: 270px;
+}
+
+
+.custom_container {
+  max-width: 390px;
+  width: 100%;
+  color: white;
+  border-radius: 6px;
+  font-weight: 500;
+  background: transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border:none;
+  box-shadow: none;
+}
+
+.custom_container .rotate_face {
+  display: block;
+  position: absolute;
+  text-align: center;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  height: 270px;
+  background-color: lightblue;
+}
+
+.custom_container .front {
+  transform: rotateX(0deg);
+  transform-origin: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 8px;
+}
+
+.custom_container .rear {
+  transform: rotateX(-90deg);
+  transform-origin: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 8px 4px;
+}
+
+.wheel_done_spinning .custom_container .front {
+  transform: rotateX(-90deg);
+}
+
+.wheel_done_spinning .custom_container .rear {
+  transform: rotateX(0deg);
+}
+
+.turnphase_spin .custom_container .front {
+  transform: rotateX(initial);
+}
+
+.turnphase_spin .custom_container .rear {
+  transform: rotateX(initial);
+}
+
+.score_dock_row .turnphase_row {
+  flex: 3;
+  font-weight:bold;
+  font-size: 20px;
+}
+
+.score_dock_row>div {
+  flex: 1;
+  font-size: 18px;
+}
+
+.score_dock_row {
+  display: flex;
+  flex-direction: row;
+}
+
+
+/* wheel */
+
+.wheel_wrapper {
+  pointer-events: none;
+  display: inline-flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.wheel_canvas {
+  display: block;
+}
+
+.spin_wheel {
+  font: 1.5rem/0 sans-serif;
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  margin: -15%;
+  background: #fff;
+  color: #fff;
+  box-shadow: 0 0 0 8px currentColor, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  transition: 0.25s;
+}
+
+.spin_wheel::after {
+  content: "";
+  position: absolute;
+  top: -17px;
+  border: 10px solid transparent;
+  border-bottom-color: currentColor;
+  border-top: none;
+}
+
+.guess_score_bank {
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  border: 2px solid black;
+  margin: 6px 0px;
+}
+
+.player_score_container {
+  background-color: red;
+  display: flex;
+  place-content: center;
+}
+
+.player_score_container .player_total_points,
+.player_score_container .player_name {
+  background-color: black;
+  color: white;
+  margin: 4px 0;
+  border-radius: 4px;
+  border: 2px inset gray;
+}
+
+.player_score_container .player_total_points {
+  width: 150px;
+  font-size: 28px;
+  font-weight: bold;
+  padding: 2px 24px;
+  border-left: 4px inset gray;
+  border-right: 4px inset rgb(100, 100, 100);
+}
+
+.player_score_container .player_name {
+  font-size: 18px;
+  width: auto;
+  padding: 2px 12px
+}
+
+
+.match_board_outer {
+  width: 98%;
+}

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Guess?</title>
+  <meta property="og:site_name" content="Locate.Beer" />
+
+  <meta name="description" content="Locate Nebraska beer at a store near you." />
+  <meta name="keywords" content="local,beer,craft,brewery,Lincoln,Nebraska" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <link rel="shortcut icon" href="/images/logo64.png">
+  <meta name='mobile-web-app-capable' content='yes'>
+  <meta name='apple-mobile-web-app-capable' content='yes'>
+  <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+
+  <link rel='icon' sizes='192x192' href='https://locate.beer/images/logo192.png'>
+  <link rel='apple-touch-icon' href='https://locate.beer/images/logo152.png'>
+  <meta name='msapplication-square310x310logo' content='https://locate.beer/images/logo310.png'>
+  <link rel='apple-touch-icon' href='https://locate.beer/images/logo192.png'>
+  <link rel="icon" sizes="192x192" href="https://locate.beer/images/logo192.png">
+
+
+  <meta property="og:url" content="https://locate.beer/hangbeer" />
+  <meta property="og:title" content="Hang Beer" />
+  <meta property="og:type" content="website" />
+
+  <meta property="og:image" content="https://locate.beer/images/hops.gif" />
+  <meta property="og:description" content="Play hang man with your friends using beer names!" />
+  <meta property="pagedate" content="01/01/2030" />
+
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/gamebase.css" />
+  <link rel="stylesheet" href="/css/guess.css" />
+  <!-- Firebase links -->
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/init.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script>
+    window.addEventListener('load', async (event) => {
+      let module = await import('/models/guessapp.js');
+
+      window.GuessApp = new module.GuessApp();
+    });
+  </script>
+</head>
+
+
+<body class="basic_beer_body hangbeer_page">
+  <div class="basic_page_wrapper app_panel">
+    <div class="base_menu_panel_wrapper">
+      <div class="base_menu_panel">
+        <a class="game_feed_list_toggle"><i class="material-icons">menu</i></a>
+        <a class="night_mode_toggle" href="/">
+          <i class="material-icons mode_day">light_mode</i>
+          <i class="material-icons mode_night">mode_night</i>
+        </a>
+        <a class="mute_button" href="mute">
+          <i class="material-icons">volume_up</i>
+        </a>
+        <a class="games_menu_anchor" href="/">
+          <i class="material-icons">home</i>
+        </a>
+      </div>
+    </div>
+    <br><br><br><br>
+    <div class="game_table_view">
+      <div class="player_dock">
+        <div style="display: flex;flex-direction: row">
+          <div class="dock_container dock_pos_0">
+            <div class="dock_seat0 game_user_wrapper seat_color_0">
+              <span></span>
+              <span></span>
+              <span class="online_status"></span>
+            </div>
+          </div>
+          <div class="dock_container dock_pos_1">
+            <div class="dock_seat1 game_user_wrapper seat_color_1">
+              <span></span>
+              <span></span>
+              <span class="online_status"></span>
+            </div>
+          </div>
+          <div class="dock_container dock_pos_2">
+            <div class="dock_seat2 game_user_wrapper seat_color_2">
+              <span></span>
+              <span></span>
+              <span class="online_status"></span>
+            </div>
+          </div>
+          <div class="dock_container dock_pos_3">
+            <div class="dock_seat3 game_user_wrapper seat_color_3">
+              <span></span>
+              <span></span>
+              <span class="online_status"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="match_board_outer">
+        <div class="mode_ready_view" style="clear:both;">
+          <div class="ready_mode_container slider-wrapper">
+            <button class="slide-arrow slide-arrow-prev">&#8249;</button>
+            <button class="slide-arrow slide-arrow-next">&#8250;</button>
+            <ul class="slides-container" id="slides-container">
+              <li class="slide">
+                <div class="slide_content">
+                  Spin to earn points for each correct letter or buy a vowel.<br><br>
+                  Correct guess gives +1 turn.<br><br>
+                  Win by getting the highest points.<br>
+                </div>
+              </li>
+              <li class="slide">
+                <div class="slide_content">
+                  Correct consanant letter guesses are worth what you spin.<br><br>
+                  # of correct letter guess * spin.value = turn.value<br><br>
+                  Vowels cost 200 points and have no point value.
+                </div>
+              </li>
+              <li class="slide">
+                <div class="slide_content">
+                  Guess the beer name completely to reveal its game card.
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="start_game">
+            <h2 style="text-align:center;">Ready for a new game?</h2>
+            <div class="seats_full_display"></div>
+            <br>
+            <button class="match_start">Start Match!</button>
+          </div>
+        </div>
+
+
+        <div class="mode_running_view">
+          <div class="currentplayer_score_dock">
+            <div class="score_dock_row">
+              <div>
+                <div>Player</div>
+              </div>
+              <div>
+                <div>Round</div>
+              </div>
+              <div class="turnphase_row">
+                <div class="turnphase_select"></div>
+              </div>
+            </div>
+            <div class="score_dock_row">
+              <div>
+                <div class="turn_player_number_div">1</div>
+              </div>
+              <div>
+                <div class="turn_number_div">1</div>
+              </div>
+              <div class="turnphase_row" style="position:relative;top:-.5em;">
+                <div class="player_dock_prompt">Spin</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="game_container">
+            <div class="word_progress_display impact-font"></div>
+
+            <div class="guess_card">
+              <div class="custom_container">
+                <div class="rotate_face front">
+                  <div class="wheel_wrapper">
+                    <canvas class="wheel_canvas" width="250" height="250"></canvas>
+                    <div class="spin_wheel spin_wheel_gradi"></div>
+                  </div>
+                </div>
+                <div class="rotate_face rear">
+                  <div class="player_action_desc" style="display: none;">
+                    <span>
+                      <div class="action_desc"></div>
+                    </span>
+                  </div>
+                  <br>
+                  <div class="keyboard_container">
+                    <button class="keys const_key" data-key="q">q</button>
+                    <button class="keys const_key" data-key="w">w</button>
+                    <button class="keys vowel" data-key="e">e</button>
+                    <button class="keys const_key" data-key="r">r</button>
+                    <button class="keys const_key" data-key="t">t</button>
+                    <button class="keys const_key" data-key="y">y</button>
+                    <button class="keys vowel" data-key="u">u</button>
+                    <button class="keys vowel" data-key="i">i</button>
+                    <button class="keys vowel" data-key="o">o</button>
+                    <button class="keys const_key" data-key="p">p</button>
+                    <div class="spacer"></div>
+                    <div class="spacer"></div>
+                    <button class="keys vowel" data-key="a">a</button>
+                    <button class="keys const_key" data-key="s">s</button>
+                    <button class="keys const_key" data-key="d">d</button>
+                    <button class="keys const_key" data-key="f">f</button>
+                    <button class="keys const_key" data-key="g">g</button>
+                    <button class="keys const_key" data-key="h">h</button>
+                    <button class="keys const_key" data-key="j">j</button>
+                    <button class="keys const_key" data-key="k">k</button>
+                    <button class="keys const_key" data-key="l">l</button>
+                    <div class="spacer"></div>
+                    <div class="spacer"></div>
+                    <div class="spacer"></div>
+                    <div class="spacer"></div>
+                    <div class="spacer"></div>
+                    <div class="spacer"></div>
+                    <div class="spacer"></div>
+                    <div class="spacer"></div>
+                    <button class="keys const_key" data-key="z">z</button>
+                    <button class="keys const_key" data-key="x">x</button>
+                    <button class="keys const_key" data-key="c">c</button>
+                    <button class="keys const_key" data-key="v">v</button>
+                    <button class="keys const_key" data-key="b">b</button>
+                    <button class="keys const_key" data-key="n">n</button>
+                    <button class="keys const_key" data-key="m">m</button>
+                    <div class="spacer"></div>
+                  </div>
+                  <div class="player_action_button">
+                    <div class="spin_value">
+                      <div class="player_total_for_turn">1</div>
+                    </div>
+                    <button class="buy_vowel_button">Trade for a Vowel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="guess_score_bank">
+              <div class="score_dock_row">
+                <div class="player_score_container">
+                  <div class="">
+                    <div class="player_total_points"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="score_dock_row">
+                <div class="player_score_container">
+                  <div class="player_name"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+            <button style="display:none" class="match_finish">Finish Match!</button>
+        </div>
+
+        <div class="mode_end_view">
+          <br><br>
+          End display
+          <br>
+          <button class="match_reset">Reset Match!</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="game_members_view">
+      <div class="seating_options card_shadow">
+        <div class="seat_wrapper seat_0_wrapper">
+          <span class="span_label">Seat 1</span>
+          <div class="seat_button_wrapper">
+            <button class="seat0_sitdown_btn"></button>
+          </div>
+          <div class="game_user_wrapper">
+            <span class="seat0_img"></span>
+            <span class="seat0_name"></span>
+          </div>
+        </div>
+        <div class="seat_wrapper seat_1_wrapper">
+          <span class="span_label">Seat 2</span>
+          <div class="seat_button_wrapper">
+            <button class="seat1_sitdown_btn"></button>
+          </div>
+          <div class="game_user_wrapper">
+            <span class="seat1_img"></span>
+            <span class="seat1_name"></span>
+          </div>
+        </div>
+        <div class="seat_wrapper seat_2_wrapper">
+          <span class="span_label">Seat 3</span>
+          <div class="seat_button_wrapper">
+            <button class="seat2_sitdown_btn"></button>
+          </div>
+          <div class="game_user_wrapper">
+            <span class="seat2_img"></span>
+            <span class="seat2_name"></span>
+          </div>
+        </div>
+        <div class="seat_wrapper seat_3_wrapper">
+          <span class="span_label">Seat 4</span>
+          <div class="seat_button_wrapper">
+            <button class="seat3_sitdown_btn"></button>
+          </div>
+          <div class="game_user_wrapper">
+            <span class="seat3_img"></span>
+            <span class="seat3_name"></span>
+          </div>
+        </div>
+      </div>
+      <div class="basic_options card_shadow">
+        <span class="span_label">Game Code</span>
+        <span class="gameid_span"></span>
+        <a href="#" style="display:none;" class="code_link_href">URL</a>
+        <button class="code_link_copy"><i class="material-icons">content_copy</i> <span>URL</span></button>
+        <br>
+        <span class="span_label">Turn</span>
+        <span class="turnindex_span"></span>
+        <br>
+        <span class="span_label">Phase</span>
+        <span class="turnphase_span"></span>
+        <br>
+        <span class="span_label">Visibility</span>
+        <span class="visibility_display"></span>
+        <select class="visibility_select">
+          <option>public</option>
+          <option>private</option>
+        </select>
+        <br>
+        <span class="span_label">Seats</span>
+        <span class="seat_count_display"></span>
+        <select class="seat_count_select">
+          <option value="1">1 seat</option>
+          <option value="2">2 seats</option>
+          <option value="3">3 seats</option>
+          <option value="4">4 seats</option>
+        </select>
+        <br>
+        <span class="span_label">Messaging</span>
+        <span class="message_level_display"></span>
+        <select class="message_level_select">
+          <option value="seated">Seated</option>
+          <option value="all">Members</option>
+        </select>
+        <br>
+        <span class="span_label">Seat Limit</span>
+        <span class="seats_per_user_display"></span>
+        <select class="seats_per_user_select">
+          <option value="one">One</option>
+          <option value="none">None</option>
+        </select>
+      </div>
+      <div class="copyright_panel">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html" style="display:none">Terms</a>
+        <a href="/about">About</a>
+        <br>
+        © 2022 Locate.Beer. All Rights Reserved.
+      </div>
+    </div>
+
+
+
+    <div style="margin-top:15px;">
+      <div class="members_list" style=""></div>
+
+      <div class="messages_list"></div>
+
+      <div class="game_loading_display">
+        <h1>Loading...</h1>
+      </div>
+
+      <div style="flex:1;min-height:4em;"></div>
+      <div class="message_list_send_wrapper">
+        <input class="message_list_input" type="text">
+        <button class="send_message_list_button game primary" style="margin:0">Send</button>
+      </div>
+    </div>
+    <div style="flex:1"></div>
+  </div>
+</body>
+
+</html>

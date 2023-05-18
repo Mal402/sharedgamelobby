@@ -1,0 +1,72 @@
+.compare_page .app_panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.local_favorites_list, .baseline_favorites_list {
+  font-size: 1.15em;
+  padding: .25em 0;
+  margin-bottom: .25em;
+  width: 6em;
+}
+
+.baseline_beer_filter, .local_beer_filter, .baseline_tag_filter, .local_tag_filter {
+  width: 4.25em;
+  padding: .25em 0;
+  font-size: 1.15em;
+  margin-bottom: .25em;
+}
+
+.baseline_tag_filter, .local_tag_filter {
+  width: 5em;
+}
+
+.beer_picker_header {
+  display: flex;
+  flex-direction: row;
+}
+
+.beer_picker_header * {
+  font-size: 1.25em
+}
+
+.generate_taste_report {
+  font-size: 1.5em;
+  padding: .5em;
+  font-weight: bold;
+  display: none;
+}
+
+.app_signed_in.compare_page .generate_taste_report {
+  display: inline-block;
+}
+
+.app_signed_in .signup_to_generate_reports {
+  display: none;
+}
+
+.next_select_beer, .next_regular_beer,
+.previous_select_beer, .previous_regular_beer {
+  font-size: 1em;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  float: right;
+  margin-right: 4px;
+  width: 30px;
+}
+
+.previous_select_beer, .previous_regular_beer {
+  float: left;
+  margin-right: 0;
+  margin-left: .5em;
+}
+
+.compare_page .request_stock_spinner {
+  display: none;
+  height: 50px;
+  margin-bottom: -20px;
+}
+
+.request_stock_spinner {
+  display: none;
+}

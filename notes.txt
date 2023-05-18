@@ -1,1 +1,0 @@
- firebase firestore:indexes | out-file -encoding utf8 "firestore.indexes.json"

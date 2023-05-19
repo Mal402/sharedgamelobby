@@ -10,7 +10,7 @@ Cloud Storage path for resized images (Optional): _resized
 <br><br>
 After creating the Firestore instance, convert it to "Native" in the google cloud console and wait a couple minutes to deploy
 <br>
-It will create a file at <userstorage>/_resized/pimage_70x70 (refer to profileapp.js for more)
+It will create a file at <userstorage>/_resized/pimage_200x200 (refer to profileapp.js for more)
 <br><br>
 
 If you create firestore indexes on the server<br>

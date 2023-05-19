@@ -188,7 +188,7 @@ export class ProfileApp extends BaseApp {
     setTimeout(() => this._finishImagePathUpdate(path), 1500);
   }
   async _finishImagePathUpdate(path) {
-    let sRef2 = firebase.storage().ref("Users").child(this.uid + '/_resized/pimage_70x70');
+    let sRef2 = firebase.storage().ref("Users").child(this.uid + '/_resized/pimage_200x200');
     let resizePath = await sRef2.getDownloadURL();
     let updatePacket = {
       rawImage: path,

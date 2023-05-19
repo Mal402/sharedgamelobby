@@ -34,9 +34,7 @@ export class ProfileApp extends BaseApp {
     }));
 
     this.mute_audio_radios = document.querySelectorAll('[name="mute_audio_radio"]');
-    this.mute_audio_radios.forEach((ctl, index) => ctl.addEventListener('input', e => {
-      this.updateProfileAudioMode(ctl, index, e);
-    }));
+    this.mute_audio_radios.forEach((ctl, index) => ctl.addEventListener('input', e => this.updateProfileAudioMode(ctl, index, e)));
 
     this.reset_profile = document.querySelector('.reset_profile');
     this.reset_profile.addEventListener('click', e => {
@@ -207,5 +205,12 @@ export class ProfileApp extends BaseApp {
       await firebase.firestore().doc(`Users/${this.uid}`).set(updatePacket, {
         merge: true
       });
+  }
+  /** handle for mute/audio settings change */
+  async updateProfileAudioMode(ctl, index, e) {
+    let updatePacket = {
+      muteState: (index === 0)
+    };
+    if (this.fireToken) await firebase.firestore().doc(`Users/${this.uid}`).update(updatePacket);
   }
 }

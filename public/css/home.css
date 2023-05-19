@@ -76,16 +76,6 @@
   top: -35px;
 }
 
-.load_more_button {
-  font-size: 1.5em;
-  margin-bottom: .5em;
-  display: none;
-}
-
-.feed_list_loaded .load_more_button {
-  display: inline-block;
-}
-
 .list_center_row .report_feed_report_link {
   padding: 10px;
   display: inline-block;

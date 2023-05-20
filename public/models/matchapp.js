@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import GameBaseApp from "./gamebaseapp.js";
 /** Match game UI app */
 export class MatchApp extends GameBaseApp {
@@ -57,37 +48,27 @@ export class MatchApp extends GameBaseApp {
         }
     }
     /** BaseApp override to paint profile specific authorization parameters */
-    authUpdateStatusUI() {
-        const _super = Object.create(null, {
-            authUpdateStatusUI: { get: () => super.authUpdateStatusUI }
-        });
-        return __awaiter(this, void 0, void 0, function* () {
-            _super.authUpdateStatusUI.call(this);
-            this.currentGame = null;
-            this.gameid_span.innerHTML = "";
-            this.initRTDBPresence();
-            const gameId = this.urlParams.get("game");
-            if (gameId) {
-                yield this.gameAPIJoin(gameId);
-                this.currentGame = gameId;
-                this.gameid_span.innerHTML = this.currentGame;
-                if (this.gameSubscription)
-                    this.gameSubscription();
-                this.gameSubscription = firebase.firestore().doc(`Games/${this.currentGame}`)
-                    .onSnapshot((doc) => this.paintGameData(doc));
-            }
-        });
+    async authUpdateStatusUI() {
+        super.authUpdateStatusUI();
+        this.currentGame = null;
+        this.gameid_span.innerHTML = "";
+        this.initRTDBPresence();
+        const gameId = this.urlParams.get("game");
+        if (gameId) {
+            await this.gameAPIJoin(gameId);
+            this.currentGame = gameId;
+            this.gameid_span.innerHTML = this.currentGame;
+            if (this.gameSubscription)
+                this.gameSubscription();
+            this.gameSubscription = firebase.firestore().doc(`Games/${this.currentGame}`)
+                .onSnapshot((doc) => this.paintGameData(doc));
+        }
     }
     /** BaseApp override to load card decks */
-    load() {
-        const _super = Object.create(null, {
-            load: { get: () => super.load }
-        });
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.readJSONFile(`/match/ziplinedeck.json`, "ziplineCardDeck");
-            yield this.readJSONFile(`/match/empyreandeck.json`, "empyreanCardDeck");
-            yield _super.load.call(this);
-        });
+    async load() {
+        await this.readJSONFile(`/match/ziplinedeck.json`, "ziplineCardDeck");
+        await this.readJSONFile(`/match/empyreandeck.json`, "empyreanCardDeck");
+        await super.load();
     }
     /** gets array of cards for a deck - unshuffled
      * @return { any } array of cards for active deck
@@ -646,128 +627,120 @@ export class MatchApp extends GameBaseApp {
         return Math.floor(card / (this.cardsPerColumn * 2));
     }
     /** api call to send card selection */
-    _sendSelection() {
-        return __awaiter(this, void 0, void 0, function* () {
-            //  this.match_start.setAttribute("disabled", true);
-            const action = "sendSelection";
-            const selectedCards = [];
-            const body = {
-                gameId: this.currentGame,
-                previousCard0: this.gameData.previousCard0,
-                previousCard1: this.gameData.previousCard1,
-                action,
-                selectedCards,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + `webPage/${this.apiType}/action`, {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            this.match_start.removeAttribute("disabled");
-            if (!json.success) {
-                console.log("selection send fail", json);
-                if (this.alertErrors)
-                    alert("Failed to send selection: " + json.errorMessage);
-                return;
-            }
+    async _sendSelection() {
+        //  this.match_start.setAttribute("disabled", true);
+        const action = "sendSelection";
+        const selectedCards = [];
+        const body = {
+            gameId: this.currentGame,
+            previousCard0: this.gameData.previousCard0,
+            previousCard1: this.gameData.previousCard1,
+            action,
+            selectedCards,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        this.match_start.removeAttribute("disabled");
+        if (!json.success) {
+            console.log("selection send fail", json);
+            if (this.alertErrors)
+                alert("Failed to send selection: " + json.errorMessage);
+            return;
+        }
     }
     /** api call to send first card selection */
-    _sendUpdateSelection() {
-        return __awaiter(this, void 0, void 0, function* () {
-            //  this.match_start.setAttribute("disabled", true);
-            const action = "updateSelection";
-            const body = {
-                gameId: this.currentGame,
-                action,
-                previousCard0: this.gameData.previousCard0,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + `webPage/${this.apiType}/action`, {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            this.match_start.removeAttribute("disabled");
-            if (!json.success) {
-                console.log("selection send fail", json);
-                if (this.alertErrors)
-                    alert("Failed to send selection: " + json.errorMessage);
-                return;
-            }
+    async _sendUpdateSelection() {
+        //  this.match_start.setAttribute("disabled", true);
+        const action = "updateSelection";
+        const body = {
+            gameId: this.currentGame,
+            action,
+            previousCard0: this.gameData.previousCard0,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        this.match_start.removeAttribute("disabled");
+        if (!json.success) {
+            console.log("selection send fail", json);
+            if (this.alertErrors)
+                alert("Failed to send selection: " + json.errorMessage);
+            return;
+        }
     }
     /** api call to end turn */
-    _endTurn() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.match_start.setAttribute("disabled", true);
-            const action = "endTurn";
-            const body = {
-                gameId: this.currentGame,
-                action,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + `webPage/${this.apiType}/action`, {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            this.match_start.removeAttribute("disabled");
-            if (!json.success) {
-                console.log("selection send resolve", json);
-                if (this.alertErrors)
-                    alert("Failed to resolve selection: " + json.errorMessage);
-                return;
-            }
+    async _endTurn() {
+        this.match_start.setAttribute("disabled", true);
+        const action = "endTurn";
+        const body = {
+            gameId: this.currentGame,
+            action,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        this.match_start.removeAttribute("disabled");
+        if (!json.success) {
+            console.log("selection send resolve", json);
+            if (this.alertErrors)
+                alert("Failed to resolve selection: " + json.errorMessage);
+            return;
+        }
     }
     /** api call to clear selection */
-    _clearSelection() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.match_start.setAttribute("disabled", true);
-            const action = "clearSelection";
-            const body = {
-                gameId: this.currentGame,
-                action,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + `webPage/${this.apiType}/action`, {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            this.match_start.removeAttribute("disabled");
-            if (!json.success) {
-                console.log("selection send resolve", json);
-                if (this.alertErrors)
-                    alert("Failed to resolve selection: " + json.errorMessage);
-            }
+    async _clearSelection() {
+        this.match_start.setAttribute("disabled", true);
+        const action = "clearSelection";
+        const body = {
+            gameId: this.currentGame,
+            action,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        this.match_start.removeAttribute("disabled");
+        if (!json.success) {
+            console.log("selection send resolve", json);
+            if (this.alertErrors)
+                alert("Failed to resolve selection: " + json.errorMessage);
+        }
     }
     /** create html template for card
      * @param { any } cardInfo card meta data

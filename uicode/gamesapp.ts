@@ -1,54 +1,59 @@
 import GameBaseApp from "./gamebaseapp.js";
+declare var window: any;
+declare var firebase: any;
 
 /** Game Lobby App - for listing, joining and creating games  */
 export class GamesApp extends GameBaseApp {
+  create_new_game_btn: any = document.querySelector(".create_new_game_btn");
+  game_history_view: any = document.querySelector(".game_history_view");
+  public_game_view: any = document.querySelector(".public_game_view");
+  join_game_btn: any = document.querySelector(".join_game_btn");
+  gametype_select: any = document.querySelector(".gametype_select");
+
+  gamelist_header_toggle_button: any = document.querySelector(".gamelist_header_toggle_button");
+  game_feed_toggle_button: any = document.querySelector(".game_feed_toggle_button");
+  feed_expand_all: any = document.querySelector(".feed_expand_all");
+  new_game_type_wrappers: any = document.querySelectorAll(".new_game_type_wrapper");
+  basic_options: any = document.querySelector(".basic_options");
+  recentExpanded: any = {};
+  gameFeedSubscription: any;
+  publicFeedSubscription: any;
+  lastGamesFeedSnapshot: any;
+  lastPublicFeedSnapshot: any;
+
   /** */
   constructor() {
     super();
 
-    this.create_new_game_btn = document.querySelector(".create_new_game_btn");
     this.create_new_game_btn.addEventListener("click", () => this.createNewGame());
-
-    this.game_history_view = document.querySelector(".game_history_view");
-    this.public_game_view = document.querySelector(".public_game_view");
-
-    this.join_game_btn = document.querySelector(".join_game_btn");
-    this.join_game_btn.addEventListener("click", () => this.joinGame());
-
-    this.gametype_select = document.querySelector(".gametype_select");
+    this.join_game_btn.addEventListener("click", () => this.joinGame(null));
     this.gametype_select.addEventListener("input", () => this.updateNewGameType());
 
-    const gameId = this.urlParams.get("game");
-    if (gameId && this._handlePassedInGameID(gameId)) return;
-
-    this.gamelist_header_toggle_button = document.querySelector(".gamelist_header_toggle_button");
-    this.gamelist_header_toggle_button.addEventListener("click", (e) => this.toggleAddGameView(e));
-
-    this.game_feed_toggle_button = document.querySelector(".game_feed_toggle_button");
-    this.game_feed_toggle_button.addEventListener("click", (e) => this.toggleFeedView(e));
-
-    this.feed_expand_all = document.querySelector(".feed_expand_all");
+    this.gamelist_header_toggle_button.addEventListener("click", (e: any) => this.toggleAddGameView(e));
+    this.game_feed_toggle_button.addEventListener("click", (e: any) => this.toggleFeedView(e));
     this.feed_expand_all.addEventListener("click", () => this.toggleFeedMembers());
-
-    this.new_game_type_wrappers = document.querySelectorAll(".new_game_type_wrapper");
-    this.new_game_type_wrappers.forEach((btn) => btn.addEventListener("click", () => this.handleGameTypeClick(btn)));
-
-    this.basic_options = document.querySelector(".basic_options");
+    this.new_game_type_wrappers.forEach((btn: any) => btn.addEventListener("click", () => this.handleGameTypeClick(btn)));
 
     this.updateNewGameType();
 
-    this.recentExpanded = {};
-
     this.initRTDBPresence();
+
     // redraw feeds to update time since values
-    setInterval(() => this.updateGamesFeed(), this.baseRedrawFeedTimer);
-    setInterval(() => this.updatePublicGamesFeed(), this.baseRedrawFeedTimer);
+    setInterval(() => this.updateGamesFeed(null), this.baseRedrawFeedTimer);
+    setInterval(() => this.updatePublicGamesFeed(null), this.baseRedrawFeedTimer);
+
+    this.init();
+  }
+  /** async init to be called at end of constructor */
+  async init() {
+    const gameId: any = this.urlParams.get("game");
+    if (gameId && await this._handlePassedInGameID(gameId)) return;
   }
   /** game type radios change handler
    * @param { any } btn dom ctl
    */
-  handleGameTypeClick(btn) {
-    this.new_game_type_wrappers.forEach((b) => b.classList.remove("selected"));
+  handleGameTypeClick(btn: any) {
+    this.new_game_type_wrappers.forEach((b: any) => b.classList.remove("selected"));
     this.gametype_select.value = btn.value;
     this.updateNewGameType();
     btn.classList.add("selected");
@@ -58,7 +63,7 @@ export class GamesApp extends GameBaseApp {
     if (this.feed_expand_all.classList.contains("expanded_all")) {
       this.feed_expand_all.classList.remove("expanded_all");
 
-      document.querySelectorAll(".gamelist_item").forEach((div) => {
+      document.querySelectorAll(".gamelist_item").forEach((div: any) => {
         div.classList.remove("show_seats");
         const gameNumber = div.dataset.gamenumber;
         this.recentExpanded[gameNumber] = false;
@@ -66,7 +71,7 @@ export class GamesApp extends GameBaseApp {
     } else {
       this.feed_expand_all.classList.add("expanded_all");
 
-      document.querySelectorAll(".gamelist_item").forEach((div) => {
+      document.querySelectorAll(".gamelist_item").forEach((div: any) => {
         div.classList.add("show_seats");
         const gameNumber = div.dataset.gamenumber;
         this.recentExpanded[gameNumber] = true;
@@ -100,7 +105,7 @@ export class GamesApp extends GameBaseApp {
    * @param { any } e dom event (preventDefault called if passed)
    * @return { boolean } true to stop anchor navigation
   */
-  toggleAddGameView(e) {
+  toggleAddGameView(e: any) {
     if (document.body.classList.contains("show_games_view")) {
       document.body.classList.remove("show_games_view");
       document.body.classList.add("show_new_game");
@@ -118,7 +123,7 @@ export class GamesApp extends GameBaseApp {
   * @param { any } e dom event (preventDefault called if passed)
   * @return { boolean } true to stop anchor navigation
  */
-  toggleFeedView(e) {
+  toggleFeedView(e: any) {
     if (document.body.classList.contains("show_public_games_view")) {
       document.body.classList.remove("show_public_games_view");
       document.body.classList.add("show_profile_games");
@@ -146,14 +151,14 @@ export class GamesApp extends GameBaseApp {
     this.basic_options.classList.remove("gametype_match");
     this.basic_options.classList.add("gametype_" + gameType);
 
-    const gameMeta = this.gameTypeMetaData()[gameType];
+    const gameMeta = this.gameTypeMetaData[gameType];
     this.create_new_game_btn.innerHTML = "Create " + gameMeta.name;
   }
   /** handle gameid passed as query string and navigate to game
    * @param { string } gameId storage record id of game to load
    * @return { boolean } true if navigating, false if invalid game id
    */
-  async _handlePassedInGameID(gameId) {
+  async _handlePassedInGameID(gameId: any) {
     const gameQuery = await firebase.firestore().doc(`Games/${gameId}`).get();
     const gameData = gameQuery.data();
 
@@ -186,55 +191,55 @@ export class GamesApp extends GameBaseApp {
     this.gameFeedSubscription = firebase.firestore().collection(`Games`)
       .orderBy(`members.${this.uid}`, "desc")
       .limit(20)
-      .onSnapshot((snapshot) => this.updateGamesFeed(snapshot));
+      .onSnapshot((snapshot: any) => this.updateGamesFeed(snapshot));
 
     this.publicFeedSubscription = firebase.firestore().collection(`Games`)
       .orderBy(`lastActivity`, "desc")
       .where("publicStatus", "==", "publicOpen")
       .limit(20)
-      .onSnapshot((snapshot) => this.updatePublicGamesFeed(snapshot));
+      .onSnapshot((snapshot: any) => this.updatePublicGamesFeed(snapshot));
   }
   /** paint games feed from firestore snapshot
    * @param { any } snapshot event driven feed data from firestore
   */
-  updateGamesFeed(snapshot) {
+  updateGamesFeed(snapshot: any) {
     if (snapshot) this.lastGamesFeedSnapshot = snapshot;
     else if (this.lastGamesFeedSnapshot) snapshot = this.lastGamesFeedSnapshot;
     else return;
 
     let html = "";
-    snapshot.forEach((doc) => html += this._renderGameFeedLine(doc));
+    snapshot.forEach((doc: any) => html += this._renderGameFeedLine(doc));
     this.game_history_view.innerHTML = html;
 
     this.game_history_view.querySelectorAll("button.delete_game")
-      .forEach((btn) => btn.addEventListener("click", (e) => {
+      .forEach((btn: any) => btn.addEventListener("click", (e: any) => {
         e.stopPropagation();
         e.preventDefault();
         this.deleteGame(btn, btn.dataset.gamenumber);
       }));
 
     this.game_history_view.querySelectorAll("button.logout_game")
-      .forEach((btn) => btn.addEventListener("click", (e) => {
+      .forEach((btn: any) => btn.addEventListener("click", (e: any) => {
         e.stopPropagation();
         e.preventDefault();
         this.logoutGame(btn, btn.dataset.gamenumber);
       }));
 
     this.game_history_view.querySelectorAll("button.toggle_expanded_game")
-      .forEach((btn) => btn.addEventListener("click", () => this.toggleFeedSeats(btn)));
+      .forEach((btn: any) => btn.addEventListener("click", () => this.toggleFeedSeats(btn)));
 
     this.game_history_view.querySelectorAll(".sit_button")
-      .forEach((btn) => btn.addEventListener("click", () => this.gameSitClick(btn)));
+      .forEach((btn: any) => btn.addEventListener("click", () => this.gameSitClick(btn)));
 
     this.game_history_view.querySelectorAll(".code_link")
-      .forEach((btn) => btn.addEventListener("click", () => this.copyGameLink(btn)));
+      .forEach((btn: any) => btn.addEventListener("click", () => this.copyGameLink(btn)));
 
     this.refreshOnlinePresence();
   }
   /** show or hide seats for a specific game
    * @param { any } btn dom element
   */
-  toggleFeedSeats(btn) {
+  toggleFeedSeats(btn: any) {
     const p = btn.parentElement.parentElement.parentElement;
     const gameNumber = btn.dataset.gamenumber;
 
@@ -256,7 +261,7 @@ export class GamesApp extends GameBaseApp {
    * @param { boolean } impact use impact font (shows selected)
    * @return { string } raw html containing user specific values
   */
-  __getUserTemplate(member, name, img, onlineStatus = false, impact = false) {
+  __getUserTemplate(member: string, name: string, img: string, onlineStatus = false, impact = false) {
     const impactFont = impact ? " impact-font" : "";
     let innerHTML = `<span style="background-image:url(${img});width: 30px;display: inline-block;"></span>
       <span class="name${impactFont}">${name}</span>`;
@@ -272,7 +277,7 @@ export class GamesApp extends GameBaseApp {
    * @param { boolean } publicFeed true if this is public open games feed
    * @return { string } html for card
   */
-  _renderGameFeedLine(doc, publicFeed = false) {
+  _renderGameFeedLine(doc: any, publicFeed = false) {
     const data = doc.data();
     let ownerClass = "";
     const gnPrefix = publicFeed ? "public_" : "";
@@ -337,8 +342,8 @@ export class GamesApp extends GameBaseApp {
 
     membersHtml += "</div>";
 
-    const title = this.gameTypeMetaData()[data.gameType].name;
-    const img = `url(${this.gameTypeMetaData()[data.gameType].icon})`;
+    const title = this.gameTypeMetaData[data.gameType].name;
+    const img = `url(${this.gameTypeMetaData[data.gameType].icon})`;
     const timeSince = this.timeSince(new Date(data.lastActivity));
     let timeStr = this.isoToLocal(data.created).toISOString().substr(11, 5);
     let hour = Number(timeStr.substr(0, 2));
@@ -411,43 +416,43 @@ export class GamesApp extends GameBaseApp {
   /** paint games feed from firestore snapshot
    * @param { any } snapshot event driven feed data from firestore
   */
-  updatePublicGamesFeed(snapshot) {
+  updatePublicGamesFeed(snapshot: any) {
     if (snapshot) this.lastPublicFeedSnapshot = snapshot;
     else if (this.lastPublicFeedSnapshot) snapshot = this.lastPublicFeedSnapshot;
     else return;
 
     let html = "";
-    snapshot.forEach((doc) => html += this._renderGameFeedLine(doc, true));
+    snapshot.forEach((doc: any) => html += this._renderGameFeedLine(doc, true));
     this.public_game_view.innerHTML = html;
 
     this.public_game_view.querySelectorAll("button.delete_game")
-      .forEach((btn) => btn.addEventListener("click", (e) => {
+      .forEach((btn: any) => btn.addEventListener("click", (e: any) => {
         e.stopPropagation();
         e.preventDefault();
         this.deleteGame(btn, btn.dataset.gamenumber);
       }));
 
     this.public_game_view.querySelectorAll("button.toggle_expanded_game")
-      .forEach((btn) => btn.addEventListener("click", () => this.toggleFeedSeats(btn)));
+      .forEach((btn: any) => btn.addEventListener("click", () => this.toggleFeedSeats(btn)));
 
     this.public_game_view.querySelectorAll(".sit_button")
-      .forEach((btn) => btn.addEventListener("click", () => this.gameSitClick(btn)));
+      .forEach((btn: any) => btn.addEventListener("click", () => this.gameSitClick(btn)));
 
     this.public_game_view.querySelectorAll(".code_link")
-      .forEach((btn) => btn.addEventListener("click", () => this.copyGameLink(btn)));
+      .forEach((btn: any) => btn.addEventListener("click", () => this.copyGameLink(btn)));
 
     this.refreshOnlinePresence();
   }
   /** copy game url link to clipboard
    * @param { any } btn dom control
    */
-  copyGameLink(btn) {
+  copyGameLink(btn: any) {
     navigator.clipboard.writeText(window.location.origin + btn.dataset.url);
   }
   /** sit down at game handler
    * @param { any } btn dom control
    */
-  async gameSitClick(btn) {
+  async gameSitClick(btn: any) {
     const result = await this._gameAPISit(btn.dataset.seatindex, btn.dataset.gamenumber);
 
     if (result) {
@@ -455,11 +460,11 @@ export class GamesApp extends GameBaseApp {
     }
   }
   /** join game api call
-   * @param { string } gameNumber
+   * @param { any } gameNumber
    * @param { string } gameType match or guess
    */
-  async joinGame(gameNumber, gameType = "games") {
-    if (!gameNumber) gameNumber = document.querySelector(".game_code_start").value;
+  async joinGame(gameNumber: any, gameType = "games") {
+    if (!gameNumber) gameNumber = (<any>document.querySelector(".game_code_start")).value;
     const a = document.createElement("a");
     a.setAttribute("href", `/${gameType}/?game=${gameNumber}`);
     document.body.appendChild(a);
@@ -473,13 +478,13 @@ export class GamesApp extends GameBaseApp {
     this.create_new_game_btn.setAttribute("disabled", true);
     this.create_new_game_btn.innerHTML = "Creating...";
 
-    const gameType = document.querySelector(".gametype_select").value;
-    const visibility = document.querySelector(".visibility_select").value;
-    const numberOfSeats = Number(document.querySelector(".seat_count_select").value);
-    const messageLevel = document.querySelector(".message_level_select").value;
-    const seatsPerUser = document.querySelector(".seats_per_user_select").value;
-    const cardDeck = document.querySelector(".card_deck_select").value;
-    const scoringSystem = document.querySelector(".scoring_system_select").value;
+    const gameType = (<any>document.querySelector(".gametype_select")).value;
+    const visibility = (<any>document.querySelector(".visibility_select")).value;
+    const numberOfSeats = Number((<any>document.querySelector(".seat_count_select")).value);
+    const messageLevel = (<any>document.querySelector(".message_level_select")).value;
+    const seatsPerUser = (<any>document.querySelector(".seats_per_user_select")).value;
+    const cardDeck = (<any>document.querySelector(".card_deck_select")).value;
+    const scoringSystem = (<any>document.querySelector(".scoring_system_select")).value;
 
     const body = {
       gameType,
@@ -519,7 +524,7 @@ export class GamesApp extends GameBaseApp {
    * @param { any } btn dom control
    * @param { string } gameNumber
    */
-  async deleteGame(btn, gameNumber) {
+  async deleteGame(btn: any, gameNumber: string) {
     if (!confirm("Are you sure you want to delete this game?")) return;
 
     btn.setAttribute("disabled", "true");
@@ -553,7 +558,7 @@ export class GamesApp extends GameBaseApp {
    * @param { any } btn dom control
    * @param { string } gameNumber
    */
-  async logoutGame(btn, gameNumber) {
+  async logoutGame(btn: any, gameNumber: string) {
     btn.setAttribute("disabled", "true");
     if (!gameNumber) {
       alert("Game Number not found - error");

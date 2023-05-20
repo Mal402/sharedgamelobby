@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import GameBaseApp from "./gamebaseapp.js";
 /** Game Lobby App - for listing, joining and creating games  */
 export class GamesApp extends GameBaseApp {
@@ -14,31 +5,35 @@ export class GamesApp extends GameBaseApp {
     constructor() {
         super();
         this.create_new_game_btn = document.querySelector(".create_new_game_btn");
-        this.create_new_game_btn.addEventListener("click", () => this.createNewGame());
         this.game_history_view = document.querySelector(".game_history_view");
         this.public_game_view = document.querySelector(".public_game_view");
         this.join_game_btn = document.querySelector(".join_game_btn");
-        this.join_game_btn.addEventListener("click", () => this.joinGame());
         this.gametype_select = document.querySelector(".gametype_select");
-        this.gametype_select.addEventListener("input", () => this.updateNewGameType());
-        const gameId = this.urlParams.get("game");
-        if (gameId && this._handlePassedInGameID(gameId))
-            return;
         this.gamelist_header_toggle_button = document.querySelector(".gamelist_header_toggle_button");
-        this.gamelist_header_toggle_button.addEventListener("click", (e) => this.toggleAddGameView(e));
         this.game_feed_toggle_button = document.querySelector(".game_feed_toggle_button");
-        this.game_feed_toggle_button.addEventListener("click", (e) => this.toggleFeedView(e));
         this.feed_expand_all = document.querySelector(".feed_expand_all");
-        this.feed_expand_all.addEventListener("click", () => this.toggleFeedMembers());
         this.new_game_type_wrappers = document.querySelectorAll(".new_game_type_wrapper");
-        this.new_game_type_wrappers.forEach((btn) => btn.addEventListener("click", () => this.handleGameTypeClick(btn)));
         this.basic_options = document.querySelector(".basic_options");
-        this.updateNewGameType();
         this.recentExpanded = {};
+        this.create_new_game_btn.addEventListener("click", () => this.createNewGame());
+        this.join_game_btn.addEventListener("click", () => this.joinGame(null));
+        this.gametype_select.addEventListener("input", () => this.updateNewGameType());
+        this.gamelist_header_toggle_button.addEventListener("click", (e) => this.toggleAddGameView(e));
+        this.game_feed_toggle_button.addEventListener("click", (e) => this.toggleFeedView(e));
+        this.feed_expand_all.addEventListener("click", () => this.toggleFeedMembers());
+        this.new_game_type_wrappers.forEach((btn) => btn.addEventListener("click", () => this.handleGameTypeClick(btn)));
+        this.updateNewGameType();
         this.initRTDBPresence();
         // redraw feeds to update time since values
-        setInterval(() => this.updateGamesFeed(), this.baseRedrawFeedTimer);
-        setInterval(() => this.updatePublicGamesFeed(), this.baseRedrawFeedTimer);
+        setInterval(() => this.updateGamesFeed(null), this.baseRedrawFeedTimer);
+        setInterval(() => this.updatePublicGamesFeed(null), this.baseRedrawFeedTimer);
+        this.init();
+    }
+    /** async init to be called at end of constructor */
+    async init() {
+        const gameId = this.urlParams.get("game");
+        if (gameId && await this._handlePassedInGameID(gameId))
+            return;
     }
     /** game type radios change handler
      * @param { any } btn dom ctl
@@ -136,27 +131,25 @@ export class GamesApp extends GameBaseApp {
         this.basic_options.classList.remove("gametype_guess");
         this.basic_options.classList.remove("gametype_match");
         this.basic_options.classList.add("gametype_" + gameType);
-        const gameMeta = this.gameTypeMetaData()[gameType];
+        const gameMeta = this.gameTypeMetaData[gameType];
         this.create_new_game_btn.innerHTML = "Create " + gameMeta.name;
     }
     /** handle gameid passed as query string and navigate to game
      * @param { string } gameId storage record id of game to load
      * @return { boolean } true if navigating, false if invalid game id
      */
-    _handlePassedInGameID(gameId) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const gameQuery = yield firebase.firestore().doc(`Games/${gameId}`).get();
-            const gameData = gameQuery.data();
-            if (!gameData) {
-                alert("game not found");
-                return false;
-            }
-            window.history.replaceState({
-                state: 1,
-            }, "", `/${gameData.gameType}/?game=${gameId}`);
-            location.reload();
-            return true;
-        });
+    async _handlePassedInGameID(gameId) {
+        const gameQuery = await firebase.firestore().doc(`Games/${gameId}`).get();
+        const gameData = gameQuery.data();
+        if (!gameData) {
+            alert("game not found");
+            return false;
+        }
+        window.history.replaceState({
+            state: 1,
+        }, "", `/${gameData.gameType}/?game=${gameId}`);
+        location.reload();
+        return true;
     }
     /** BaseApp override to update additional use profile status */
     authUpdateStatusUI() {
@@ -165,25 +158,23 @@ export class GamesApp extends GameBaseApp {
         this.initRTDBPresence();
     }
     /** init listening events on games store to populate feeds in realtime */
-    initGameFeeds() {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.gameFeedInited || !this.profile)
-                return;
-            this.gameFeedInited = true;
-            if (this.gameFeedSubscription)
-                this.gameFeedSubscription();
-            if (this.publicFeedSubscription)
-                this.publicFeedSubscription();
-            this.gameFeedSubscription = firebase.firestore().collection(`Games`)
-                .orderBy(`members.${this.uid}`, "desc")
-                .limit(20)
-                .onSnapshot((snapshot) => this.updateGamesFeed(snapshot));
-            this.publicFeedSubscription = firebase.firestore().collection(`Games`)
-                .orderBy(`lastActivity`, "desc")
-                .where("publicStatus", "==", "publicOpen")
-                .limit(20)
-                .onSnapshot((snapshot) => this.updatePublicGamesFeed(snapshot));
-        });
+    async initGameFeeds() {
+        if (this.gameFeedInited || !this.profile)
+            return;
+        this.gameFeedInited = true;
+        if (this.gameFeedSubscription)
+            this.gameFeedSubscription();
+        if (this.publicFeedSubscription)
+            this.publicFeedSubscription();
+        this.gameFeedSubscription = firebase.firestore().collection(`Games`)
+            .orderBy(`members.${this.uid}`, "desc")
+            .limit(20)
+            .onSnapshot((snapshot) => this.updateGamesFeed(snapshot));
+        this.publicFeedSubscription = firebase.firestore().collection(`Games`)
+            .orderBy(`lastActivity`, "desc")
+            .where("publicStatus", "==", "publicOpen")
+            .limit(20)
+            .onSnapshot((snapshot) => this.updatePublicGamesFeed(snapshot));
     }
     /** paint games feed from firestore snapshot
      * @param { any } snapshot event driven feed data from firestore
@@ -325,8 +316,8 @@ export class GamesApp extends GameBaseApp {
         if (data.numberOfSeats % 2 === 1)
             membersHtml += "<div class=\"table_seat_fill\"></div>";
         membersHtml += "</div>";
-        const title = this.gameTypeMetaData()[data.gameType].name;
-        const img = `url(${this.gameTypeMetaData()[data.gameType].icon})`;
+        const title = this.gameTypeMetaData[data.gameType].name;
+        const img = `url(${this.gameTypeMetaData[data.gameType].icon})`;
         const timeSince = this.timeSince(new Date(data.lastActivity));
         let timeStr = this.isoToLocal(data.created).toISOString().substr(11, 5);
         let hour = Number(timeStr.substr(0, 2));
@@ -429,139 +420,129 @@ export class GamesApp extends GameBaseApp {
     /** sit down at game handler
      * @param { any } btn dom control
      */
-    gameSitClick(btn) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this._gameAPISit(btn.dataset.seatindex, btn.dataset.gamenumber);
-            if (result) {
-                btn.parentElement.parentElement.parentElement.parentElement.querySelector(".game_number_open").click();
-            }
-        });
+    async gameSitClick(btn) {
+        const result = await this._gameAPISit(btn.dataset.seatindex, btn.dataset.gamenumber);
+        if (result) {
+            btn.parentElement.parentElement.parentElement.parentElement.querySelector(".game_number_open").click();
+        }
     }
     /** join game api call
-     * @param { string } gameNumber
+     * @param { any } gameNumber
      * @param { string } gameType match or guess
      */
-    joinGame(gameNumber, gameType = "games") {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!gameNumber)
-                gameNumber = document.querySelector(".game_code_start").value;
-            const a = document.createElement("a");
-            a.setAttribute("href", `/${gameType}/?game=${gameNumber}`);
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        });
+    async joinGame(gameNumber, gameType = "games") {
+        if (!gameNumber)
+            gameNumber = document.querySelector(".game_code_start").value;
+        const a = document.createElement("a");
+        a.setAttribute("href", `/${gameType}/?game=${gameNumber}`);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     }
     /** create new game api call */
-    createNewGame() {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!this.profile)
-                return;
-            this.create_new_game_btn.setAttribute("disabled", true);
-            this.create_new_game_btn.innerHTML = "Creating...";
-            const gameType = document.querySelector(".gametype_select").value;
-            const visibility = document.querySelector(".visibility_select").value;
-            const numberOfSeats = Number(document.querySelector(".seat_count_select").value);
-            const messageLevel = document.querySelector(".message_level_select").value;
-            const seatsPerUser = document.querySelector(".seats_per_user_select").value;
-            const cardDeck = document.querySelector(".card_deck_select").value;
-            const scoringSystem = document.querySelector(".scoring_system_select").value;
-            const body = {
-                gameType,
-                visibility,
-                numberOfSeats,
-                messageLevel,
-                seatsPerUser,
-                cardDeck,
-                scoringSystem,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/games/create", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            if (!json.success) {
-                console.log("failed create", json);
-                alert("failed to create game");
-                return;
-            }
-            const a = document.createElement("a");
-            a.setAttribute("href", `/${gameType}/?game=${json.gameNumber}`);
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+    async createNewGame() {
+        if (!this.profile)
+            return;
+        this.create_new_game_btn.setAttribute("disabled", true);
+        this.create_new_game_btn.innerHTML = "Creating...";
+        const gameType = document.querySelector(".gametype_select").value;
+        const visibility = document.querySelector(".visibility_select").value;
+        const numberOfSeats = Number(document.querySelector(".seat_count_select").value);
+        const messageLevel = document.querySelector(".message_level_select").value;
+        const seatsPerUser = document.querySelector(".seats_per_user_select").value;
+        const cardDeck = document.querySelector(".card_deck_select").value;
+        const scoringSystem = document.querySelector(".scoring_system_select").value;
+        const body = {
+            gameType,
+            visibility,
+            numberOfSeats,
+            messageLevel,
+            seatsPerUser,
+            cardDeck,
+            scoringSystem,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/games/create", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        if (!json.success) {
+            console.log("failed create", json);
+            alert("failed to create game");
+            return;
+        }
+        const a = document.createElement("a");
+        a.setAttribute("href", `/${gameType}/?game=${json.gameNumber}`);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     }
     /** delete game api call
      * @param { any } btn dom control
      * @param { string } gameNumber
      */
-    deleteGame(btn, gameNumber) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!confirm("Are you sure you want to delete this game?"))
-                return;
-            btn.setAttribute("disabled", "true");
-            if (!gameNumber) {
-                alert("Game Number not found - error");
-                return;
-            }
-            const body = {
-                gameNumber,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/games/delete", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const result = yield fResult.json();
-            if (!result.success) {
-                console.log("delete error", result);
-                alert("Delete failed");
-            }
+    async deleteGame(btn, gameNumber) {
+        if (!confirm("Are you sure you want to delete this game?"))
+            return;
+        btn.setAttribute("disabled", "true");
+        if (!gameNumber) {
+            alert("Game Number not found - error");
+            return;
+        }
+        const body = {
+            gameNumber,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/games/delete", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const result = await fResult.json();
+        if (!result.success) {
+            console.log("delete error", result);
+            alert("Delete failed");
+        }
     }
     /** logout api call
      * @param { any } btn dom control
      * @param { string } gameNumber
      */
-    logoutGame(btn, gameNumber) {
-        return __awaiter(this, void 0, void 0, function* () {
-            btn.setAttribute("disabled", "true");
-            if (!gameNumber) {
-                alert("Game Number not found - error");
-                return;
-            }
-            const body = {
-                gameNumber,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/games/leave", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const result = yield fResult.json();
-            if (!result.success)
-                alert("Logout failed");
+    async logoutGame(btn, gameNumber) {
+        btn.setAttribute("disabled", "true");
+        if (!gameNumber) {
+            alert("Game Number not found - error");
+            return;
+        }
+        const body = {
+            gameNumber,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/games/leave", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const result = await fResult.json();
+        if (!result.success)
+            alert("Logout failed");
     }
 }
 //# sourceMappingURL=gamesapp.js.map

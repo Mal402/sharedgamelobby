@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 /** Base class for all pages - handles authorization and low level routing for api calls, etc */
 class BaseApp {
     /** constructor  */
@@ -58,40 +49,36 @@ class BaseApp {
         this.load();
     }
     /** asynchronous loads - data setup  */
-    load() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const promises = [];
-            promises.push(this.readJSONFile(`/data/breweryMap.json`, "breweryJSON"));
-            promises.push(this.readJSONFile(`/data/beerMap.json`, "allBeers"));
-            promises.push(this.readJSONFile(`/data/beerTags.json`, "beerTagsMap"));
-            promises.push(this.readJSONFile(`/data/trending.json`, "trendingMap"));
-            promises.push(this.readJSONFile(`/data/storeMap.json`, "storesJSON"));
-            promises.push(this.readJSONFile(`/data/beerTotals.json`, "beerTotals"));
-            yield Promise.all(promises);
-            this.tagList = Object.keys(window.beerTagsMap);
-            this.tagList = this.tagList.sort();
-            this._generateColors();
-            this.allBeers = window.allBeers;
-            this.authUpdateStatusUI();
-        });
+    async load() {
+        const promises = [];
+        promises.push(this.readJSONFile(`/data/breweryMap.json`, "breweryJSON"));
+        promises.push(this.readJSONFile(`/data/beerMap.json`, "allBeers"));
+        promises.push(this.readJSONFile(`/data/beerTags.json`, "beerTagsMap"));
+        promises.push(this.readJSONFile(`/data/trending.json`, "trendingMap"));
+        promises.push(this.readJSONFile(`/data/storeMap.json`, "storesJSON"));
+        promises.push(this.readJSONFile(`/data/beerTotals.json`, "beerTotals"));
+        await Promise.all(promises);
+        this.tagList = Object.keys(window.beerTagsMap);
+        this.tagList = this.tagList.sort();
+        this._generateColors();
+        this.allBeers = window.allBeers;
+        this.authUpdateStatusUI();
     }
     /** reads a json file async and sets window.varName to it's value
      * @param { string } path url to json data
      * @param { string } varName window.variable to hold data
      */
-    readJSONFile(path, varName) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (window[varName])
-                return;
-            try {
-                const response = yield fetch(path);
-                window[varName] = yield response.json();
-            }
-            catch (e) {
-                console.log("ERROR with download of " + varName, e);
-                window[varName] = {};
-            }
-        });
+    async readJSONFile(path, varName) {
+        if (window[varName])
+            return;
+        try {
+            const response = await fetch(path);
+            window[varName] = await response.json();
+        }
+        catch (e) {
+            console.log("ERROR with download of " + varName, e);
+            window[varName] = {};
+        }
     }
     /** Paints UI display/status for user profile based changes */
     authUpdateStatusUI() {
@@ -109,70 +96,64 @@ class BaseApp {
     /** firebase authorization event handler
      * @param { any } user logged in user - or null if not logged in
      */
-    authHandleEvent(user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // ignore unwanted events
-            if (user && this.uid === user.uid) {
-                return;
-            }
-            if (user) {
-                this.fireUser = user;
-                this.uid = this.fireUser.uid;
-                this.fireToken = yield user.getIdToken();
-                document.body.classList.add("app_signed_in");
-                document.body.classList.remove("app_signed_out");
-                if (this.fireUser.isAnonymous)
-                    document.body.classList.add("signed_in_anonymous");
-                yield this._authInitProfile();
-            }
-            else {
-                this.fireToken = null;
-                this.fireUser = null;
-                this.uid = null;
-                document.body.classList.remove("app_signed_in");
-                document.body.classList.add("app_signed_out");
-                this.authUpdateStatusUI();
-            }
+    async authHandleEvent(user) {
+        // ignore unwanted events
+        if (user && this.uid === user.uid) {
             return;
-        });
+        }
+        if (user) {
+            this.fireUser = user;
+            this.uid = this.fireUser.uid;
+            this.fireToken = await user.getIdToken();
+            document.body.classList.add("app_signed_in");
+            document.body.classList.remove("app_signed_out");
+            if (this.fireUser.isAnonymous)
+                document.body.classList.add("signed_in_anonymous");
+            await this._authInitProfile();
+        }
+        else {
+            this.fireToken = null;
+            this.fireUser = null;
+            this.uid = null;
+            document.body.classList.remove("app_signed_in");
+            document.body.classList.add("app_signed_out");
+            this.authUpdateStatusUI();
+        }
+        return;
     }
     /** setup watch for user profile changes */
-    _authInitProfile() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.profileSubscription = firebase.firestore().doc(`Users/${this.uid}`)
-                .onSnapshot((snapshot) => __awaiter(this, void 0, void 0, function* () {
-                this.profileInited = true;
-                this.profile = snapshot.data();
-                if (!this.profile) {
-                    if (this.fireUser.email) {
-                        const result = yield firebase.auth().fetchSignInMethodsForEmail(this.fireUser.email);
-                        // user was deleted dont create new profile - this is the case where the user deletes the account in browser
-                        if (result.length < 1)
-                            return;
-                    }
-                    yield this._authCreateDefaultProfile();
+    async _authInitProfile() {
+        this.profileSubscription = firebase.firestore().doc(`Users/${this.uid}`)
+            .onSnapshot(async (snapshot) => {
+            this.profileInited = true;
+            this.profile = snapshot.data();
+            if (!this.profile) {
+                if (this.fireUser.email) {
+                    const result = await firebase.auth().fetchSignInMethodsForEmail(this.fireUser.email);
+                    // user was deleted dont create new profile - this is the case where the user deletes the account in browser
+                    if (result.length < 1)
+                        return;
                 }
-                this.authUpdateStatusUI();
-            }));
+                await this._authCreateDefaultProfile();
+            }
+            this.authUpdateStatusUI();
         });
     }
     /** create default user profile record and overwrite to database without merge (reset) */
-    _authCreateDefaultProfile() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.profile = {
-                points: 0,
-                locationTrack: false,
-                favoriteBeer: null,
-                favoriteStore: null,
-                favoriteBrewery: null,
-                excludeBeer: {},
-                excludeStore: {},
-                excludeBrewery: {},
-                displayName: "",
-                displayImage: "",
-            };
-            yield firebase.firestore().doc(`Users/${this.uid}`).set(this.profile);
-        });
+    async _authCreateDefaultProfile() {
+        this.profile = {
+            points: 0,
+            locationTrack: false,
+            favoriteBeer: null,
+            favoriteStore: null,
+            favoriteBrewery: null,
+            excludeBeer: {},
+            excludeStore: {},
+            excludeBrewery: {},
+            displayName: "",
+            displayImage: "",
+        };
+        await firebase.firestore().doc(`Users/${this.uid}`).set(this.profile);
     }
     /** update user auth status, username/email etc */
     updateUserStatus() {
@@ -183,17 +164,15 @@ class BaseApp {
      * @param { number } index 0 = auto, 1 for day, 2 for nite
      * @param { any } e dom event object - preventDefault is called to stop anchor from navigating
      */
-    updateProfileNightMode(ctl, index, e) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const updatePacket = {
-                nightModeState: index,
-            };
-            this.updateNightModeStatus(index);
-            if (this.fireToken)
-                yield firebase.firestore().doc(`Users/${this.uid}`).update(updatePacket);
-            if (e)
-                e.preventDefault();
-        });
+    async updateProfileNightMode(ctl, index, e) {
+        const updatePacket = {
+            nightModeState: index,
+        };
+        this.updateNightModeStatus(index);
+        if (this.fireToken)
+            await firebase.firestore().doc(`Users/${this.uid}`).update(updatePacket);
+        if (e)
+            e.preventDefault();
     }
     /** paint night mode status change
      * @param { number } state 0 = auto, 1 for day, 2 for nite
@@ -228,88 +207,80 @@ class BaseApp {
     /** store mute setting for user, mute any active sounds
      * @param { boolean } muted true if muted
      */
-    updateMute(muted) {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.muted = muted;
-            if (!this.mute_button)
-                return;
-            if (muted) {
-                this.mute_button.children[0].innerHTML = "volume_off";
-                if (this.pickAudio)
-                    this.pickAudio.pause();
-                if (this.downAudio)
-                    this.downAudio.pause();
-                if (this.upAudio)
-                    this.upAudio.pause();
-                if (this.lockAudio)
-                    this.lockAudio.pause();
-                muted = true;
-            }
-            else {
-                this.mute_button.children[0].innerHTML = "volume_up";
-                muted = false;
-            }
-            if (this.profile) {
-                yield firebase.firestore().doc(`Users/${this.uid}`).update({
-                    muteState: muted,
-                });
-            }
-        });
+    async updateMute(muted) {
+        this.muted = muted;
+        if (!this.mute_button)
+            return;
+        if (muted) {
+            this.mute_button.children[0].innerHTML = "volume_off";
+            if (this.pickAudio)
+                this.pickAudio.pause();
+            if (this.downAudio)
+                this.downAudio.pause();
+            if (this.upAudio)
+                this.upAudio.pause();
+            if (this.lockAudio)
+                this.lockAudio.pause();
+            muted = true;
+        }
+        else {
+            this.mute_button.children[0].innerHTML = "volume_up";
+            muted = false;
+        }
+        if (this.profile) {
+            await firebase.firestore().doc(`Users/${this.uid}`).update({
+                muteState: muted,
+            });
+        }
     }
     /** google sign in handler
      * @param { any } e dom event - preventDefault is called if passed
      */
-    authGoogleSignIn(e) {
-        return __awaiter(this, void 0, void 0, function* () {
-            e.preventDefault();
-            const provider = new firebase.auth.GoogleAuthProvider();
-            provider.setCustomParameters({
-                "display": "popup",
-            });
-            yield firebase.auth().signInWithPopup(provider);
-            setTimeout(() => {
-                location.href = "/";
-            }, 1);
+    async authGoogleSignIn(e) {
+        e.preventDefault();
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({
+            "display": "popup",
         });
+        await firebase.auth().signInWithPopup(provider);
+        setTimeout(() => {
+            location.href = "/";
+        }, 1);
     }
     /** anonymous sign in handler
      * @param { any } e dom event - preventDefault is called if passed
      */
-    signInAnon(e) {
-        return __awaiter(this, void 0, void 0, function* () {
-            e.preventDefault();
-            yield firebase.auth().signInAnonymously();
-            setTimeout(() => {
-                location.href = "/";
-            }, 1);
-            return true;
-        });
+    async signInAnon(e) {
+        e.preventDefault();
+        await firebase.auth().signInAnonymously();
+        setTimeout(() => {
+            location.href = "/";
+        }, 1);
+        return true;
     }
     /** email sign in handler from UI (sends email to user for logging in)
      * @param { any } e dom event - preventDefault is called if passed
      */
-    signInByEmail(e) {
-        return __awaiter(this, void 0, void 0, function* () {
-            e.preventDefault();
-            let email = "";
-            if (this.login_email)
-                email = this.login_email.value;
-            /*
-            if (!email) {
-              email = window.prompt("Please provide your email to send link");
-            }*/
-            if (!email) {
-                alert("A valid email is required for sending a link");
-                return;
-            }
-            const actionCodeSettings = {
-                url: window.location.href,
-                handleCodeInApp: true,
-            };
-            yield firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings);
-            window.localStorage.setItem("emailForSignIn", email);
-            alert("Email Sent");
-        });
+    async signInByEmail(e) {
+        e.preventDefault();
+        let email = "";
+        if (this.login_email)
+            email = this.login_email.value;
+        /*
+        if (!email) {
+          email = window.prompt("Please provide your email to send link");
+        }*/
+        if (!email) {
+            alert("A valid email is required for sending a link");
+            return;
+        }
+        const actionCodeSettings = {
+            url: window.location.href,
+            handleCodeInApp: true,
+        };
+        await firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings);
+        window.localStorage.setItem("emailForSignIn", email);
+        alert("Email Sent");
     }
     /** for use on page load - tests if a signIn token was included in the URL */
     signInWithURL() {

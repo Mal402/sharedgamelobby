@@ -182,7 +182,7 @@ export default class GameBaseApp extends BaseApp {
   /** static data for guess and match (name, logo)
    * @return { any } map for lookup game details
   */
-  gameTypeMetaData() {
+  get gameTypeMetaData(): any {
     return {
       guess: {
         name: "Guess?",

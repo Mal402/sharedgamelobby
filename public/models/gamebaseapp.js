@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import BaseApp from "./baseapp.js";
 /** common logic for game apps and game lobby */
 export default class GameBaseApp extends BaseApp {
@@ -170,7 +161,7 @@ export default class GameBaseApp extends BaseApp {
     /** static data for guess and match (name, logo)
      * @return { any } map for lookup game details
     */
-    gameTypeMetaData() {
+    get gameTypeMetaData() {
         return {
             guess: {
                 name: "Guess?",
@@ -208,157 +199,145 @@ export default class GameBaseApp extends BaseApp {
         this.members_list.innerHTML = html;
     }
     /** resolves sitting down in a seat - needs renamed */
-    queryStringPaintProcess() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const seatId = this.urlParams.get("seat");
-            if (seatId !== null && !this.loadSeatingComplete) {
-                this.loadSeatingComplete = true;
-                if (this.gameData["seat" + seatId] === null) {
-                    yield this._gameAPISit(Number(seatId));
-                }
-                else {
-                    if (this.gameData["seat" + seatId] !== this.uid)
-                        alert("seat is filled");
-                }
+    async queryStringPaintProcess() {
+        const seatId = this.urlParams.get("seat");
+        if (seatId !== null && !this.loadSeatingComplete) {
+            this.loadSeatingComplete = true;
+            if (this.gameData["seat" + seatId] === null) {
+                await this._gameAPISit(Number(seatId));
             }
-        });
+            else {
+                if (this.gameData["seat" + seatId] !== this.uid)
+                    alert("seat is filled");
+            }
+        }
     }
     /** call join game api
      * @param { string } gameNumber doc id for game
      */
-    gameAPIJoin(gameNumber) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!this.profile)
-                return;
-            const body = {
-                gameNumber,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/games/join", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            if (this.verboseLog) {
-                const json = yield fResult.json();
-                console.log("join", json);
-            }
+    async gameAPIJoin(gameNumber) {
+        if (!this.profile)
             return;
+        const body = {
+            gameNumber,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/games/join", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        if (this.verboseLog) {
+            const json = await fResult.json();
+            console.log("join", json);
+        }
+        return;
     }
     /** stand/sit api call for dock seat
      * @param { number } seatIndex 0 based seat index
      * @return { boolean } api sit/stand result
     */
-    gameAPIToggle(seatIndex) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.gameData["seat" + seatIndex.toString()] === this.uid)
-                return this._gameAPIStand(seatIndex);
-            if (this.gameData["seat" + seatIndex.toString()] !== null &&
-                this.gameData.createUser === this.uid)
-                return this._gameAPIStand(seatIndex);
-            return this._gameAPISit(seatIndex);
-        });
+    async gameAPIToggle(seatIndex) {
+        if (this.gameData["seat" + seatIndex.toString()] === this.uid)
+            return this._gameAPIStand(seatIndex);
+        if (this.gameData["seat" + seatIndex.toString()] !== null &&
+            this.gameData.createUser === this.uid)
+            return this._gameAPIStand(seatIndex);
+        return this._gameAPISit(seatIndex);
     }
     /** sit api call
      * @param { number } seatIndex 0 based seat index
      * @param { string } gameNumber id for game doc
      * @return { boolean } true is seat sitted in
     */
-    _gameAPISit(seatIndex, gameNumber = null) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (gameNumber === null)
-                gameNumber = this.currentGame;
-            const body = {
-                gameNumber,
-                seatIndex,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/games/sit", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            if (!json.success)
-                alert(json.errorMessage);
-            return json.success;
+    async _gameAPISit(seatIndex, gameNumber = null) {
+        if (gameNumber === null)
+            gameNumber = this.currentGame;
+        const body = {
+            gameNumber,
+            seatIndex,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/games/sit", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        if (!json.success)
+            alert(json.errorMessage);
+        return json.success;
     }
     /** stand api call
      * @param { number } seatIndex 0 based seat index
      * @param { gameNumber } gameNumber id for game doc
      * @return { boolean } true seat emptied
     */
-    _gameAPIStand(seatIndex) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const body = {
-                gameNumber: this.currentGame,
-                seatIndex,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/games/stand", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            if (this.verboseLog) {
-                const json = yield fResult.json();
-                console.log(json);
-            }
+    async _gameAPIStand(seatIndex) {
+        const body = {
+            gameNumber: this.currentGame,
+            seatIndex,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/games/stand", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        if (this.verboseLog) {
+            const json = await fResult.json();
+            console.log(json);
+        }
     }
     /** scrape options from UI and call api */
-    gameAPIOptions() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const visibility = this.visibility_select.value;
-            const numberOfSeats = Number(this.seat_count_select.value);
-            const messageLevel = this.message_level_select.value;
-            const seatsPerUser = this.seats_per_user_select.value;
-            const body = {
-                gameNumber: this.currentGame,
-                visibility,
-                numberOfSeats,
-                seatsPerUser,
-                messageLevel,
-            };
-            if (this.card_deck_select) {
-                body.cardDeck = this.card_deck_select.value;
-            }
-            if (this.scoring_system_select) {
-                body.scoringSystem = this.scoring_system_select.value;
-            }
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/games/options", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            if (this.verboseLog) {
-                const json = yield fResult.json();
-                console.log("change game options result", json);
-            }
+    async gameAPIOptions() {
+        const visibility = this.visibility_select.value;
+        const numberOfSeats = Number(this.seat_count_select.value);
+        const messageLevel = this.message_level_select.value;
+        const seatsPerUser = this.seats_per_user_select.value;
+        const body = {
+            gameNumber: this.currentGame,
+            visibility,
+            numberOfSeats,
+            seatsPerUser,
+            messageLevel,
+        };
+        if (this.card_deck_select) {
+            body.cardDeck = this.card_deck_select.value;
+        }
+        if (this.scoring_system_select) {
+            body.scoringSystem = this.scoring_system_select.value;
+        }
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/games/options", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        if (this.verboseLog) {
+            const json = await fResult.json();
+            console.log("change game options result", json);
+        }
     }
     /** member data for a user
      * @param { string } uid user id
@@ -377,21 +356,19 @@ export default class GameBaseApp extends BaseApp {
         };
     }
     /** setup data listender for user messages */
-    initGameMessageFeed() {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.gameFeedInited)
-                return;
-            this.gameFeedInited = true;
-            const gameId = this.urlParams.get("game");
-            if (!gameId)
-                return;
-            if (this.gameMessagesSubscription)
-                this.gameMessagesSubscription();
-            this.gameMessagesSubscription = firebase.firestore().collection(`Games/${gameId}/messages`)
-                .orderBy(`created`, "desc")
-                .limit(50)
-                .onSnapshot((snapshot) => this.updateGameMessagesFeed(snapshot));
-        });
+    async initGameMessageFeed() {
+        if (this.gameFeedInited)
+            return;
+        this.gameFeedInited = true;
+        const gameId = this.urlParams.get("game");
+        if (!gameId)
+            return;
+        if (this.gameMessagesSubscription)
+            this.gameMessagesSubscription();
+        this.gameMessagesSubscription = firebase.firestore().collection(`Games/${gameId}/messages`)
+            .orderBy(`created`, "desc")
+            .limit(50)
+            .onSnapshot((snapshot) => this.updateGameMessagesFeed(snapshot));
     }
     /** paint user message feed
      * @param { any } snapshot firestore query data snapshot
@@ -426,28 +403,26 @@ export default class GameBaseApp extends BaseApp {
      * @param { string } gameNumber firestore game document id
      * @param { string } messageId firestore message id
      */
-    deleteMessage(btn, gameNumber, messageId) {
-        return __awaiter(this, void 0, void 0, function* () {
-            btn.setAttribute("disabled", "true");
-            const body = {
-                gameNumber,
-                messageId,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/games/message/delete", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const result = yield fResult.json();
-            if (!result.success)
-                alert("Delete message failed");
+    async deleteMessage(btn, gameNumber, messageId) {
+        btn.setAttribute("disabled", "true");
+        const body = {
+            gameNumber,
+            messageId,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/games/message/delete", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const result = await fResult.json();
+        if (!result.success)
+            alert("Delete message failed");
     }
     /** generate html for message card
      * @param { any } doc firestore message document
@@ -492,50 +467,46 @@ export default class GameBaseApp extends BaseApp {
     </div>`;
     }
     /** api user send message */
-    sendGameMessage() {
-        return __awaiter(this, void 0, void 0, function* () {
-            let message = this.message_list_input.value.trim();
-            if (message === "") {
-                alert("Please supply a message");
-                return;
-            }
-            if (message.length > 1000)
-                message = message.substr(0, 1000);
-            this.message_list_input.value = "";
-            const body = {
-                gameNumber: this.currentGame,
-                message,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/games/message", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            if (!json.success) {
-                console.log("message post", json);
-                alert(json.errorMessage);
-            }
+    async sendGameMessage() {
+        let message = this.message_list_input.value.trim();
+        if (message === "") {
+            alert("Please supply a message");
+            return;
+        }
+        if (message.length > 1000)
+            message = message.substr(0, 1000);
+        this.message_list_input.value = "";
+        const body = {
+            gameNumber: this.currentGame,
+            message,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/games/message", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        if (!json.success) {
+            console.log("message post", json);
+            alert(json.errorMessage);
+        }
     }
     /** api call for click in open dock seat to sit
      * @param { number } seatIndex 0 based seat index
      * @return { boolean } true is sit down was success
     */
-    dockSit(seatIndex) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.gameData["seat" + seatIndex.toString()] !== null)
-                return;
-            // if (this.userSeated)
-            // return;
-            return this._gameAPISit(seatIndex);
-        });
+    async dockSit(seatIndex) {
+        if (this.gameData["seat" + seatIndex.toString()] !== null)
+            return;
+        // if (this.userSeated)
+        // return;
+        return this._gameAPISit(seatIndex);
     }
     /** show/paint user message snackbar if needed */
     showMessageSnackbar() {
@@ -680,98 +651,92 @@ export default class GameBaseApp extends BaseApp {
         navigator.clipboard.writeText(path);
     }
     /** api call to finish game */
-    finishGame() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.refreshOnlinePresence();
-            this.match_finish.setAttribute("disabled", true);
-            const action = "endGame";
-            const body = {
-                gameId: this.currentGame,
-                action,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + `webPage/${this.apiType}/action`, {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            this.match_finish.removeAttribute("disabled");
-            if (!json.success) {
-                console.log("finish fail", json);
-                if (this.alertErrors)
-                    alert("Failed to finish game: " + json.errorMessage);
-                return;
-            }
+    async finishGame() {
+        this.refreshOnlinePresence();
+        this.match_finish.setAttribute("disabled", true);
+        const action = "endGame";
+        const body = {
+            gameId: this.currentGame,
+            action,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        this.match_finish.removeAttribute("disabled");
+        if (!json.success) {
+            console.log("finish fail", json);
+            if (this.alertErrors)
+                alert("Failed to finish game: " + json.errorMessage);
+            return;
+        }
     }
     /** api call to reset game */
-    resetGame() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.refreshOnlinePresence();
-            this.match_reset.setAttribute("disabled", true);
-            const action = "resetGame";
-            const body = {
-                gameId: this.currentGame,
-                action,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + `webPage/${this.apiType}/action`, {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            this.match_reset.removeAttribute("disabled");
-            if (!json.success) {
-                console.log("reset fail", json);
-                if (this.alertErrors)
-                    alert("Failed to reset game: " + json.errorMessage);
-                return;
-            }
+    async resetGame() {
+        this.refreshOnlinePresence();
+        this.match_reset.setAttribute("disabled", true);
+        const action = "resetGame";
+        const body = {
+            gameId: this.currentGame,
+            action,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        this.match_reset.removeAttribute("disabled");
+        if (!json.success) {
+            console.log("reset fail", json);
+            if (this.alertErrors)
+                alert("Failed to reset game: " + json.errorMessage);
+            return;
+        }
     }
     /** api call to start game */
-    startGame() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.refreshOnlinePresence();
-            this.match_start.setAttribute("disabled", true);
-            const action = "startGame";
-            const body = {
-                gameId: this.currentGame,
-                action,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + `webPage/${this.apiType}/action`, {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            this.match_start.removeAttribute("disabled");
-            if (!json.success) {
-                console.log("start fail", json);
-                if (this.alertErrors)
-                    alert("Failed to start game: " + json.errorMessage);
-                return;
-            }
-            this.matchBoardRendered = false;
+    async startGame() {
+        this.refreshOnlinePresence();
+        this.match_start.setAttribute("disabled", true);
+        const action = "startGame";
+        const body = {
+            gameId: this.currentGame,
+            action,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        this.match_start.removeAttribute("disabled");
+        if (!json.success) {
+            console.log("start fail", json);
+            if (this.alertErrors)
+                alert("Failed to start game: " + json.errorMessage);
+            return;
+        }
+        this.matchBoardRendered = false;
     }
 }
 //# sourceMappingURL=gamebaseapp.js.map

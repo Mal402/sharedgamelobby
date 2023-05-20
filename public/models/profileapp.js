@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import BaseApp from "./baseapp.js";
 /** app class for profile page */
 export class ProfileApp extends BaseApp {
@@ -56,47 +47,41 @@ export class ProfileApp extends BaseApp {
         this.initPresetLogos();
     }
     /** load the team logos <select> */
-    initPresetLogos() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.readJSONFile(`/profile/logos.json`, "profileLogos");
-            let html = "<option>Select a preset image</option>";
-            for (const logo in window.profileLogos) {
-                if (window.profileLogos[logo])
-                    html += `<option value="${window.profileLogos[logo]}">${logo}</option>`;
-            }
-            this.profile_display_image_preset.innerHTML = html;
-        });
+    async initPresetLogos() {
+        await this.readJSONFile(`/profile/logos.json`, "profileLogos");
+        let html = "<option>Select a preset image</option>";
+        for (const logo in window.profileLogos) {
+            if (window.profileLogos[logo])
+                html += `<option value="${window.profileLogos[logo]}">${logo}</option>`;
+        }
+        this.profile_display_image_preset.innerHTML = html;
     }
     /** team image <select> change handler */
-    selectedProfilePreset() {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.profile_display_image_preset.selectedIndex > 0) {
-                const updatePacket = {
-                    rawImage: this.profile_display_image_preset.value,
-                    displayImage: this.profile_display_image_preset.value,
-                };
-                if (this.fireToken) {
-                    yield firebase.firestore().doc(`Users/${this.uid}`).set(updatePacket, {
-                        merge: true,
-                    });
-                }
+    async selectedProfilePreset() {
+        if (this.profile_display_image_preset.selectedIndex > 0) {
+            const updatePacket = {
+                rawImage: this.profile_display_image_preset.value,
+                displayImage: this.profile_display_image_preset.value,
+            };
+            if (this.fireToken) {
+                await firebase.firestore().doc(`Users/${this.uid}`).set(updatePacket, {
+                    merge: true,
+                });
             }
-        });
+        }
     }
     /** signout of firebase authorization
      * @param { any } e dom event
      */
-    authSignout(e) {
-        return __awaiter(this, void 0, void 0, function* () {
-            e.preventDefault();
-            if (this.fireToken) {
-                yield firebase.auth().signOut();
-                this.fireToken = null;
-                this.fireUser = null;
-                this.uid = null;
-                window.location = "/profile";
-            }
-        });
+    async authSignout(e) {
+        e.preventDefault();
+        if (this.fireToken) {
+            await firebase.auth().signOut();
+            this.fireToken = null;
+            this.fireUser = null;
+            this.uid = null;
+            window.location = "/profile";
+        }
     }
     /** BaseApp override to paint profile specific authorization parameters */
     authUpdateStatusUI() {
@@ -119,19 +104,17 @@ export class ProfileApp extends BaseApp {
         this.updateInfoProfile();
     }
     /** handle (store) change to users display name */
-    displayNameChange() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.profile.displayName = this.profile_display_name.value.trim().substring(0, 15);
-            const updatePacket = {
-                displayName: this.profile.displayName,
-            };
-            if (this.fireToken) {
-                yield firebase.firestore().doc(`Users/${this.uid}`).set(updatePacket, {
-                    merge: true,
-                });
-            }
-            this.lastNameChange = new Date().getTime();
-        });
+    async displayNameChange() {
+        this.profile.displayName = this.profile_display_name.value.trim().substring(0, 15);
+        const updatePacket = {
+            displayName: this.profile.displayName,
+        };
+        if (this.fireToken) {
+            await firebase.firestore().doc(`Users/${this.uid}`).set(updatePacket, {
+                merge: true,
+            });
+        }
+        this.lastNameChange = new Date().getTime();
     }
     /** paint user profile */
     updateInfoProfile() {
@@ -167,62 +150,54 @@ export class ProfileApp extends BaseApp {
         this.file_upload_input.click();
     }
     /** handle local profile image selected for upload and store it */
-    fileUploadSelected() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const file = this.file_upload_input.files[0];
-            const sRef = firebase.storage().ref("Users").child(this.uid + "/pimage");
-            if (file.size > 2500000) {
-                alert("File needs to be less than 1mb in size");
-                return;
-            }
-            this.profile_display_image.style.backgroundImage = ``;
-            yield sRef.put(file);
-            const path = yield sRef.getDownloadURL();
-            setTimeout(() => this._finishImagePathUpdate(path), 1500);
-        });
+    async fileUploadSelected() {
+        const file = this.file_upload_input.files[0];
+        const sRef = firebase.storage().ref("Users").child(this.uid + "/pimage");
+        if (file.size > 2500000) {
+            alert("File needs to be less than 1mb in size");
+            return;
+        }
+        this.profile_display_image.style.backgroundImage = ``;
+        await sRef.put(file);
+        const path = await sRef.getDownloadURL();
+        setTimeout(() => this._finishImagePathUpdate(path), 1500);
     }
     /** handle profile image upload complete
      * @param { string } path cloud path to image (includes uid)
      */
-    _finishImagePathUpdate(path) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const sRef2 = firebase.storage().ref("Users").child(this.uid + "/_resized/pimage_200x200");
-            const resizePath = yield sRef2.getDownloadURL();
-            const updatePacket = {
-                rawImage: path,
-                displayImage: resizePath,
-            };
-            if (this.fireToken) {
-                yield firebase.firestore().doc(`Users/${this.uid}`).set(updatePacket, {
-                    merge: true,
-                });
-            }
-        });
+    async _finishImagePathUpdate(path) {
+        const sRef2 = firebase.storage().ref("Users").child(this.uid + "/_resized/pimage_200x200");
+        const resizePath = await sRef2.getDownloadURL();
+        const updatePacket = {
+            rawImage: path,
+            displayImage: resizePath,
+        };
+        if (this.fireToken) {
+            await firebase.firestore().doc(`Users/${this.uid}`).set(updatePacket, {
+                merge: true,
+            });
+        }
     }
     /** reset profile image (and store result in user profile) */
-    clearProfileImage() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const updatePacket = {
-                displayImage: "",
-            };
-            if (this.fireToken) {
-                yield firebase.firestore().doc(`Users/${this.uid}`).set(updatePacket, {
-                    merge: true,
-                });
-            }
-        });
+    async clearProfileImage() {
+        const updatePacket = {
+            displayImage: "",
+        };
+        if (this.fireToken) {
+            await firebase.firestore().doc(`Users/${this.uid}`).set(updatePacket, {
+                merge: true,
+            });
+        }
     }
     /** handle for mute/audio settings change
      * @param { number } index radio button index (to set value)
     */
-    updateProfileAudioMode(index) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const updatePacket = {
-                muteState: (index === 0),
-            };
-            if (this.fireToken)
-                yield firebase.firestore().doc(`Users/${this.uid}`).update(updatePacket);
-        });
+    async updateProfileAudioMode(index) {
+        const updatePacket = {
+            muteState: (index === 0),
+        };
+        if (this.fireToken)
+            await firebase.firestore().doc(`Users/${this.uid}`).update(updatePacket);
     }
 }
 //# sourceMappingURL=profileapp.js.map

@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import GameBaseApp from "./gamebaseapp.js";
 /** Guess app class */
 export class GuessApp extends GameBaseApp {
@@ -62,33 +53,31 @@ export class GuessApp extends GameBaseApp {
     /** handles keyboard click by user
      * @param { any } ctl dom button clicked
      */
-    keypressHandler(ctl) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.gameData.turnPhase !== "letter")
-                return;
-            const guessLetter = ctl.dataset.key;
-            const action = "playturn";
-            const body = {
-                gameId: this.currentGame,
-                uid: this.uid,
-                action,
-                guessLetter,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/guess/action", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            if (!json.success)
-                console.log("pick letter failed", json);
+    async keypressHandler(ctl) {
+        if (this.gameData.turnPhase !== "letter")
+            return;
+        const guessLetter = ctl.dataset.key;
+        const action = "playturn";
+        const body = {
+            gameId: this.currentGame,
+            uid: this.uid,
+            action,
+            guessLetter,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/guess/action", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        if (!json.success)
+            console.log("pick letter failed", json);
     }
     /** paint vowel */
     showVowel() {
@@ -215,32 +204,30 @@ export class GuessApp extends GameBaseApp {
         }
     }
     /** api call to start spin */
-    startSpin() {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.gameData.turnPhase !== "spin")
-                return;
-            const action = "spin";
-            const body = {
-                gameId: this.currentGame,
-                uid: this.uid,
-                action,
-            };
-            const token = yield firebase.auth().currentUser.getIdToken();
-            const fResult = yield fetch(this.basePath + "webPage/guess/action", {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                headers: {
-                    "Content-Type": "application/json",
-                    token,
-                },
-                body: JSON.stringify(body),
-            });
-            const json = yield fResult.json();
-            if (!json.success) {
-                console.log("spin click failed", json);
-            }
+    async startSpin() {
+        if (this.gameData.turnPhase !== "spin")
+            return;
+        const action = "spin";
+        const body = {
+            gameId: this.currentGame,
+            uid: this.uid,
+            action,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "webPage/guess/action", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
         });
+        const json = await fResult.json();
+        if (!json.success) {
+            console.log("spin click failed", json);
+        }
     }
     /** BaseApp override to paint profile specific authorization parameters */
     authUpdateStatusUI() {

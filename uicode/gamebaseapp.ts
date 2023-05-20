@@ -1,21 +1,74 @@
 import BaseApp from "./baseapp.js";
+declare var window: any;
+declare var firebase: any;
 
 /** common logic for game apps and game lobby */
 export default class GameBaseApp extends BaseApp {
+  apiType = "invalid";
+  userPresenceStatus: any = {};
+  userPresenceStatusRefs: any = {};
+  verboseLog = false;
+  lastMessageId: any;
+  chat_snackbar: any = document.querySelector("#chat_snackbar");
+  lastMessagesSnapshot: any;
+  userStatusDatabaseRef: any;
+  rtdbPresenceInited = false;
+  isOfflineForDatabase: any;
+  isOnlineForDatabase: any;
+  gameFeedInited = false;
+  gameData: any;
+  loadSeatingComplete = false;
+  currentGame = "";
+  card_deck_select: any;
+  scoring_system_select: any;
+  gameMessagesSubscription: any;
+  toggleSnackBarTimeout: any;
+  seatsFull = 0;
+  userSeated = false;
+  alertErrors = false;
+  matchBoardRendered = false;
+
+  seat0_name: any = document.querySelector(".seat0_name");
+  seat1_name: any = document.querySelector(".seat1_name");
+  seat2_name: any = document.querySelector(".seat2_name");
+  seat3_name: any = document.querySelector(".seat3_name");
+  seat0_img: any = document.querySelector(".seat0_img");
+  seat1_img: any = document.querySelector(".seat1_img");
+  seat2_img: any = document.querySelector(".seat2_img");
+  seat3_img: any = document.querySelector(".seat3_img");
+  seat0_sitdown_btn: any = document.querySelector(".seat0_sitdown_btn");
+  seat1_sitdown_btn: any = document.querySelector(".seat1_sitdown_btn");
+  seat2_sitdown_btn: any = document.querySelector(".seat2_sitdown_btn");
+  seat3_sitdown_btn: any = document.querySelector(".seat3_sitdown_btn");
+  gameid_span: any = document.querySelector(".gameid_span");
+  turnindex_span: any = document.querySelector(".turnindex_span");
+  turnphase_span: any = document.querySelector(".turnphase_span");
+  members_list: any = document.querySelector(".members_list");
+  visibility_display: any = document.querySelector(".visibility_display");
+  seat_count_display: any = document.querySelector(".seat_count_display");
+  message_level_display: any = document.querySelector(".message_level_display");
+  seats_per_user_display: any = document.querySelector(".seats_per_user_display");
+  message_level_select: any = document.querySelector(".message_level_select");
+  seats_per_user_select: any = document.querySelector(".seats_per_user_select");
+  visibility_select: any = document.querySelector(".visibility_select");
+  seat_count_select: any = document.querySelector(".seat_count_select");
+
+  send_message_list_button: any = document.querySelector(".send_message_list_button");
+  message_list_input: any = document.querySelector(".message_list_input");
+  messages_list: any = document.querySelector(".messages_list");
+  seats_full_display: any = document.querySelector(".seats_full_display");
+  match_start: any = document.querySelector(".match_start");
+  match_finish: any = document.querySelector(".match_finish");
+  match_reset: any = document.querySelector(".match_reset");
+  code_link_href: any = document.querySelector(".code_link_href");
+  code_link_copy: any = document.querySelector(".code_link_copy");
+
   /** */
   constructor() {
     super();
-    this.apiType = "invalid";
-    this.userPresenceStatus = {};
-    this.userPresenceStatusRefs = {};
-    this.verboseLog = false;
-
-    this.lastMessageId = null;
 
     // redraw message feed to update time since values
-    setInterval(() => this.updateGameMessagesFeed(), this.baseRedrawFeedTimer);
-
-    this.chat_snackbar = document.querySelector("#chat_snackbar");
+    setInterval(() => this.updateGameMessagesFeed(null), this.baseRedrawFeedTimer);
 
     document.addEventListener("visibilitychange", () => this.refreshOnlinePresence());
   }
@@ -46,7 +99,7 @@ export default class GameBaseApp extends BaseApp {
       last_changed: firebase.database.ServerValue.TIMESTAMP,
     };
 
-    firebase.database().ref(".info/connected").on("value", (snapshot) => {
+    firebase.database().ref(".info/connected").on("value", (snapshot: any) => {
       if (snapshot.val() == false) return;
 
       this.userStatusDatabaseRef.onDisconnect().set(this.isOfflineForDatabase).then(() => {
@@ -57,10 +110,10 @@ export default class GameBaseApp extends BaseApp {
   /** register a uid to watch for online state
    * @param { string } uid user id
   */
-  addUserPresenceWatch(uid) {
+  addUserPresenceWatch(uid: string) {
     if (!this.userPresenceStatusRefs[uid]) {
       this.userPresenceStatusRefs[uid] = firebase.database().ref("OnlinePresence/" + uid);
-      this.userPresenceStatusRefs[uid].on("value", (snapshot) => {
+      this.userPresenceStatusRefs[uid].on("value", (snapshot: any) => {
         this.userPresenceStatus[uid] = false;
         const data = snapshot.val();
         if (data && data.state === "online") this.userPresenceStatus[uid] = true;
@@ -72,7 +125,7 @@ export default class GameBaseApp extends BaseApp {
   /** paint users online status */
   updateUserPresence() {
     document.querySelectorAll(".member_online_status")
-      .forEach((div) => {
+      .forEach((div: any) => {
         if (this.userPresenceStatus[div.dataset.uid]) div.classList.add("online");
         else div.classList.remove("online");
       });
@@ -91,76 +144,37 @@ export default class GameBaseApp extends BaseApp {
   }
   /** init game doc controls and register handlers */
   _initGameCommon() {
-    document.querySelector(".player_dock .dock_seat0")
-      .addEventListener("click", (e) => this.dockSit(0, e));
-    document.querySelector(".player_dock .dock_seat1")
-      .addEventListener("click", (e) => this.dockSit(1, e));
-    document.querySelector(".player_dock .dock_seat2")
-      .addEventListener("click", (e) => this.dockSit(2, e));
-    document.querySelector(".player_dock .dock_seat3")
-      .addEventListener("click", (e) => this.dockSit(3, e));
+    (<any>document.querySelector(".player_dock .dock_seat0"))
+      .addEventListener("click", () => this.dockSit(0));
+    (<any>document.querySelector(".player_dock .dock_seat1"))
+      .addEventListener("click", () => this.dockSit(1));
+    (<any>document.querySelector(".player_dock .dock_seat2"))
+      .addEventListener("click", () => this.dockSit(2));
+    (<any>document.querySelector(".player_dock .dock_seat3"))
+      .addEventListener("click", () => this.dockSit(3));
 
-    this.seat0_name = document.querySelector(".seat0_name");
-    this.seat1_name = document.querySelector(".seat1_name");
-    this.seat2_name = document.querySelector(".seat2_name");
-    this.seat3_name = document.querySelector(".seat3_name");
-    this.seat0_img = document.querySelector(".seat0_img");
-    this.seat1_img = document.querySelector(".seat1_img");
-    this.seat2_img = document.querySelector(".seat2_img");
-    this.seat3_img = document.querySelector(".seat3_img");
-    this.seat0_sitdown_btn = document.querySelector(".seat0_sitdown_btn");
     this.seat0_sitdown_btn.addEventListener("click", () => this.gameAPIToggle(0));
-    this.seat1_sitdown_btn = document.querySelector(".seat1_sitdown_btn");
     this.seat1_sitdown_btn.addEventListener("click", () => this.gameAPIToggle(1));
-    this.seat2_sitdown_btn = document.querySelector(".seat2_sitdown_btn");
     this.seat2_sitdown_btn.addEventListener("click", () => this.gameAPIToggle(2));
-    this.seat3_sitdown_btn = document.querySelector(".seat3_sitdown_btn");
     this.seat3_sitdown_btn.addEventListener("click", () => this.gameAPIToggle(3));
 
-    this.gameid_span = document.querySelector(".gameid_span");
-    this.turnindex_span = document.querySelector(".turnindex_span");
-    this.turnphase_span = document.querySelector(".turnphase_span");
-
-    this.members_list = document.querySelector(".members_list");
-    this.visibility_display = document.querySelector(".visibility_display");
-    this.seat_count_display = document.querySelector(".seat_count_display");
-    this.message_level_display = document.querySelector(".message_level_display");
-    this.seats_per_user_display = document.querySelector(".seats_per_user_display");
-
-    this.message_level_select = document.querySelector(".message_level_select");
     this.message_level_select.addEventListener("input", () => this.gameAPIOptions());
-
-    this.seats_per_user_select = document.querySelector(".seats_per_user_select");
     this.seats_per_user_select.addEventListener("input", () => this.gameAPIOptions());
-
-    this.visibility_select = document.querySelector(".visibility_select");
     this.visibility_select.addEventListener("input", () => this.gameAPIOptions());
-
-    this.seat_count_select = document.querySelector(".seat_count_select");
     this.seat_count_select.addEventListener("input", () => this.gameAPIOptions());
 
     this.mute_button = document.querySelector(".mute_button");
-    this.mute_button.addEventListener("click", (e) => this.muteClick(e));
-
-    this.send_message_list_button = document.querySelector(".send_message_list_button");
+    this.mute_button.addEventListener("click", (e: any) => this.muteClick(e));
+    
     this.send_message_list_button.addEventListener("click", () => this.sendGameMessage());
-    this.message_list_input = document.querySelector(".message_list_input");
-    this.message_list_input.addEventListener("keyup", (e) => {
+    this.message_list_input.addEventListener("keyup", (e: any) => {
       if (e.key === "Enter") this.sendGameMessage();
     });
-    this.messages_list = document.querySelector(".messages_list");
 
-    this.seats_full_display = document.querySelector(".seats_full_display");
-
-    this.match_start = document.querySelector(".match_start");
     this.match_start.addEventListener("click", () => this.startGame());
-    this.match_finish = document.querySelector(".match_finish");
     this.match_finish.addEventListener("click", () => this.finishGame());
-    this.match_reset = document.querySelector(".match_reset");
     this.match_reset.addEventListener("click", () => this.resetGame());
 
-    this.code_link_href = document.querySelector(".code_link_href");
-    this.code_link_copy = document.querySelector(".code_link_copy");
     if (this.code_link_copy) this.code_link_copy.addEventListener("click", () => this.copyGameLinkToClipboard());
 
     this.initGameMessageFeed();
@@ -184,11 +198,11 @@ export default class GameBaseApp extends BaseApp {
   _updateGameMembersList() {
     let html = "";
     if (this.gameData) {
-      let members = {};
+      let members: any = {};
       if (this.gameData.members) members = this.gameData.members;
       let membersList = Object.keys(members);
       membersList = membersList.sort();
-      membersList.forEach((member) => {
+      membersList.forEach((member: string) => {
         this.addUserPresenceWatch(member);
         const data = this._gameMemberData(member);
 
@@ -220,7 +234,7 @@ export default class GameBaseApp extends BaseApp {
   /** call join game api
    * @param { string } gameNumber doc id for game
    */
-  async gameAPIJoin(gameNumber) {
+  async gameAPIJoin(gameNumber: string) {
     if (!this.profile) return;
 
     const body = {
@@ -247,7 +261,7 @@ export default class GameBaseApp extends BaseApp {
    * @param { number } seatIndex 0 based seat index
    * @return { boolean } api sit/stand result
   */
-  async gameAPIToggle(seatIndex) {
+  async gameAPIToggle(seatIndex: number) {
     if (this.gameData["seat" + seatIndex.toString()] === this.uid) return this._gameAPIStand(seatIndex);
 
     if (this.gameData["seat" + seatIndex.toString()] !== null &&
@@ -257,10 +271,10 @@ export default class GameBaseApp extends BaseApp {
   }
   /** sit api call
    * @param { number } seatIndex 0 based seat index
-   * @param { gameNumber } gameNumber id for game doc
+   * @param { string } gameNumber id for game doc
    * @return { boolean } true is seat sitted in
   */
-  async _gameAPISit(seatIndex, gameNumber = null) {
+  async _gameAPISit(seatIndex: number, gameNumber: any = null) {
     if (gameNumber === null) gameNumber = this.currentGame;
     const body = {
       gameNumber,
@@ -287,7 +301,7 @@ export default class GameBaseApp extends BaseApp {
    * @param { gameNumber } gameNumber id for game doc
    * @return { boolean } true seat emptied
   */
-  async _gameAPIStand(seatIndex) {
+  async _gameAPIStand(seatIndex: number) {
     const body = {
       gameNumber: this.currentGame,
       seatIndex,
@@ -315,7 +329,7 @@ export default class GameBaseApp extends BaseApp {
     const messageLevel = this.message_level_select.value;
     const seatsPerUser = this.seats_per_user_select.value;
 
-    const body = {
+    const body: any = {
       gameNumber: this.currentGame,
       visibility,
       numberOfSeats,
@@ -351,7 +365,7 @@ export default class GameBaseApp extends BaseApp {
    * @param { string } uid user id
    * @return { any } name, img
    */
-  _gameMemberData(uid) {
+  _gameMemberData(uid: string) {
     let name = this.gameData.memberNames[uid];
     let img = this.gameData.memberImages[uid];
     if (!name) name = "Anonymous";
@@ -374,18 +388,18 @@ export default class GameBaseApp extends BaseApp {
     this.gameMessagesSubscription = firebase.firestore().collection(`Games/${gameId}/messages`)
       .orderBy(`created`, "desc")
       .limit(50)
-      .onSnapshot((snapshot) => this.updateGameMessagesFeed(snapshot));
+      .onSnapshot((snapshot: any) => this.updateGameMessagesFeed(snapshot));
   }
   /** paint user message feed
    * @param { any } snapshot firestore query data snapshot
    */
-  updateGameMessagesFeed(snapshot) {
+  updateGameMessagesFeed(snapshot: any) {
     if (snapshot) this.lastMessagesSnapshot = snapshot;
     else if (this.lastMessagesSnapshot) snapshot = this.lastMessagesSnapshot;
     else return;
 
     let html = "";
-    snapshot.forEach((doc) => html += this._renderMessageFeedLine(doc));
+    snapshot.forEach((doc: any) => html += this._renderMessageFeedLine(doc));
 
     this.messages_list.innerHTML = html;
 
@@ -398,7 +412,7 @@ export default class GameBaseApp extends BaseApp {
     }
 
     this.messages_list.querySelectorAll("button.delete_game")
-      .forEach((btn) => btn.addEventListener("click", (e) => {
+      .forEach((btn: any) => btn.addEventListener("click", (e: any) => {
         e.stopPropagation();
         e.preventDefault();
         this.deleteMessage(btn, btn.dataset.gamenumber, btn.dataset.messageid);
@@ -411,7 +425,7 @@ export default class GameBaseApp extends BaseApp {
    * @param { string } gameNumber firestore game document id
    * @param { string } messageId firestore message id
    */
-  async deleteMessage(btn, gameNumber, messageId) {
+  async deleteMessage(btn: any, gameNumber: string, messageId: string) {
     btn.setAttribute("disabled", "true");
 
     const body = {
@@ -438,7 +452,7 @@ export default class GameBaseApp extends BaseApp {
    * @param { boolean } messageFeed if true adds delete button and clips message length to 12 (...)
    * @return { string } html for card
    */
-  _renderMessageFeedLine(doc, messageFeed = true) {
+  _renderMessageFeedLine(doc: any, messageFeed = true) {
     const data = doc.data();
     const gameOwnerClass = data.isGameOwner ? " message_game_owner" : "";
     const ownerClass = data.uid === this.uid ? " message_owner" : "";
@@ -511,7 +525,7 @@ export default class GameBaseApp extends BaseApp {
    * @param { number } seatIndex 0 based seat index
    * @return { boolean } true is sit down was success
   */
-  async dockSit(seatIndex) {
+  async dockSit(seatIndex: number) {
     if (this.gameData["seat" + seatIndex.toString()] !== null) return;
 
     // if (this.userSeated)
@@ -545,7 +559,7 @@ export default class GameBaseApp extends BaseApp {
   _paintDockSeats(queryPrefix = ".player_dock ") {
     for (let c = 0; c < this.gameData.numberOfSeats; c++) {
       const key = "seat" + c.toString();
-      const seat = document.querySelector(queryPrefix + `.dock_seat${c.toString()}`);
+      const seat: any = document.querySelector(queryPrefix + `.dock_seat${c.toString()}`);
       const spans = seat.querySelectorAll("span");
       if (this.gameData[key]) {
         spans[0].style.backgroundImage = "url(" + this._gameMemberData(this.gameData[key]).img + ")";
@@ -635,22 +649,22 @@ export default class GameBaseApp extends BaseApp {
     for (let c = 0; c < 4; c++) {
       const key = "seat" + c.toString();
       if (this.gameData[key]) {
-        this[key + "_name"].innerHTML = this._gameMemberData(this.gameData[key]).name;
-        this[key + "_img"].style.backgroundImage = "url(" + this._gameMemberData(this.gameData[key]).img + ")";
+        (<any>this)[key + "_name"].innerHTML = this._gameMemberData(this.gameData[key]).name;
+        (<any>this)[key + "_img"].style.backgroundImage = "url(" + this._gameMemberData(this.gameData[key]).img + ")";
       } else {
-        this[key + "_name"].innerHTML = "";
-        this[key + "_img"].style.backgroundImage = "";
+        (<any>this)[key + "_name"].innerHTML = "";
+        (<any>this)[key + "_img"].style.backgroundImage = "";
       }
 
-      this[key + "_sitdown_btn"].classList.remove("admin_only");
+      (<any>this)[key + "_sitdown_btn"].classList.remove("admin_only");
       if (this.gameData[key] === this.uid) {
-        this[key + "_sitdown_btn"].innerHTML = "Stand";
+        (<any>this)[key + "_sitdown_btn"].innerHTML = "Stand";
       } else {
         if (this.gameData[key]) {
-          this[key + "_sitdown_btn"].innerHTML = "Boot";
-          this[key + "_sitdown_btn"].classList.add("admin_only");
+          (<any>this)[key + "_sitdown_btn"].innerHTML = "Boot";
+          (<any>this)[key + "_sitdown_btn"].classList.add("admin_only");
         } else {
-          this[key + "_sitdown_btn"].innerHTML = "Sit";
+          (<any>this)[key + "_sitdown_btn"].innerHTML = "Sit";
         }
       }
     }

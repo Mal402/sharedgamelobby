@@ -9,6 +9,10 @@
     "allowJs": true,
     "esModuleInterop": true,
     "strict": true,
+    "lib": [
+      "DOM",
+      "ES2021"
+    ],
     "outDir": "./../public/models",
   },
   "include": [

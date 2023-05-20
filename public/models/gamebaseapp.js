@@ -17,10 +17,50 @@ export default class GameBaseApp extends BaseApp {
         this.userPresenceStatus = {};
         this.userPresenceStatusRefs = {};
         this.verboseLog = false;
-        this.lastMessageId = null;
-        // redraw message feed to update time since values
-        setInterval(() => this.updateGameMessagesFeed(), this.baseRedrawFeedTimer);
         this.chat_snackbar = document.querySelector("#chat_snackbar");
+        this.rtdbPresenceInited = false;
+        this.gameFeedInited = false;
+        this.loadSeatingComplete = false;
+        this.currentGame = "";
+        this.seatsFull = 0;
+        this.userSeated = false;
+        this.alertErrors = false;
+        this.matchBoardRendered = false;
+        this.seat0_name = document.querySelector(".seat0_name");
+        this.seat1_name = document.querySelector(".seat1_name");
+        this.seat2_name = document.querySelector(".seat2_name");
+        this.seat3_name = document.querySelector(".seat3_name");
+        this.seat0_img = document.querySelector(".seat0_img");
+        this.seat1_img = document.querySelector(".seat1_img");
+        this.seat2_img = document.querySelector(".seat2_img");
+        this.seat3_img = document.querySelector(".seat3_img");
+        this.seat0_sitdown_btn = document.querySelector(".seat0_sitdown_btn");
+        this.seat1_sitdown_btn = document.querySelector(".seat1_sitdown_btn");
+        this.seat2_sitdown_btn = document.querySelector(".seat2_sitdown_btn");
+        this.seat3_sitdown_btn = document.querySelector(".seat3_sitdown_btn");
+        this.gameid_span = document.querySelector(".gameid_span");
+        this.turnindex_span = document.querySelector(".turnindex_span");
+        this.turnphase_span = document.querySelector(".turnphase_span");
+        this.members_list = document.querySelector(".members_list");
+        this.visibility_display = document.querySelector(".visibility_display");
+        this.seat_count_display = document.querySelector(".seat_count_display");
+        this.message_level_display = document.querySelector(".message_level_display");
+        this.seats_per_user_display = document.querySelector(".seats_per_user_display");
+        this.message_level_select = document.querySelector(".message_level_select");
+        this.seats_per_user_select = document.querySelector(".seats_per_user_select");
+        this.visibility_select = document.querySelector(".visibility_select");
+        this.seat_count_select = document.querySelector(".seat_count_select");
+        this.send_message_list_button = document.querySelector(".send_message_list_button");
+        this.message_list_input = document.querySelector(".message_list_input");
+        this.messages_list = document.querySelector(".messages_list");
+        this.seats_full_display = document.querySelector(".seats_full_display");
+        this.match_start = document.querySelector(".match_start");
+        this.match_finish = document.querySelector(".match_finish");
+        this.match_reset = document.querySelector(".match_reset");
+        this.code_link_href = document.querySelector(".code_link_href");
+        this.code_link_copy = document.querySelector(".code_link_copy");
+        // redraw message feed to update time since values
+        setInterval(() => this.updateGameMessagesFeed(null), this.baseRedrawFeedTimer);
         document.addEventListener("visibilitychange", () => this.refreshOnlinePresence());
     }
     /** update storage to show online for current user */
@@ -98,64 +138,31 @@ export default class GameBaseApp extends BaseApp {
     /** init game doc controls and register handlers */
     _initGameCommon() {
         document.querySelector(".player_dock .dock_seat0")
-            .addEventListener("click", (e) => this.dockSit(0, e));
+            .addEventListener("click", () => this.dockSit(0));
         document.querySelector(".player_dock .dock_seat1")
-            .addEventListener("click", (e) => this.dockSit(1, e));
+            .addEventListener("click", () => this.dockSit(1));
         document.querySelector(".player_dock .dock_seat2")
-            .addEventListener("click", (e) => this.dockSit(2, e));
+            .addEventListener("click", () => this.dockSit(2));
         document.querySelector(".player_dock .dock_seat3")
-            .addEventListener("click", (e) => this.dockSit(3, e));
-        this.seat0_name = document.querySelector(".seat0_name");
-        this.seat1_name = document.querySelector(".seat1_name");
-        this.seat2_name = document.querySelector(".seat2_name");
-        this.seat3_name = document.querySelector(".seat3_name");
-        this.seat0_img = document.querySelector(".seat0_img");
-        this.seat1_img = document.querySelector(".seat1_img");
-        this.seat2_img = document.querySelector(".seat2_img");
-        this.seat3_img = document.querySelector(".seat3_img");
-        this.seat0_sitdown_btn = document.querySelector(".seat0_sitdown_btn");
+            .addEventListener("click", () => this.dockSit(3));
         this.seat0_sitdown_btn.addEventListener("click", () => this.gameAPIToggle(0));
-        this.seat1_sitdown_btn = document.querySelector(".seat1_sitdown_btn");
         this.seat1_sitdown_btn.addEventListener("click", () => this.gameAPIToggle(1));
-        this.seat2_sitdown_btn = document.querySelector(".seat2_sitdown_btn");
         this.seat2_sitdown_btn.addEventListener("click", () => this.gameAPIToggle(2));
-        this.seat3_sitdown_btn = document.querySelector(".seat3_sitdown_btn");
         this.seat3_sitdown_btn.addEventListener("click", () => this.gameAPIToggle(3));
-        this.gameid_span = document.querySelector(".gameid_span");
-        this.turnindex_span = document.querySelector(".turnindex_span");
-        this.turnphase_span = document.querySelector(".turnphase_span");
-        this.members_list = document.querySelector(".members_list");
-        this.visibility_display = document.querySelector(".visibility_display");
-        this.seat_count_display = document.querySelector(".seat_count_display");
-        this.message_level_display = document.querySelector(".message_level_display");
-        this.seats_per_user_display = document.querySelector(".seats_per_user_display");
-        this.message_level_select = document.querySelector(".message_level_select");
         this.message_level_select.addEventListener("input", () => this.gameAPIOptions());
-        this.seats_per_user_select = document.querySelector(".seats_per_user_select");
         this.seats_per_user_select.addEventListener("input", () => this.gameAPIOptions());
-        this.visibility_select = document.querySelector(".visibility_select");
         this.visibility_select.addEventListener("input", () => this.gameAPIOptions());
-        this.seat_count_select = document.querySelector(".seat_count_select");
         this.seat_count_select.addEventListener("input", () => this.gameAPIOptions());
         this.mute_button = document.querySelector(".mute_button");
         this.mute_button.addEventListener("click", (e) => this.muteClick(e));
-        this.send_message_list_button = document.querySelector(".send_message_list_button");
         this.send_message_list_button.addEventListener("click", () => this.sendGameMessage());
-        this.message_list_input = document.querySelector(".message_list_input");
         this.message_list_input.addEventListener("keyup", (e) => {
             if (e.key === "Enter")
                 this.sendGameMessage();
         });
-        this.messages_list = document.querySelector(".messages_list");
-        this.seats_full_display = document.querySelector(".seats_full_display");
-        this.match_start = document.querySelector(".match_start");
         this.match_start.addEventListener("click", () => this.startGame());
-        this.match_finish = document.querySelector(".match_finish");
         this.match_finish.addEventListener("click", () => this.finishGame());
-        this.match_reset = document.querySelector(".match_reset");
         this.match_reset.addEventListener("click", () => this.resetGame());
-        this.code_link_href = document.querySelector(".code_link_href");
-        this.code_link_copy = document.querySelector(".code_link_copy");
         if (this.code_link_copy)
             this.code_link_copy.addEventListener("click", () => this.copyGameLinkToClipboard());
         this.initGameMessageFeed();
@@ -260,7 +267,7 @@ export default class GameBaseApp extends BaseApp {
     }
     /** sit api call
      * @param { number } seatIndex 0 based seat index
-     * @param { gameNumber } gameNumber id for game doc
+     * @param { string } gameNumber id for game doc
      * @return { boolean } true is seat sitted in
     */
     _gameAPISit(seatIndex, gameNumber = null) {

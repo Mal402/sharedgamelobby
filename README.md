@@ -19,3 +19,17 @@ If you create firestore indexes on the server<br>
 Hosted<br>
 <a href="https://sharedgamelobby.web.app/" target="_blank">sharedgamelobby.web.app</a>
 <br>
+<br>
+* changing code<br><br>
+Editing the typescript for the browser -<br>
+Directory: public/uicode<br>
+Command: tsc --watch <br>
+<br>
+Editing the typescript for the cloud functions -<br>
+Directory: public/src<br>
+Command: tsc --watch<br>
+<br>
+To deploy - compiles the functions - but NOT the browser code<br>
+Directory: project\<br>
+Command: firebase deploy<br>
+<br>

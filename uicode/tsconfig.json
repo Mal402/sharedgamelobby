@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "target": "es2015",
+    "module": "es2015",
+    "moduleResolution": "node",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "outDir": "lib",
     "sourceMap": true,
     "allowJs": true,
     "esModuleInterop": true,
     "strict": true,
-    "target": "es2020"
+    "outDir": "./../public/models",
   },
-  "compileOnSave": true,
   "include": [
     "./"
   ]

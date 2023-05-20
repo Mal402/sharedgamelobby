@@ -1,38 +1,62 @@
+declare var firebase: any;
+declare var window: any;
+
 /** Base class for all pages - handles authorization and low level routing for api calls, etc */
-export class BaseApp {
+class BaseApp {
+  baseRedrawFeedTimer = 90000;
+  feedLimit = 10;
+  deferredPWAInstallPrompt: any = null;
+  projectId = firebase.app().options.projectId;
+  basePath = `https://us-central1-${this.projectId}.cloudfunctions.net/`;
+  urlParams = new URLSearchParams(window.location.search);
+  startBeer: string | null = "";
+  startTag: string | null = "";
+  filterTagsList: Array<any> = [];
+  muted = false;
+  night_mode_toggle: any = null;
+  tagList: Array<string> = [];
+  allBeers: any = null;
+  uid: any = null;
+  profile: any = null;
+  fireUser: any = null;
+  fireToken: any = null;
+  profileSubscription: any = null;
+  profileInited = false;
+  nightModeCurrent = false;
+  mute_button: any = null;
+
+  pickAudio: any = null;
+  downAudio: any = null;
+  upAudio: any = null;
+  lockAudio: any = null;
+
+  login_email: any = null;
+  tagColorsArrays: any = [];
+  tagPens: any = [];
+  tagColors: any = [];
+
   /** constructor  */
   constructor() {
-    this.baseRedrawFeedTimer = 90000;
-    this.feedLimit = 10;
-    window.addEventListener("beforeinstallprompt", (e) => {
+    window.addEventListener("beforeinstallprompt", (e: any) => {
       e.preventDefault();
       this.deferredPWAInstallPrompt = e;
     });
     if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js");
 
-    this.projectId = firebase.app().options.projectId;
-    this.basePath = `https://us-central1-${this.projectId}.cloudfunctions.net/`;
     if (window.location.hostname === "localhost") this.basePath = `http://localhost:5001/${this.projectId}/us-central1/`;
 
-    this.urlParams = new URLSearchParams(window.location.search);
     this.startBeer = this.urlParams.get("beer");
     this.startTag = this.urlParams.get("tag");
 
-    this.filterTagsList = [];
-    this.muted = false;
-
     this.night_mode_toggle = document.querySelector(".night_mode_toggle");
-    if (this.night_mode_toggle) this.night_mode_toggle.addEventListener("click", (e) => this.nightModeToggle(e));
+    if (this.night_mode_toggle) this.night_mode_toggle.addEventListener("click", (e: any) => this.nightModeToggle(e));
 
-    firebase.auth().onAuthStateChanged((u) => this.authHandleEvent(u));
+    firebase.auth().onAuthStateChanged((u: any) => this.authHandleEvent(u));
     this.signInWithURL();
-
-    this.collapse_headers = document.querySelectorAll(".collapse_header");
-    this.collapse_headers.forEach((ctl) => ctl.addEventListener("click", (e) => this.toggleCollapsePanel(ctl, e)));
 
     this.load();
   }
-  /** asynchronous loads - data setup - define a function: loadCallback if you need a callback */
+  /** asynchronous loads - data setup  */
   async load() {
     const promises = [];
     promises.push(this.readJSONFile(`/data/breweryMap.json`, "breweryJSON"));
@@ -51,13 +75,12 @@ export class BaseApp {
     this.allBeers = window.allBeers;
 
     this.authUpdateStatusUI();
-    if (this.loadCallback) this.loadCallback();
   }
   /** reads a json file async and sets window.varName to it's value
    * @param { string } path url to json data
    * @param { string } varName window.variable to hold data
    */
-  async readJSONFile(path, varName) {
+  async readJSONFile(path: string, varName: string) {
     if (window[varName]) return;
 
     try {
@@ -70,16 +93,10 @@ export class BaseApp {
   }
   /** Paints UI display/status for user profile based changes */
   authUpdateStatusUI() {
-    let html = "";
     document.body.classList.add("loaded");
     if (this.fireToken) {
-      html = "Profile";
-
       if (document.body.dataset.creator === this.uid) document.body.classList.add("user_editable_record");
-    } else {
-      html = "Sign In";
     }
-    if (this.profile_status_label) this.profile_status_label.innerHTML = html;
 
     if (this.profile) {
       this.updateNightModeStatus(this.profile.nightModeState);
@@ -90,7 +107,7 @@ export class BaseApp {
   /** firebase authorization event handler
    * @param { any } user logged in user - or null if not logged in
    */
-  async authHandleEvent(user) {
+  async authHandleEvent(user: any) {
     // ignore unwanted events
     if (user && this.uid === user.uid) {
       return;
@@ -118,7 +135,7 @@ export class BaseApp {
   /** setup watch for user profile changes */
   async _authInitProfile() {
     this.profileSubscription = firebase.firestore().doc(`Users/${this.uid}`)
-      .onSnapshot(async (snapshot) => {
+      .onSnapshot(async (snapshot: any) => {
         this.profileInited = true;
         this.profile = snapshot.data();
         if (!this.profile) {
@@ -160,7 +177,7 @@ export class BaseApp {
    * @param { number } index 0 = auto, 1 for day, 2 for nite
    * @param { any } e dom event object - preventDefault is called to stop anchor from navigating
    */
-  async updateProfileNightMode(ctl, index, e) {
+  async updateProfileNightMode(ctl: any, index: number, e: any) {
     const updatePacket = {
       nightModeState: index,
     };
@@ -187,7 +204,7 @@ export class BaseApp {
    * @param { any } e dom event object
    * @return { boolean } true to stop anchor navigation
    */
-  nightModeToggle(e) {
+  nightModeToggle(e: any) {
     let niteMode = 2;
     if (this.nightModeCurrent) niteMode = 1;
     this.updateNightModeStatus(niteMode);
@@ -198,7 +215,7 @@ export class BaseApp {
   /** store mute setting for user, mute any active sounds
    * @param { boolean } muted true if muted
    */
-  async updateMute(muted) {
+  async updateMute(muted: boolean) {
     this.muted = muted;
     if (!this.mute_button) return;
 
@@ -223,13 +240,13 @@ export class BaseApp {
   /** google sign in handler
    * @param { any } e dom event - preventDefault is called if passed
    */
-  async authGoogleSignIn(e) {
+  async authGoogleSignIn(e: any) {
     e.preventDefault();
-    this.provider = new firebase.auth.GoogleAuthProvider();
-    this.provider.setCustomParameters({
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({
       "display": "popup",
     });
-    await firebase.auth().signInWithPopup(this.provider);
+    await firebase.auth().signInWithPopup(provider);
     setTimeout(() => {
       location.href = "/";
     }, 1);
@@ -237,7 +254,7 @@ export class BaseApp {
   /** anonymous sign in handler
    * @param { any } e dom event - preventDefault is called if passed
    */
-  async signInAnon(e) {
+  async signInAnon(e: any) {
     e.preventDefault();
     await firebase.auth().signInAnonymously();
     setTimeout(() => {
@@ -248,7 +265,7 @@ export class BaseApp {
   /** email sign in handler from UI (sends email to user for logging in)
    * @param { any } e dom event - preventDefault is called if passed
    */
-  async signInByEmail(e) {
+  async signInByEmail(e: any) {
     e.preventDefault();
 
     let email = "";
@@ -284,9 +301,9 @@ export class BaseApp {
     firebase.auth().signInWithEmailLink(email, window.location.href)
       .then(() => {
         window.localStorage.removeItem("emailForSignIn");
-        location = "/profile";
+        window.location = "/profile";
       })
-      .catch((e) => console.log(e));
+      .catch((e: any) => console.log(e));
   }
   /** setup colors for tags */
   _generateColors() {
@@ -321,7 +338,7 @@ export class BaseApp {
    * @param { number } option 0: (default) brewey beer 2: beer, brewery
    * @return { string } beer description
    */
-  gameNameForBeer(beer, option = 0) {
+  gameNameForBeer(beer: string, option = 0) {
     const beerData = this.allBeers[beer];
     if (!beerData) return "missing name";
     const name = beerData.name ? beerData.name : "Missing Name";
@@ -336,7 +353,7 @@ export class BaseApp {
    * @param { Array<any> } array array of any type
    * @return { Array<any> } passed in array returned in randomized order
    */
-  _shuffleArray(array) {
+  _shuffleArray(array: Array<any>) {
     let currentIndex = array.length;
     while (0 !== currentIndex) {
       const randomIndex = Math.floor(Math.random() * currentIndex);
@@ -352,8 +369,8 @@ export class BaseApp {
    * @param { Date } date value to format
    * @return { string } formatted string value for time since
    */
-  timeSince(date) {
-    const seconds = Math.floor((new Date() - date) / 1000);
+  timeSince(date: Date) {
+    const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
 
     let interval = seconds / 31536000;
     if (interval > 1) return Math.floor(interval) + ` year${Math.floor(interval) === 1 ? "" : "s"} ago`;
@@ -377,7 +394,7 @@ export class BaseApp {
    * @param { string } startTimeISOString iso date GMT referenced
    * @return { Date } JS Date object with date in local time zone reference
    */
-  isoToLocal(startTimeISOString) {
+  isoToLocal(startTimeISOString: string) {
     const startTime = new Date(startTimeISOString);
     const offset = startTime.getTimezoneOffset();
     return new Date(startTime.getTime() - (offset * 60000));
@@ -386,7 +403,7 @@ export class BaseApp {
    * @param { any } d Date(d) is parsed
    * @return { string } mm/dd/yy string value
    */
-  shortShowDate(d) {
+  shortShowDate(d: any) {
     d = new Date(d);
     if (isNaN(d)) return "";
     const str = d.toISOString().substr(0, 10);
@@ -399,7 +416,7 @@ export class BaseApp {
    * @param { any } e dom event (preventDefault called if passed)
    * @return { boolean } true to cancel anchor navigation
    */
-  muteClick(e) {
+  muteClick(e: any) {
     this.muted = (!this.muted);
     this.updateMute(this.muted);
     e.preventDefault();
@@ -409,7 +426,7 @@ export class BaseApp {
    * @param { string } beer beer slug (brewery:beer)
    * @return { any }
    */
-  calcBeerTags(beer) {
+  calcBeerTags(beer: string) {
     const data = window.beerTotals.beers[beer];
     if (!data) {
       return {};

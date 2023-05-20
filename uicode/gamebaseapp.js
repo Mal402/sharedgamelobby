@@ -1,4 +1,4 @@
-import BaseApp from "/models/baseapp.js";
+import BaseApp from "./baseapp.js";
 
 /** common logic for game apps and game lobby */
 export default class GameBaseApp extends BaseApp {

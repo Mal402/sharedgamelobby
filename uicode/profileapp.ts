@@ -1,45 +1,48 @@
-import BaseApp from "/models/baseapp.js";
+import BaseApp from "./baseapp.js";
+declare var window: any;
+declare var firebase: any;
 
 /** app class for profile page */
 export class ProfileApp extends BaseApp {
-  /** constructor for profile app */
+  logged_in_status: any = document.querySelector(".logged_in_status");
+  login_google: any = document.getElementById("login_google");
+  login_email_anchor: any = document.getElementById("login_email_anchor");
+  anon_login_anchor: any = document.querySelector(".anon_login_anchor");
+  sign_out_button: any = document.querySelector(".sign_out_button");
+  night_mode_radios: any = document.querySelectorAll("[name=\"night_mode_radio\"]");
+  mute_audio_radios: any = document.querySelectorAll("[name=\"mute_audio_radio\"]");
+  reset_profile: any = document.querySelector(".reset_profile");
+  profile_display_name: any = document.querySelector(".profile_display_name");
+  profile_display_image: any = document.querySelector(".profile_display_image");
+  profile_display_image_upload: any = document.querySelector(".profile_display_image_upload");
+  file_upload_input: any = document.querySelector(".file_upload_input");
+  profile_display_image_clear: any = document.querySelector(".profile_display_image_clear");
+  profile_display_image_preset: any = document.querySelector(".profile_display_image_preset");
+  lastNameChange = 0;
+
+  /** */
   constructor() {
     super();
 
-    this.review_count = document.querySelector(".review_count");
-    this.review_overall = document.querySelector(".overall_count");
-    this.feed_list_wrapper = document.querySelector(".feed_list_wrapper");
-    this.logged_in_status = document.querySelector(".logged_in_status");
-    this.location_list_display = document.querySelector(".location_list_display");
-    this.brewery_list_display = document.querySelector(".brewery_list_display");
-    this.beer_list_display = document.querySelector(".beer_list_display");
-
-    this.login_google = document.getElementById("login_google");
-    this.login_google.addEventListener("click", (e) => this.authGoogleSignIn(e));
-    this.login_email_anchor = document.getElementById("login_email_anchor");
-    this.login_email_anchor.addEventListener("click", (e) => this.signInByEmail(e));
+    this.login_google.addEventListener("click", (e: any) => this.authGoogleSignIn(e));
+    this.login_email_anchor.addEventListener("click", (e: any) => this.signInByEmail(e));
 
     this.login_email = document.querySelector(".login_email");
-    this.anon_login_anchor = document.querySelector(".anon_login_anchor");
-    this.anon_login_anchor.addEventListener("click", (e) => this.signInAnon(e));
+    this.anon_login_anchor.addEventListener("click", (e: any) => this.signInAnon(e));
 
-    this.sign_out_button = document.querySelector(".sign_out_button");
-    this.sign_out_button.addEventListener("click", (e) => {
+    this.sign_out_button.addEventListener("click", (e: any) => {
       this.authSignout(e);
       e.preventDefault();
       return false;
     });
 
-    this.night_mode_radios = document.querySelectorAll("[name=\"night_mode_radio\"]");
-    this.night_mode_radios.forEach((ctl, index) => ctl.addEventListener("input", (e) => {
+    this.night_mode_radios.forEach((ctl: any, index: number) => ctl.addEventListener("input", (e: any) => {
       this.updateProfileNightMode(ctl, index, e);
     }));
 
-    this.mute_audio_radios = document.querySelectorAll("[name=\"mute_audio_radio\"]");
-    this.mute_audio_radios.forEach((ctl, index) => ctl.addEventListener("input", () => this.updateProfileAudioMode(index)));
+    this.mute_audio_radios.forEach((ctl: any, index: number) => ctl.addEventListener("input", () => this.updateProfileAudioMode(index)));
 
-    this.reset_profile = document.querySelector(".reset_profile");
-    this.reset_profile.addEventListener("click", (e) => {
+    this.reset_profile.addEventListener("click", (e: any) => {
       if (confirm("Are you sure you want to clear out all reviews and profile data?")) {
         this._authCreateDefaultProfile();
       }
@@ -47,20 +50,14 @@ export class ProfileApp extends BaseApp {
       return true;
     });
 
-    this.profile_display_name = document.querySelector(".profile_display_name");
-    this.profile_display_image = document.querySelector(".profile_display_image");
     this.profile_display_name.addEventListener("input", () => this.displayNameChange());
 
-    this.profile_display_image_upload = document.querySelector(".profile_display_image_upload");
     this.profile_display_image_upload.addEventListener("click", () => this.uploadProfileImage());
 
-    this.file_upload_input = document.querySelector(".file_upload_input");
     this.file_upload_input.addEventListener("input", () => this.fileUploadSelected());
 
-    this.profile_display_image_clear = document.querySelector(".profile_display_image_clear");
     this.profile_display_image_clear.addEventListener("click", () => this.clearProfileImage());
 
-    this.profile_display_image_preset = document.querySelector(".profile_display_image_preset");
     this.profile_display_image_preset.addEventListener("input", () => this.selectedProfilePreset());
 
     this.initPresetLogos();
@@ -93,7 +90,7 @@ export class ProfileApp extends BaseApp {
   /** signout of firebase authorization
    * @param { any } e dom event
    */
-  async authSignout(e) {
+  async authSignout(e: any) {
     e.preventDefault();
     if (this.fireToken) {
       await firebase.auth().signOut();
@@ -102,7 +99,7 @@ export class ProfileApp extends BaseApp {
       this.fireUser = null;
       this.uid = null;
 
-      location = "/profile";
+      window.location = "/profile";
     }
   }
   /** BaseApp override to paint profile specific authorization parameters */
@@ -111,7 +108,7 @@ export class ProfileApp extends BaseApp {
       let displayName = this.profile.displayName;
       if (!displayName) displayName = "";
 
-      if (!this.lastNameChange || this.lastNameChange + 2000 < new Date()) this.profile_display_name.value = displayName;
+      if (!this.lastNameChange || this.lastNameChange + 2000 < new Date().getTime()) this.profile_display_name.value = displayName;
 
       if (this.profile.displayImage) this.profile_display_image.style.backgroundImage = `url(${this.profile.displayImage})`;
       else this.profile_display_image.style.backgroundImage = `url(/images/defaultprofile.png)`;
@@ -135,7 +132,7 @@ export class ProfileApp extends BaseApp {
         merge: true,
       });
     }
-    this.lastNameChange = new Date();
+    this.lastNameChange = new Date().getTime();
   }
   /** paint user profile */
   updateInfoProfile() {
@@ -187,7 +184,7 @@ export class ProfileApp extends BaseApp {
   /** handle profile image upload complete
    * @param { string } path cloud path to image (includes uid)
    */
-  async _finishImagePathUpdate(path) {
+  async _finishImagePathUpdate(path: string) {
     const sRef2 = firebase.storage().ref("Users").child(this.uid + "/_resized/pimage_200x200");
     const resizePath = await sRef2.getDownloadURL();
     const updatePacket = {
@@ -214,7 +211,7 @@ export class ProfileApp extends BaseApp {
   /** handle for mute/audio settings change
    * @param { number } index radio button index (to set value)
   */
-  async updateProfileAudioMode(index) {
+  async updateProfileAudioMode(index: number) {
     const updatePacket = {
       muteState: (index === 0),
     };

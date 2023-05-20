@@ -1,4 +1,4 @@
-import GameBaseApp from "/models/gamebaseapp.js";
+import GameBaseApp from "./gamebaseapp.js";
 
 /** Guess app class */
 export class GuessApp extends GameBaseApp {

@@ -1,4 +1,4 @@
-import GameBaseApp from "/models/gamebaseapp.js";
+import GameBaseApp from "./gamebaseapp.js";
 
 /** Game Lobby App - for listing, joining and creating games  */
 export class GamesApp extends GameBaseApp {

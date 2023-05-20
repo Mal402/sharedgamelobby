@@ -1,4 +1,4 @@
-import GameBaseApp from "/models/gamebaseapp.js";
+import GameBaseApp from "./gamebaseapp.js";
 
 /** Match game UI app */
 export class MatchApp extends GameBaseApp {

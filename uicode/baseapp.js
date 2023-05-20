@@ -405,6 +405,41 @@ export class BaseApp {
     e.preventDefault();
     return true;
   }
+  /** calulate beer tag UI meta info
+   * @param { string } beer beer slug (brewery:beer)
+   * @return { any }
+   */
+  calcBeerTags(beer) {
+    const data = window.beerTotals.beers[beer];
+    if (!data) {
+      return {};
+    }
+    const tags = data.sortedTags;
+    let tagthreshold = data[tags[0]];
+    for (let c = 1; c < 4; c++) {
+      if (data[tags[c]] > tagthreshold) tagthreshold = data[tags[c]];
+    }
+
+    const levels = [];
+    const backgroundColors = [];
+    const colors = [];
+    const returnTags = [];
+    for (let c = 0; c < 4; c++) {
+      levels.push(data[tags[c]] / tagthreshold);
+      const index = this.tagList.indexOf(tags[c]);
+      backgroundColors.push(this.tagColors[index]);
+      colors.push(this.tagPens[index]);
+      returnTags.push(tags[c]);
+    }
+
+    return {
+      threshold: tagthreshold,
+      levels,
+      backgroundColors,
+      colors,
+      tags: returnTags,
+    };
+  }
 }
 
 export default BaseApp;

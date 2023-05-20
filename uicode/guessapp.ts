@@ -1,77 +1,72 @@
 import GameBaseApp from "./gamebaseapp.js";
+declare var firebase: any;
 
 /** Guess app class */
 export class GuessApp extends GameBaseApp {
+  vowelLetters = "AEIOU";
+  constLetters = "BCDFGHJKLMNPQRSTVWXYZ";
+  apiType = "guess";
+  correctLetters = "";
+  turnsSpun: any = {};
+  word_progress_display: any = document.querySelector(".word_progress_display");
+  keyboard_container: any = document.querySelector(".keyboard_container");
+  keyboard_keys: any = document.querySelectorAll(".keys");
+  action_desc: any = document.querySelector(".action_desc");
+  buy_vowel_button: any = document.querySelector(".buy_vowel_button");
+  match_start: any = document.querySelector(".match_start");
+  turn_number_div: any = document.querySelector(".turn_number_div");
+  turn_player_number_div: any = document.querySelector(".turn_player_number_div");
+  player_total_points: any = document.querySelector(".player_total_points");
+  player_total_for_turn: any = document.querySelector(".player_total_for_turn");
+  player_dock_prompt: any = document.querySelector(".player_dock_prompt");
+  currentplayer_score_dock: any = document.querySelector(".currentplayer_score_dock");
+  match_board_outer: any = document.querySelector(".match_board_outer");
+  player_name: any = document.querySelector(".player_name");
+  wheel_wrapper: any = document.querySelector(".wheel_wrapper");
+  game_instruction_container: any = document.querySelector(".game_instruction_container");
+  slidesContainer: any = document.querySelector(".slides-container");
+  slide: any = document.querySelector(".slide");
+  prevButton: any = document.querySelector(".slide-arrow-prev");
+  nextButton: any = document.querySelector(".slide-arrow-next");
+  wheelPosition = -1; // 0.5 * Math.PI;
+  renderedWheelPosition = -1;
+  spin_wheel: any = document.querySelector(".spin_wheel");
+  isSpinning = false;
+  isAccelerating = false;
+  game_feed_list_toggle: any = document.querySelector(".game_feed_list_toggle");
+  wheelSpinnerInited = false;
+  wheel_canvas: any = document.querySelector(".wheel_canvas");
+  hasSpun: any = {};
+  currentGame: any;
+  gameSubscription: any;
+
   /**  */
   constructor() {
     super();
 
-    this.vowelLetters = "AEIOU";
-    this.constLetters = "BCDFGHJKLMNPQRSTVWXYZ";
-
-    this.apiType = "guess";
-
-    this.correctLetters = "";
     this._initGameCommon();
-
-    this.turnsSpun = {};
-
-    this.word_progress_display = document.querySelector(".word_progress_display");
-
-    this.keyboard_container = document.querySelector(".keyboard_container");
-    this.keyboard_keys = document.querySelectorAll(".keys");
-    this.keyboard_keys.forEach((ctl) => ctl.addEventListener("click", () => this.keypressHandler(ctl)));
-
-    this.action_desc = document.querySelector(".action_desc");
-
-    this.buy_vowel_button = document.querySelector(".buy_vowel_button");
+    this.keyboard_keys.forEach((ctl: any) => ctl.addEventListener("click", () => this.keypressHandler(ctl)));
     this.buy_vowel_button.addEventListener("click", () => this.showVowel());
-
-    this.match_start = document.querySelector(".match_start");
     this.match_start.addEventListener("click", () => this.startGame());
 
-    this.turn_number_div = document.querySelector(".turn_number_div");
-    this.turn_player_number_div = document.querySelector(".turn_player_number_div");
-    this.player_total_points = document.querySelector(".player_total_points");
-    this.player_total_for_turn = document.querySelector(".player_total_for_turn");
-    this.player_dock_prompt = document.querySelector(".player_dock_prompt");
-
-    this.currentplayer_score_dock = document.querySelector(".currentplayer_score_dock");
-    this.match_board_outer = document.querySelector(".match_board_outer");
-    this.player_name = document.querySelector(".player_name");
-
-    this.wheel_wrapper = document.querySelector(".wheel_wrapper");
-
-    this.game_instruction_container = document.querySelector(".game_instruction_container");
-    this.slidesContainer = document.querySelector(".slides-container");
-    this.slide = document.querySelector(".slide");
-    this.prevButton = document.querySelector(".slide-arrow-prev");
     this.prevButton.addEventListener("click", () => {
       const slideWidth = this.slide.clientWidth;
       this.slidesContainer.scrollLeft -= slideWidth;
     });
 
-    this.nextButton = document.querySelector(".slide-arrow-next");
     this.nextButton.addEventListener("click", () => {
       const slideWidth = this.slide.clientWidth;
       this.slidesContainer.scrollLeft += slideWidth;
     });
 
-    this.wheelPosition = -1; // 0.5 * Math.PI;
-
-    this.spin_wheel = document.querySelector(".spin_wheel");
     this.spin_wheel.addEventListener("click", () => this.startSpin());
-    this.isSpinning = false;
-    this.isAccelerating = false;
-
-    this.game_feed_list_toggle = document.querySelector(".game_feed_list_toggle");
     this.game_feed_list_toggle.addEventListener("click", () => this.toggleTabView());
     this.toggleTabView();
   }
   /** handles keyboard click by user
    * @param { any } ctl dom button clicked
    */
-  async keypressHandler(ctl) {
+  async keypressHandler(ctl: any) {
     if (this.gameData.turnPhase !== "letter") return;
 
     const guessLetter = ctl.dataset.key;
@@ -123,7 +118,7 @@ export class GuessApp extends GameBaseApp {
     // Generate random float in range min-max:
     // const rand = (m, M) => Math.random() * (M - m) + m;
     const elSpin = this.spin_wheel;
-    const ctx = document.querySelector(".wheel_canvas").getContext("2d");
+    const ctx = this.wheel_canvas.getContext("2d");
     const dia = ctx.canvas.width;
     const rad = dia / 2;
     const PI = Math.PI;
@@ -133,7 +128,7 @@ export class GuessApp extends GameBaseApp {
     let angVel = 0; // Current angular velocity
 
     //* Draw sectors and prizes texts to canvas */
-    const drawSector = (sector, i) => {
+    const drawSector = (sector: any, i: number) => {
       const ang = arc * i;
       ctx.save();
       // COLOR
@@ -265,13 +260,13 @@ export class GuessApp extends GameBaseApp {
 
       if (this.gameSubscription) this.gameSubscription();
       this.gameSubscription = firebase.firestore().doc(`Games/${this.currentGame}`)
-        .onSnapshot((doc) => this.paintGameData(doc));
+        .onSnapshot((doc: any) => this.paintGameData(doc));
     }
   }
   /** paint game data (game document change handler)
    * @param { any } gameDoc firestore query snapshot
    */
-  paintGameData(gameDoc = null) {
+  paintGameData(gameDoc: any = null) {
     if (gameDoc) this.gameData = gameDoc.data();
     if (!this.gameData) return;
     if (!this.allBeers) return;
@@ -356,7 +351,7 @@ export class GuessApp extends GameBaseApp {
     const gName = this.gameData.solutionText;
     const chars = Array.from(gName);
     html += "<div class=\"hangbeer_word\">";
-    chars.forEach((char) => {
+    chars.forEach((char: any) => {
       if (char !== " ") {
         let d = char;
 
@@ -372,7 +367,7 @@ export class GuessApp extends GameBaseApp {
   }
   /** */
   updateKeyboardStatus() {
-    this.keyboard_keys.forEach((ctl) => {
+    this.keyboard_keys.forEach((ctl: any) => {
       const key = ctl.dataset.key.toUpperCase();
       ctl.classList.remove("hide_used");
       if (this.correctLetters.indexOf(key) !== -1) ctl.classList.add("hide_used");

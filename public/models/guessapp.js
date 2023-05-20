@@ -8,17 +8,13 @@ export class GuessApp extends GameBaseApp {
         this.constLetters = "BCDFGHJKLMNPQRSTVWXYZ";
         this.apiType = "guess";
         this.correctLetters = "";
-        this._initGameCommon();
         this.turnsSpun = {};
         this.word_progress_display = document.querySelector(".word_progress_display");
         this.keyboard_container = document.querySelector(".keyboard_container");
         this.keyboard_keys = document.querySelectorAll(".keys");
-        this.keyboard_keys.forEach((ctl) => ctl.addEventListener("click", () => this.keypressHandler(ctl)));
         this.action_desc = document.querySelector(".action_desc");
         this.buy_vowel_button = document.querySelector(".buy_vowel_button");
-        this.buy_vowel_button.addEventListener("click", () => this.showVowel());
         this.match_start = document.querySelector(".match_start");
-        this.match_start.addEventListener("click", () => this.startGame());
         this.turn_number_div = document.querySelector(".turn_number_div");
         this.turn_player_number_div = document.querySelector(".turn_player_number_div");
         this.player_total_points = document.querySelector(".player_total_points");
@@ -32,21 +28,29 @@ export class GuessApp extends GameBaseApp {
         this.slidesContainer = document.querySelector(".slides-container");
         this.slide = document.querySelector(".slide");
         this.prevButton = document.querySelector(".slide-arrow-prev");
+        this.nextButton = document.querySelector(".slide-arrow-next");
+        this.wheelPosition = -1; // 0.5 * Math.PI;
+        this.renderedWheelPosition = -1;
+        this.spin_wheel = document.querySelector(".spin_wheel");
+        this.isSpinning = false;
+        this.isAccelerating = false;
+        this.game_feed_list_toggle = document.querySelector(".game_feed_list_toggle");
+        this.wheelSpinnerInited = false;
+        this.wheel_canvas = document.querySelector(".wheel_canvas");
+        this.hasSpun = {};
+        this._initGameCommon();
+        this.keyboard_keys.forEach((ctl) => ctl.addEventListener("click", () => this.keypressHandler(ctl)));
+        this.buy_vowel_button.addEventListener("click", () => this.showVowel());
+        this.match_start.addEventListener("click", () => this.startGame());
         this.prevButton.addEventListener("click", () => {
             const slideWidth = this.slide.clientWidth;
             this.slidesContainer.scrollLeft -= slideWidth;
         });
-        this.nextButton = document.querySelector(".slide-arrow-next");
         this.nextButton.addEventListener("click", () => {
             const slideWidth = this.slide.clientWidth;
             this.slidesContainer.scrollLeft += slideWidth;
         });
-        this.wheelPosition = -1; // 0.5 * Math.PI;
-        this.spin_wheel = document.querySelector(".spin_wheel");
         this.spin_wheel.addEventListener("click", () => this.startSpin());
-        this.isSpinning = false;
-        this.isAccelerating = false;
-        this.game_feed_list_toggle = document.querySelector(".game_feed_list_toggle");
         this.game_feed_list_toggle.addEventListener("click", () => this.toggleTabView());
         this.toggleTabView();
     }
@@ -106,7 +110,7 @@ export class GuessApp extends GameBaseApp {
         // Generate random float in range min-max:
         // const rand = (m, M) => Math.random() * (M - m) + m;
         const elSpin = this.spin_wheel;
-        const ctx = document.querySelector(".wheel_canvas").getContext("2d");
+        const ctx = this.wheel_canvas.getContext("2d");
         const dia = ctx.canvas.width;
         const rad = dia / 2;
         const PI = Math.PI;

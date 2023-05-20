@@ -1,7 +1,51 @@
 import GameBaseApp from "./gamebaseapp.js";
+declare var window: any;
+declare var firebase: any;
 
 /** Match game UI app */
 export class MatchApp extends GameBaseApp {
+  currentplayer_score_dock:any = document.querySelector(".currentplayer_score_dock");
+  match_board_wrapper:any = document.querySelector(".match_board_wrapper");
+  card_deck_display:any = document.querySelector(".card_deck_display");
+  card_deck_select:any = document.querySelector(".card_deck_select");
+  scoring_system_display:any = document.querySelector(".scoring_system_display");
+  scoring_system_select:any = document.querySelector(".scoring_system_select");
+  turn_number_div:any = document.querySelector(".turn_number_div");
+  player_total_points:any = document.querySelector(".player_total_points");
+  player_total_for_turn:any = document.querySelector(".player_total_for_turn");
+  player_dock_prompt:any = document.querySelector(".player_dock_prompt");
+  game_feed_list_toggle:any = document.querySelector(".game_feed_list_toggle");
+  tracer_line_0:any = document.querySelector(".tracer_line_0");
+  tracer_line_1:any = document.querySelector(".tracer_line_1");
+  members_header_toggle_button:any = document.querySelector(".members_header_toggle_button");
+  tag_inner:any = document.querySelectorAll(".tag_inner");
+  tag_description:any = document.querySelectorAll(".tag_description");
+  match_result_message: any = document.querySelector(".match_result_message");
+  seat0_total: any = document.querySelector(".seat0_results .score_total");
+  seat1_total: any = document.querySelector(".seat1_results .score_total");
+  seat2_total: any = document.querySelector(".seat2_results .score_total");
+  seat3_total: any = document.querySelector(".seat3_results .score_total");
+  seat0_results: any = document.querySelector(".seat0_results");
+  seat1_results: any = document.querySelector(".seat1_results");
+  seat2_results: any = document.querySelector(".seat2_results");
+  seat3_results: any = document.querySelector(".seat3_results");
+  match_end_display_promo: any = document.querySelector(".match_end_display_promo");
+  upperRightDisplayCard: any;
+  upperLeftDisplayCard: any;
+  lowerLeftDisplayCard: any;
+  lowerRightDisplayCard: any;
+
+  matchCards: any = [];
+  zoom_out_beer_cards: any = [];
+  bigDiv0: any;
+  bigDiv1: any;
+  cardsPerColumn = 0;
+  alertErrors = false;
+  currentGame: any = null;
+  gameSubscription: any;
+  previousMode: any;
+  cardShowQs: any;
+
   /** */
   constructor() {
     super();
@@ -9,35 +53,11 @@ export class MatchApp extends GameBaseApp {
 
     this._initGameCommon();
 
-    this.currentplayer_score_dock = document.querySelector(".currentplayer_score_dock");
-    this.match_board_wrapper = document.querySelector(".match_board_wrapper");
-
-    this.card_deck_display = document.querySelector(".card_deck_display");
-    this.card_deck_select = document.querySelector(".card_deck_select");
     this.card_deck_select.addEventListener("input", () => this.gameAPIOptions());
-
-    this.scoring_system_display = document.querySelector(".scoring_system_display");
-    this.scoring_system_select = document.querySelector(".scoring_system_select");
     this.scoring_system_select.addEventListener("input", () => this.gameAPIOptions());
-
-    this.turn_number_div = document.querySelector(".turn_number_div");
-    this.player_total_points = document.querySelector(".player_total_points");
-    this.player_total_for_turn = document.querySelector(".player_total_for_turn");
-    this.player_dock_prompt = document.querySelector(".player_dock_prompt");
     this.player_dock_prompt.addEventListener("click", () => this.turnPhaseAdvance());
-
-    this.game_feed_list_toggle = document.querySelector(".game_feed_list_toggle");
     this.game_feed_list_toggle.addEventListener("click", () => this.toggleTabView());
-
-    this.tracer_line_0 = document.querySelector(".tracer_line_0");
-    this.tracer_line_1 = document.querySelector(".tracer_line_1");
-
-    this.members_header_toggle_button = document.querySelector(".members_header_toggle_button");
     this.members_header_toggle_button.addEventListener("click", () => this.toggleMembersHeader());
-
-    this.tag_inner = document.querySelectorAll(".tag_inner");
-    this.tag_description = document.querySelectorAll(".tag_description");
-    this.alertErrors = false;
 
     this.toggleTabView();
   }
@@ -60,7 +80,6 @@ export class MatchApp extends GameBaseApp {
   /** BaseApp override to paint profile specific authorization parameters */
   async authUpdateStatusUI() {
     super.authUpdateStatusUI();
-    this.currentGame = null;
     this.gameid_span.innerHTML = "";
     this.initRTDBPresence();
 
@@ -72,7 +91,7 @@ export class MatchApp extends GameBaseApp {
 
       if (this.gameSubscription) this.gameSubscription();
       this.gameSubscription = firebase.firestore().doc(`Games/${this.currentGame}`)
-        .onSnapshot((doc) => this.paintGameData(doc));
+        .onSnapshot((doc: any) => this.paintGameData(doc));
     }
   }
   /** BaseApp override to load card decks */
@@ -92,7 +111,7 @@ export class MatchApp extends GameBaseApp {
    * @param { number } cardIndex 0 based index of a card for the deck
    * @return { any } meta data for a specific card
    */
-  getCardMeta(cardIndex) {
+  getCardMeta(cardIndex: number): any {
     let cards = 8;
     if (this.gameData.runningNumberOfSeats > 2) cards = 12;
     cardIndex = cardIndex % cards;
@@ -101,7 +120,7 @@ export class MatchApp extends GameBaseApp {
     if (!cardData) cardData = {};
 
     const beerSlug = cardData.beerSlug;
-    const cardInfo = {
+    const cardInfo: any = {
       beerSlug,
       deckIndex: cardIndex,
       fullName: this.gameNameForBeer(beerSlug),
@@ -120,7 +139,7 @@ export class MatchApp extends GameBaseApp {
   /** paint game data
    * @param { any } gameDoc firestore game query result document
   */
-  paintGameData(gameDoc = null) {
+  paintGameData(gameDoc: any = null) {
     if (gameDoc) this.gameData = gameDoc.data();
 
     if (!this.gameData) return;
@@ -202,23 +221,18 @@ export class MatchApp extends GameBaseApp {
       msg = "";
     }
 
-    this.match_result_message = document.querySelector(".match_result_message");
-    this.seat0_total = document.querySelector(".seat0_results .score_total");
-    this.seat1_total = document.querySelector(".seat1_results .score_total");
-    this.seat2_total = document.querySelector(".seat2_results .score_total");
-    this.seat3_total = document.querySelector(".seat3_results .score_total");
 
     let name = this.gameData.memberNames[this.gameData.seat0];
     if (!name) name = "Anonymous";
 
-    document.querySelector(".seat0_results").classList.remove("winner");
-    document.querySelector(".seat1_results").classList.remove("winner");
-    document.querySelector(".seat2_results").classList.remove("winner");
-    document.querySelector(".seat3_results").classList.remove("winner");
+    this.seat0_results.classList.remove("winner");
+    this.seat1_results.classList.remove("winner");
+    this.seat2_results.classList.remove("winner");
+    this.seat3_results.classList.remove("winner");
 
     let wIndex = this.gameData.winningSeatIndex;
     if (!wIndex) wIndex = 0;
-    document.querySelector(`.seat${wIndex}_results`).classList.add("winner");
+    (<any>document.querySelector(`.seat${wIndex}_results`)).classList.add("winner");
 
     this.match_result_message.innerHTML = msg;
     this.seat0_total.innerHTML = `<span class="score_name">${name}</span>
@@ -253,7 +267,6 @@ export class MatchApp extends GameBaseApp {
       this.seat3_total.innerHTML = "";
     }
 
-    this.match_end_display_promo = document.querySelector(".match_end_display_promo");
     let deckIndex = 0;
     if (this.gameData.lastMatchIndex) deckIndex = this.gameData.lastMatchIndex;
     const cardMeta = this.getCardMeta(deckIndex);
@@ -308,19 +321,19 @@ export class MatchApp extends GameBaseApp {
     }
 
     if (!this.zoom_out_beer_cards) return;
-    this.zoom_out_beer_cards.forEach((ctl) => ctl.classList.remove("selection_missed"));
-    this.zoom_out_beer_cards.forEach((ctl) => ctl.classList.remove("selection_matched"));
+    this.zoom_out_beer_cards.forEach((ctl: any) => ctl.classList.remove("selection_missed"));
+    this.zoom_out_beer_cards.forEach((ctl: any) => ctl.classList.remove("selection_matched"));
 
     this._updateCardZoomState();
     if (this.gameData.previousCard0 > -1 && this.gameData.previousCard1 > -1) {
       if (this.gameData.selectionMatched) {
         this.matchCards[this.gameData.previousCard0].classList.add("selection_matched");
         this.matchCards[this.gameData.previousCard1].classList.add("selection_matched");
-        this.zoom_out_beer_cards.forEach((ctl) => ctl.classList.add("selection_matched"));
+        this.zoom_out_beer_cards.forEach((ctl: any) => ctl.classList.add("selection_matched"));
       } else {
         this.matchCards[this.gameData.previousCard0].classList.add("selection_missed");
         this.matchCards[this.gameData.previousCard1].classList.add("selection_missed");
-        this.zoom_out_beer_cards.forEach((ctl) => ctl.classList.add("selection_missed"));
+        this.zoom_out_beer_cards.forEach((ctl: any) => ctl.classList.add("selection_missed"));
       }
 
       const smallCard0 = this.matchCards[this.gameData.previousCard0];
@@ -328,7 +341,7 @@ export class MatchApp extends GameBaseApp {
       const leftOffset = this.match_board_wrapper.getBoundingClientRect().x;
       const topOffset = this.match_board_wrapper.getBoundingClientRect().y;
 
-      const setTracer = (smallCard, bigCard, line) => {
+      const setTracer = (smallCard: any, bigCard: any, line: any) => {
         const smallWidth = smallCard.getBoundingClientRect().width;
         const smallHeight = smallCard.getBoundingClientRect().height;
         const bigWidth = bigCard.getBoundingClientRect().width;
@@ -379,10 +392,10 @@ export class MatchApp extends GameBaseApp {
   /** paint cards on table */
   _renderMatchBoard() {
     this.matchBoardRendered = this.gameData.cardCount;
-    const lowerLeft = document.querySelector(".lower_left.match_quandrant");
-    const lowerRight = document.querySelector(".lower_right.match_quandrant");
-    const upperLeft = document.querySelector(".upper_left.match_quandrant");
-    const upperRight = document.querySelector(".upper_right.match_quandrant");
+    const lowerLeft: any = document.querySelector(".lower_left.match_quandrant");
+    const lowerRight: any = document.querySelector(".lower_right.match_quandrant");
+    const upperLeft: any = document.querySelector(".upper_left.match_quandrant");
+    const upperRight: any = document.querySelector(".upper_right.match_quandrant");
     lowerLeft.innerHTML = "";
     lowerRight.innerHTML = "";
     upperLeft.innerHTML = "";
@@ -451,7 +464,7 @@ export class MatchApp extends GameBaseApp {
    * @param { any } div dom element
    * @param { number } cardIndex 0 based card index
    */
-  cardSelected(e, div, cardIndex) {
+  cardSelected(e: any, div: any, cardIndex: number) {
     this.refreshOnlinePresence();
 
     if (this.uid !== this.gameData["seat" + this.gameData.currentSeat]) return;
@@ -505,19 +518,19 @@ export class MatchApp extends GameBaseApp {
 
       let qs1 = 1;
       if (q1 === 0) {
-        if (q0 !== 1 && q1 !== 1 && qs0 !== 1) qs1 = 1;
+        if (q0 !== 1 && qs0 !== 1) qs1 = 1;
         else qs1 = 2;
       }
       if (q1 === 1) {
-        if (q0 !== 3 && q1 !== 3 && qs0 !== 3) qs1 = 3;
+        if (q0 !== 3 && qs0 !== 3) qs1 = 3;
         else qs1 = 0;
       }
       if (q1 === 2) {
-        if (q0 !== 3 && q1 !== 3 && qs0 !== 3) qs1 = 3;
+        if (q0 !== 3 && qs0 !== 3) qs1 = 3;
         else qs1 = 0;
       }
       if (q1 === 3) {
-        if (q0 !== 2 && q1 !== 2 && qs0 !== 2) qs1 = 2;
+        if (q0 !== 2 && qs0 !== 2) qs1 = 2;
         else qs1 = 1;
       }
 
@@ -633,14 +646,14 @@ export class MatchApp extends GameBaseApp {
    * @param { number } card card position index
    * @return { number } quandrant index; 0 - 3
    */
-  _quandrantForCard(card) {
+  _quandrantForCard(card: number) {
     return Math.floor(card / (this.cardsPerColumn * 2));
   }
   /** api call to send card selection */
   async _sendSelection() {
     //  this.match_start.setAttribute("disabled", true);
     const action = "sendSelection";
-    const selectedCards = [];
+    const selectedCards: any = [];
     const body = {
       gameId: this.currentGame,
       previousCard0: this.gameData.previousCard0,
@@ -757,7 +770,7 @@ export class MatchApp extends GameBaseApp {
    * @param { any } cardInfo card meta data
    * @return { string } html data
    */
-  _cardTemplate(cardInfo) {
+  _cardTemplate(cardInfo: any) {
     return `<span class="card_inner" data-bkg="${btoa(cardInfo.image)}"></span>`;
   }
 }

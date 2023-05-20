@@ -4,30 +4,44 @@ export class MatchApp extends GameBaseApp {
     /** */
     constructor() {
         super();
-        this.apiType = "match";
-        this._initGameCommon();
         this.currentplayer_score_dock = document.querySelector(".currentplayer_score_dock");
         this.match_board_wrapper = document.querySelector(".match_board_wrapper");
         this.card_deck_display = document.querySelector(".card_deck_display");
         this.card_deck_select = document.querySelector(".card_deck_select");
-        this.card_deck_select.addEventListener("input", () => this.gameAPIOptions());
         this.scoring_system_display = document.querySelector(".scoring_system_display");
         this.scoring_system_select = document.querySelector(".scoring_system_select");
-        this.scoring_system_select.addEventListener("input", () => this.gameAPIOptions());
         this.turn_number_div = document.querySelector(".turn_number_div");
         this.player_total_points = document.querySelector(".player_total_points");
         this.player_total_for_turn = document.querySelector(".player_total_for_turn");
         this.player_dock_prompt = document.querySelector(".player_dock_prompt");
-        this.player_dock_prompt.addEventListener("click", () => this.turnPhaseAdvance());
         this.game_feed_list_toggle = document.querySelector(".game_feed_list_toggle");
-        this.game_feed_list_toggle.addEventListener("click", () => this.toggleTabView());
         this.tracer_line_0 = document.querySelector(".tracer_line_0");
         this.tracer_line_1 = document.querySelector(".tracer_line_1");
         this.members_header_toggle_button = document.querySelector(".members_header_toggle_button");
-        this.members_header_toggle_button.addEventListener("click", () => this.toggleMembersHeader());
         this.tag_inner = document.querySelectorAll(".tag_inner");
         this.tag_description = document.querySelectorAll(".tag_description");
+        this.match_result_message = document.querySelector(".match_result_message");
+        this.seat0_total = document.querySelector(".seat0_results .score_total");
+        this.seat1_total = document.querySelector(".seat1_results .score_total");
+        this.seat2_total = document.querySelector(".seat2_results .score_total");
+        this.seat3_total = document.querySelector(".seat3_results .score_total");
+        this.seat0_results = document.querySelector(".seat0_results");
+        this.seat1_results = document.querySelector(".seat1_results");
+        this.seat2_results = document.querySelector(".seat2_results");
+        this.seat3_results = document.querySelector(".seat3_results");
+        this.match_end_display_promo = document.querySelector(".match_end_display_promo");
+        this.matchCards = [];
+        this.zoom_out_beer_cards = [];
+        this.cardsPerColumn = 0;
         this.alertErrors = false;
+        this.currentGame = null;
+        this.apiType = "match";
+        this._initGameCommon();
+        this.card_deck_select.addEventListener("input", () => this.gameAPIOptions());
+        this.scoring_system_select.addEventListener("input", () => this.gameAPIOptions());
+        this.player_dock_prompt.addEventListener("click", () => this.turnPhaseAdvance());
+        this.game_feed_list_toggle.addEventListener("click", () => this.toggleTabView());
+        this.members_header_toggle_button.addEventListener("click", () => this.toggleMembersHeader());
         this.toggleTabView();
     }
     /** show/hide members list in header */
@@ -50,7 +64,6 @@ export class MatchApp extends GameBaseApp {
     /** BaseApp override to paint profile specific authorization parameters */
     async authUpdateStatusUI() {
         super.authUpdateStatusUI();
-        this.currentGame = null;
         this.gameid_span.innerHTML = "";
         this.initRTDBPresence();
         const gameId = this.urlParams.get("game");
@@ -185,18 +198,13 @@ export class MatchApp extends GameBaseApp {
         if (this.gameData.gameFinished) {
             msg = "";
         }
-        this.match_result_message = document.querySelector(".match_result_message");
-        this.seat0_total = document.querySelector(".seat0_results .score_total");
-        this.seat1_total = document.querySelector(".seat1_results .score_total");
-        this.seat2_total = document.querySelector(".seat2_results .score_total");
-        this.seat3_total = document.querySelector(".seat3_results .score_total");
         let name = this.gameData.memberNames[this.gameData.seat0];
         if (!name)
             name = "Anonymous";
-        document.querySelector(".seat0_results").classList.remove("winner");
-        document.querySelector(".seat1_results").classList.remove("winner");
-        document.querySelector(".seat2_results").classList.remove("winner");
-        document.querySelector(".seat3_results").classList.remove("winner");
+        this.seat0_results.classList.remove("winner");
+        this.seat1_results.classList.remove("winner");
+        this.seat2_results.classList.remove("winner");
+        this.seat3_results.classList.remove("winner");
         let wIndex = this.gameData.winningSeatIndex;
         if (!wIndex)
             wIndex = 0;
@@ -234,7 +242,6 @@ export class MatchApp extends GameBaseApp {
         else {
             this.seat3_total.innerHTML = "";
         }
-        this.match_end_display_promo = document.querySelector(".match_end_display_promo");
         let deckIndex = 0;
         if (this.gameData.lastMatchIndex)
             deckIndex = this.gameData.lastMatchIndex;
@@ -482,25 +489,25 @@ export class MatchApp extends GameBaseApp {
             }
             let qs1 = 1;
             if (q1 === 0) {
-                if (q0 !== 1 && q1 !== 1 && qs0 !== 1)
+                if (q0 !== 1 && qs0 !== 1)
                     qs1 = 1;
                 else
                     qs1 = 2;
             }
             if (q1 === 1) {
-                if (q0 !== 3 && q1 !== 3 && qs0 !== 3)
+                if (q0 !== 3 && qs0 !== 3)
                     qs1 = 3;
                 else
                     qs1 = 0;
             }
             if (q1 === 2) {
-                if (q0 !== 3 && q1 !== 3 && qs0 !== 3)
+                if (q0 !== 3 && qs0 !== 3)
                     qs1 = 3;
                 else
                     qs1 = 0;
             }
             if (q1 === 3) {
-                if (q0 !== 2 && q1 !== 2 && qs0 !== 2)
+                if (q0 !== 2 && qs0 !== 2)
                     qs1 = 2;
                 else
                     qs1 = 1;

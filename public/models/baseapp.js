@@ -52,8 +52,6 @@ class BaseApp {
         promises.push(this.readJSONFile(`/data/breweryMap.json`, "breweryJSON"));
         promises.push(this.readJSONFile(`/data/beerMap.json`, "allBeers"));
         promises.push(this.readJSONFile(`/data/beerTags.json`, "beerTagsMap"));
-        promises.push(this.readJSONFile(`/data/trending.json`, "trendingMap"));
-        promises.push(this.readJSONFile(`/data/storeMap.json`, "storesJSON"));
         promises.push(this.readJSONFile(`/data/beerTotals.json`, "beerTotals"));
         await Promise.all(promises);
         this.tagList = Object.keys(window.beerTagsMap);

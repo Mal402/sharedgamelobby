@@ -8,8 +8,6 @@ body {
   min-height: 100.3vh;
 }
 
-body.night_mode {}
-
 .impact-font {
   font-family: 'Arial';
   color: rgb(50, 100, 200);
@@ -83,20 +81,6 @@ a {
   color: rgb(240, 240, 240);
 }
 
-.search_box_wrapper {
-  padding-left: 8px;
-  padding-right: 8px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.gsc-control-cse.gsc-control-cse-en {
-  padding: 0;
-  background: none;
-  border: none;
-}
-
 .card_shadow.review_template {
   display: flex;
   flex-direction: column;
@@ -126,31 +110,6 @@ a {
   box-sizing: border-box;
 }
 
-.location_link_anchor {
-  display: block;
-  text-align: left;
-  text-decoration: none;
-  white-space: nowrap;
-  overflow: hidden;
-  line-height: 44px;
-  font-size: 22px;
-}
-
-.location_link_anchor span {
-  text-decoration: underline;
-}
-
-.location_link_anchor>div {
-  height: 30px;
-  display: inline-block;
-  width: 35px;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  position: relative;
-  top: 10px;
-}
-
 .anchor_wrapper {
   line-height: 2.25em;
   padding: 6px;
@@ -167,19 +126,6 @@ a {
   position: relative;
   top: 8px;
   padding-right: 5px;
-}
-
-.abv_table {
-  display: inline-block;
-}
-
-.abv_table td {
-  padding: 6px;
-}
-
-.beer_brewery_nav {
-  display: block;
-  padding: 10px 0px;
 }
 
 .main_page_link_list {
@@ -226,35 +172,6 @@ a {
 
 .break_underline_anchor span {
   text-decoration: underline;
-}
-
-.store_anchor_wrapper {
-  display: flex;
-}
-
-.store_anchor_wrapper i {
-  position: relative;
-  top: 12px;
-  padding: 0 6px;
-}
-
-.beer_navigation_links {
-  display: none;
-  padding-right: 1em;
-}
-
-.loaded .beer_navigation_links {
-  display: block;
-}
-
-.copyright_panel {
-  padding: 4px;
-  text-align: center;
-  line-height: 1.75em;
-}
-
-.copyright_panel a {
-  padding: .5em;
 }
 
 .base_menu_panel_wrapper {
@@ -310,9 +227,6 @@ a.night_mode_toggle {
   padding: 12px 12px;
 }
 
-a.take_me_to_location_button i {
-}
-
 a.profile_menu_anchor, a.home_menu_anchor, a.mute_button,
 a.take_me_to_location_button, a.anchor_button, a.brews_button,
 a.games_menu_anchor {
@@ -325,19 +239,6 @@ a.games_menu_anchor {
 
 a.mute_button i {
   font-size: 40px;
-}
-
-a.profile_menu_anchor i {
-
-}
-
-a.brews_button i {
-}
-
-a.home_menu_anchor i {
-}
-
-a.games_menu_anchor i {
 }
 
 .night_mode_toggle .mode_day {
@@ -354,47 +255,6 @@ a.games_menu_anchor i {
 
 .night_mode .night_mode_toggle .mode_night {
   display: none;
-}
-
-.contents_search_wrapper {
-  padding: 8px;
-  padding-right: 120px;
-}
-
-.collapse_panel {
-  opacity: 1;
-  transition: opacity .4s ease-in;
-}
-
-.collapsed>.collapse_panel {
-  height: 0;
-  padding: 0 !important;
-  margin: 0 !important;
-  opacity: 0;
-  overflow: hidden;
-}
-
-.collapse_header {
-  margin: 0;
-  cursor: pointer;
-}
-
-.paragraphfit_auto {
-  overflow: auto;
-  text-align: justify;
-}
-
-.seo_page_header {
-  height: 60px;
-}
-
-.signup_alert {
-  display: none;
-}
-
-.app_signed_out .signup_alert {
-  display: block;
-  text-align: left;
 }
 
 .signed_out_options {
@@ -449,98 +309,6 @@ a.games_menu_anchor i {
   text-align: center;
   font-size: .7em;
   padding-right: 8px;
-}
-
-.line_owner {
-  border: solid red 1px;
-}
-
-.profile_beer_anchor {
-  width: 110px;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  font-size: .6em;
-}
-
-.profile_beer_anchor img {
-  height: 120px;
-}
-
-.list_center_row {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.landing_text {
-  text-align: left;
-  padding: .5em;
-  font-size: 1.5em;
-}
-
-.likability_bar_wrapper {
-  height: 2em;
-  position: relative;
-  font-size: 1.5em;
-  box-sizing: border-box;
-  margin: 0 1.5em;
-  border-top-left-radius: .25em;
-  border-top-right-radius: .25em;
-  overflow: hidden;
-  flex: 1;
-  display: block;
-  text-decoration: none;
-}
-
-.likability_bar_wrapper div span {
-}
-
-.likability_bar_wrapper .notlike_range {
-  background: rgba(0, 0, 0, .5);
-  color: white;
-  width: 100%;
-  height: inherit;
-  white-space: nowrap;
-  overflow: hidden;
-  text-align: left;
-  box-sizing: border-box;
-  padding-top: 10px;
-}
-
-.likability_bar_wrapper .deviation_range, .likability_bar_wrapper .like_range {
-  position: absolute;
-  width: 0%;
-  background: rgba(0, 0, 0, .5);
-  color: rgb(0, 0, 0);
-  height: inherit;
-  top: 0px;
-  left: 0px;
-  transition: width 1s ease-out;
-  white-space: nowrap;
-  overflow: hidden;
-  text-align: left;
-  padding-top: 10px;
-  box-sizing: border-box;
-}
-
-.likability_bar_wrapper .deviation_range {
-  color: rgb(0, 0, 0);
-  background: rgb(235, 235, 0);
-}
-
-.likability_bar_wrapper .like_range {
-  width: 0;
-  background: rgb(0, 255, 0);
-  color: rgb(0, 0, 0);
-  left: 0px;
-  top: 0px;
-}
-
-.beer_icon_img {
-  height: 40px;
-  width: 14px;
-  padding: 2px 5px;
 }
 
 .game_feed_list_toggle {

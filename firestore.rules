@@ -1,31 +1,11 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-  	match /Stores/{id} {
-    	allow read: if true;
-    }
-
-    match /Breweries/{id} {
-      allow read: if true;
-    }
-
-    match /Summary/{id} {
-      allow read: if true;
-    }
-
-    match /Reports/{id} {
-      allow read: if true;
-    }
-
     match /Games/{id} {
       allow read: if true;
     }
 
     match /Games/{id}/messages/{mid} {
-      allow read: if true;
-    }
-
-    match /Breweries/{id}/beers/{beerSlug} {
       allow read: if true;
     }
 

@@ -41,7 +41,6 @@ class BaseApp {
       e.preventDefault();
       this.deferredPWAInstallPrompt = e;
     });
-    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js");
 
     if (window.location.hostname === "localhost") this.basePath = `http://localhost:5001/${this.projectId}/us-central1/`;
 

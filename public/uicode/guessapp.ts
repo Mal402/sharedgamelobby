@@ -104,7 +104,7 @@ export class GuessApp extends GameBaseApp {
   /** calculate wheel sector from position
    * @return { number }
    */
-  wheelSector() {
+  wheelSector(): number {
     const tot = this.gameData.sectors.length;
     return Math.floor(tot - this.wheelPosition / (2 * Math.PI) * tot) % tot;
   }

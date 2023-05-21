@@ -314,9 +314,9 @@ export class GuessApp extends GameBaseApp {
         this.htmlForBeerTitle();
         this.gamePaintSeats();
         this.updateKeyboardStatus();
-        this.updateUserPresence();
         this._updateGameMembersList();
         this._updateWheelSpin();
+        this.updateUserPresence();
     }
     /** html frag for beer title */
     htmlForBeerTitle() {

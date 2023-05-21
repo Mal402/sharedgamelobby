@@ -10,13 +10,14 @@ export default class GameBaseApp extends BaseApp {
         this.verboseLog = false;
         this.chat_snackbar = document.querySelector("#chat_snackbar");
         this.rtdbPresenceInited = false;
-        this.gameFeedInited = false;
+        this.messageFeedRegistered = false;
         this.loadSeatingComplete = false;
         this.currentGame = "";
         this.seatsFull = 0;
         this.userSeated = false;
         this.alertErrors = false;
         this.matchBoardRendered = false;
+        this.messageListRendered = false;
         this.seat0_name = document.querySelector(".seat0_name");
         this.seat1_name = document.querySelector(".seat1_name");
         this.seat2_name = document.querySelector(".seat2_name");
@@ -358,9 +359,9 @@ export default class GameBaseApp extends BaseApp {
     }
     /** setup data listender for user messages */
     async initGameMessageFeed() {
-        if (this.gameFeedInited)
+        if (this.messageFeedRegistered)
             return;
-        this.gameFeedInited = true;
+        this.messageFeedRegistered = true;
         const gameId = this.urlParams.get("game");
         if (!gameId)
             return;
@@ -384,13 +385,13 @@ export default class GameBaseApp extends BaseApp {
         let html = "";
         snapshot.forEach((doc) => html += this._renderMessageFeedLine(doc));
         this.messages_list.innerHTML = html;
-        if (snapshot.docs.length > 0) {
-            if (snapshot.docs[0].id !== this.lastMessageId) {
-                if (this.lastMessageId !== null)
-                    this.showMessageSnackbar();
-                this.lastMessageId = snapshot.docs[0].id;
+        if (snapshot.docs.length > 0 && this.messageListRendered) {
+            if (snapshot.docs[0].id !== this.lastShownSnackBarMessage) {
+                this.showMessageSnackbar();
+                this.lastShownSnackBarMessage = snapshot.docs[0].id;
             }
         }
+        this.messageListRendered = true;
         this.messages_list.querySelectorAll("button.delete_game")
             .forEach((btn) => btn.addEventListener("click", (e) => {
             e.stopPropagation();

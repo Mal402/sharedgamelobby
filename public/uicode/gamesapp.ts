@@ -20,6 +20,7 @@ export class GamesApp extends GameBaseApp {
   publicFeedSubscription: any;
   lastGamesFeedSnapshot: any;
   lastPublicFeedSnapshot: any;
+  gameFeedInited = false;
 
   /** */
   constructor() {

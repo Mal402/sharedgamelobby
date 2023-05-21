@@ -8,14 +8,14 @@ export default class GameBaseApp extends BaseApp {
   userPresenceStatus: any = {};
   userPresenceStatusRefs: any = {};
   verboseLog = false;
-  lastMessageId: any;
+  lastShownSnackBarMessage: any;
   chat_snackbar: any = document.querySelector("#chat_snackbar");
   lastMessagesSnapshot: any;
   userStatusDatabaseRef: any;
   rtdbPresenceInited = false;
   isOfflineForDatabase: any;
   isOnlineForDatabase: any;
-  gameFeedInited = false;
+  messageFeedRegistered = false;
   gameData: any;
   loadSeatingComplete = false;
   currentGame = "";
@@ -27,6 +27,7 @@ export default class GameBaseApp extends BaseApp {
   userSeated = false;
   alertErrors = false;
   matchBoardRendered = false;
+  messageListRendered = false;
 
   seat0_name: any = document.querySelector(".seat0_name");
   seat1_name: any = document.querySelector(".seat1_name");
@@ -380,8 +381,8 @@ export default class GameBaseApp extends BaseApp {
   }
   /** setup data listender for user messages */
   async initGameMessageFeed() {
-    if (this.gameFeedInited) return;
-    this.gameFeedInited = true;
+    if (this.messageFeedRegistered) return;
+    this.messageFeedRegistered = true;
     const gameId = this.urlParams.get("game");
     if (!gameId) return;
 
@@ -405,13 +406,13 @@ export default class GameBaseApp extends BaseApp {
 
     this.messages_list.innerHTML = html;
 
-    if (snapshot.docs.length > 0) {
-      if (snapshot.docs[0].id !== this.lastMessageId) {
-        if (this.lastMessageId !== null) this.showMessageSnackbar();
-
-        this.lastMessageId = snapshot.docs[0].id;
+    if (snapshot.docs.length > 0 && this.messageListRendered) {
+      if (snapshot.docs[0].id !== this.lastShownSnackBarMessage) {
+        this.showMessageSnackbar();
+        this.lastShownSnackBarMessage = snapshot.docs[0].id;
       }
     }
+    this.messageListRendered = true;
 
     this.messages_list.querySelectorAll("button.delete_game")
       .forEach((btn: any) => btn.addEventListener("click", (e: any) => {

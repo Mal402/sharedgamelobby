@@ -15,6 +15,7 @@ export class GamesApp extends GameBaseApp {
         this.new_game_type_wrappers = document.querySelectorAll(".new_game_type_wrapper");
         this.basic_options = document.querySelector(".basic_options");
         this.recentExpanded = {};
+        this.gameFeedInited = false;
         this.create_new_game_btn.addEventListener("click", () => this.createNewGame());
         this.join_game_btn.addEventListener("click", () => this.joinGame(null));
         this.gametype_select.addEventListener("input", () => this.updateNewGameType());

@@ -261,7 +261,7 @@ export default class GameBaseApp extends BaseApp {
    * @param { number } seatIndex 0 based seat index
    * @return { boolean } api sit/stand result
   */
-  async gameAPIToggle(seatIndex: number) {
+  async gameAPIToggle(seatIndex: number): Promise<boolean> {
     if (this.gameData["seat" + seatIndex.toString()] === this.uid) return this._gameAPIStand(seatIndex);
 
     if (this.gameData["seat" + seatIndex.toString()] !== null &&
@@ -272,9 +272,9 @@ export default class GameBaseApp extends BaseApp {
   /** sit api call
    * @param { number } seatIndex 0 based seat index
    * @param { string } gameNumber id for game doc
-   * @return { boolean } true is seat sitted in
+   * @return { Promise<boolean> } true is seat sitted in
   */
-  async _gameAPISit(seatIndex: number, gameNumber: any = null) {
+  async _gameAPISit(seatIndex: number, gameNumber: any = null): Promise<boolean> {
     if (gameNumber === null) gameNumber = this.currentGame;
     const body = {
       gameNumber,
@@ -299,9 +299,9 @@ export default class GameBaseApp extends BaseApp {
   /** stand api call
    * @param { number } seatIndex 0 based seat index
    * @param { gameNumber } gameNumber id for game doc
-   * @return { boolean } true seat emptied
+   * @return { Promsie<boolean> } true seat emptied
   */
-  async _gameAPIStand(seatIndex: number) {
+  async _gameAPIStand(seatIndex: number): Promise<boolean> {
     const body = {
       gameNumber: this.currentGame,
       seatIndex,
@@ -317,10 +317,12 @@ export default class GameBaseApp extends BaseApp {
       },
       body: JSON.stringify(body),
     });
+    const json = await fResult.json();
     if (this.verboseLog) {
-      const json = await fResult.json();
       console.log(json);
     }
+
+    return json.success;
   }
   /** scrape options from UI and call api */
   async gameAPIOptions() {
@@ -523,13 +525,10 @@ export default class GameBaseApp extends BaseApp {
   }
   /** api call for click in open dock seat to sit
    * @param { number } seatIndex 0 based seat index
-   * @return { boolean } true is sit down was success
+   * @return { Promise<boolean> } true is sit down was success
   */
-  async dockSit(seatIndex: number) {
-    if (this.gameData["seat" + seatIndex.toString()] !== null) return;
-
-    // if (this.userSeated)
-    // return;
+  async dockSit(seatIndex: number): Promise<boolean> {
+    if (this.gameData["seat" + seatIndex.toString()] !== null) return false;
 
     return this._gameAPISit(seatIndex);
   }

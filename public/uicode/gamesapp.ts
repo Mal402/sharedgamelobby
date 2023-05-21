@@ -123,7 +123,7 @@ export class GamesApp extends GameBaseApp {
   * @param { any } e dom event (preventDefault called if passed)
   * @return { boolean } true to stop anchor navigation
  */
-  toggleFeedView(e: any) {
+  toggleFeedView(e: any): boolean {
     if (document.body.classList.contains("show_public_games_view")) {
       document.body.classList.remove("show_public_games_view");
       document.body.classList.add("show_profile_games");
@@ -463,7 +463,7 @@ export class GamesApp extends GameBaseApp {
    * @param { any } gameNumber
    * @param { string } gameType match or guess
    */
-  async joinGame(gameNumber: any, gameType = "games") {
+  async joinGame(gameNumber: any, gameType = "games"): Promise<void> {
     if (!gameNumber) gameNumber = (<any>document.querySelector(".game_code_start")).value;
     const a = document.createElement("a");
     a.setAttribute("href", `/${gameType}/?game=${gameNumber}`);

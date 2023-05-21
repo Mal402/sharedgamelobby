@@ -51,8 +51,8 @@ export class GuessApp extends GameBaseApp {
             this.slidesContainer.scrollLeft += slideWidth;
         });
         this.spin_wheel.addEventListener("click", () => this.startSpin());
-        this.game_feed_list_toggle.addEventListener("click", () => this.toggleTabView());
-        this.toggleTabView();
+        this.game_feed_list_toggle.addEventListener("click", (e) => this.toggleTabView(e));
+        this.toggleTabView(null);
     }
     /** handles keyboard click by user
      * @param { any } ctl dom button clicked
@@ -355,8 +355,10 @@ export class GuessApp extends GameBaseApp {
                 ctl.classList.add("hide_used");
         });
     }
-    /** show/hide members list */
-    toggleTabView() {
+    /** show/hide members list
+     * @param { any } e event to prevent default
+     */
+    toggleTabView(e) {
         if (document.body.classList.contains("show_game_table")) {
             document.body.classList.remove("show_game_table");
             document.body.classList.add("show_game_members");
@@ -367,6 +369,8 @@ export class GuessApp extends GameBaseApp {
             document.body.classList.remove("show_game_members");
             this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">menu</i>";
         }
+        if (e)
+            e.preventDefault();
     }
 }
 //# sourceMappingURL=guessapp.js.map

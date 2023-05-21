@@ -40,16 +40,21 @@ export class MatchApp extends GameBaseApp {
         this.card_deck_select.addEventListener("input", () => this.gameAPIOptions());
         this.scoring_system_select.addEventListener("input", () => this.gameAPIOptions());
         this.player_dock_prompt.addEventListener("click", () => this.turnPhaseAdvance());
-        this.game_feed_list_toggle.addEventListener("click", () => this.toggleTabView());
-        this.members_header_toggle_button.addEventListener("click", () => this.toggleMembersHeader());
-        this.toggleTabView();
+        this.game_feed_list_toggle.addEventListener("click", (e) => this.toggleTabView(e));
+        this.members_header_toggle_button.addEventListener("click", (e) => this.toggleMembersHeader(e));
+        this.toggleTabView(null);
     }
-    /** show/hide members list in header */
-    toggleMembersHeader() {
+    /** show/hide members list in header
+     * @param { any } e dom event to prevent default
+     */
+    toggleMembersHeader(e) {
         document.body.classList.toggle("members_expanded");
+        e.preventDefault();
     }
-    /** show/hide options view in UI  */
-    toggleTabView() {
+    /** show/hide options view in UI
+     * @param { any } e event
+      */
+    toggleTabView(e) {
         if (document.body.classList.contains("show_game_table")) {
             document.body.classList.remove("show_game_table");
             document.body.classList.add("show_game_options");
@@ -60,6 +65,8 @@ export class MatchApp extends GameBaseApp {
             document.body.classList.remove("show_game_options");
             this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">menu</i>";
         }
+        if (e)
+            e.preventDefault();
     }
     /** BaseApp override to paint profile specific authorization parameters */
     async authUpdateStatusUI() {

@@ -1,5 +1,6 @@
 import GameBaseApp from "./gamebaseapp.js";
 declare var firebase: any;
+declare var window: any;
 
 /** Guess app class */
 export class GuessApp extends GameBaseApp {
@@ -276,6 +277,7 @@ export class GuessApp extends GameBaseApp {
 
     this.paintOptions();
     this.paintDock();
+    this._paintDockSeats(".match_end_result ");
 
     document.body.classList.remove("turnphase_spin");
     document.body.classList.remove("turnphase_letter");
@@ -332,6 +334,7 @@ export class GuessApp extends GameBaseApp {
     this.updateKeyboardStatus();
     this._updateGameMembersList();
     this._updateWheelSpin();
+    this._updateFinishStatus();
     this.updateUserPresence();
   }
   /** html frag for beer title */
@@ -381,5 +384,18 @@ export class GuessApp extends GameBaseApp {
       this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">menu</i>";
     }
     if (e) e.preventDefault();
+  }
+  /** gets card meta and totals
+  * @return meta data for beer
+  */
+  getLastCardMeta(): any {
+    const beerSlug = this.gameData.beerSlug;
+    const beerData = window.allBeers[beerSlug];
+    const fullName = this.gameData.solutionText;
+    return {
+      img: beerData.mapImage,
+      fullName,
+      beerSlug
+    };
   }
 }

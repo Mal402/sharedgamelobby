@@ -18,18 +18,6 @@ export class MatchApp extends GameBaseApp {
   tracer_line_0:any = document.querySelector(".tracer_line_0");
   tracer_line_1:any = document.querySelector(".tracer_line_1");
   members_header_toggle_button:any = document.querySelector(".members_header_toggle_button");
-  tag_inner:any = document.querySelectorAll(".tag_inner");
-  tag_description:any = document.querySelectorAll(".tag_description");
-  match_result_message: any = document.querySelector(".match_result_message");
-  seat0_total: any = document.querySelector(".seat0_results .score_total");
-  seat1_total: any = document.querySelector(".seat1_results .score_total");
-  seat2_total: any = document.querySelector(".seat2_results .score_total");
-  seat3_total: any = document.querySelector(".seat3_results .score_total");
-  seat0_results: any = document.querySelector(".seat0_results");
-  seat1_results: any = document.querySelector(".seat1_results");
-  seat2_results: any = document.querySelector(".seat2_results");
-  seat3_results: any = document.querySelector(".seat3_results");
-  match_end_display_promo: any = document.querySelector(".match_end_display_promo");
   upperRightDisplayCard: any;
   upperLeftDisplayCard: any;
   lowerLeftDisplayCard: any;
@@ -217,86 +205,6 @@ export class MatchApp extends GameBaseApp {
     this._updateCardStatus();
     this._updateFinishStatus();
     this.updateUserPresence();
-  }
-  /** paint game finished display (if needed) */
-  _updateFinishStatus() {
-    if (this.gameData.mode !== "end") return;
-
-    let msg = "Game ended early - no winner";
-    if (this.gameData.gameFinished) {
-      msg = "";
-    }
-
-
-    let name = this.gameData.memberNames[this.gameData.seat0];
-    if (!name) name = "Anonymous";
-
-    this.seat0_results.classList.remove("winner");
-    this.seat1_results.classList.remove("winner");
-    this.seat2_results.classList.remove("winner");
-    this.seat3_results.classList.remove("winner");
-
-    let wIndex = this.gameData.winningSeatIndex;
-    if (!wIndex) wIndex = 0;
-    (<any>document.querySelector(`.seat${wIndex}_results`)).classList.add("winner");
-
-    this.match_result_message.innerHTML = msg;
-    this.seat0_total.innerHTML = `<span class="score_name">${name}</span>
-    <span class="score_points">${this.gameData.seatPoints0} pts</span>`;
-
-    if (this.gameData.runningNumberOfSeats > 1) {
-      let name = this.gameData.memberNames[this.gameData.seat1];
-      if (!name) name = "Anonymous";
-      this.seat1_total.innerHTML = `<span class="score_name">${name}</span>
-      <span class="score_points">${this.gameData.seatPoints1} pts</span>`;
-    } else {
-      this.seat1_total.innerHTML = "";
-    }
-
-    if (this.gameData.runningNumberOfSeats > 2) {
-      let name = this.gameData.memberNames[this.gameData.seat2];
-      if (!name) name = "Anonymous";
-
-      this.seat2_total.innerHTML = `<span class="score_name">${name}</span>
-      <span class="score_points">${this.gameData.seatPoints2} pts</span>`;
-    } else {
-      this.seat2_total.innerHTML = "";
-    }
-
-    if (this.gameData.runningNumberOfSeats > 3) {
-      let name = this.gameData.memberNames[this.gameData.seat3];
-      if (!name) name = "Anonymous";
-
-      this.seat3_total.innerHTML = `<span class="score_name">${name}</span>
-      <span class="score_points">${this.gameData.seatPoints3} pts</span>`;
-    } else {
-      this.seat3_total.innerHTML = "";
-    }
-
-    let deckIndex = 0;
-    if (this.gameData.lastMatchIndex) deckIndex = this.gameData.lastMatchIndex;
-    const cardMeta = this.getCardMeta(deckIndex);
-    this.match_end_display_promo.querySelector(".beer_image").style.backgroundImage = `url(${cardMeta.img})`;
-    this.match_end_display_promo.querySelector(".beer_name").innerHTML = cardMeta.fullName;
-    this.match_end_display_promo.querySelector(".beer_name_anchor").setAttribute("href",
-      "https://locate.beer/" + cardMeta.beerSlug.replace(":", "/"));
-
-    const tagData = this.calcBeerTags(cardMeta.beerSlug);
-    if (tagData.tags) {
-      for (let c = 0; c < 4; c++) {
-        const inner = this.tag_inner[c];
-        const outer = this.tag_description[c];
-
-        let desc = tagData.tags[c];
-        if (!desc) desc = "";
-
-        outer.innerHTML = "&nbsp;<span>" + desc + "</span>";
-        inner.innerHTML = "&nbsp;<span>" + desc + "</span>";
-        inner.style.backgroundColor = tagData.backgroundColors[c];
-        inner.style.color = tagData.colors[c];
-        inner.style.width = (100.0 * tagData.levels[c]).toFixed(2) + "%";
-      }
-    }
   }
   /** paint cards display */
   _updateCardStatus() {
@@ -649,10 +557,10 @@ export class MatchApp extends GameBaseApp {
     }
   }
   /** return quandrant for card index (0 - 3)
-   * @param { number } card card position index
-   * @return { number } quandrant index; 0 - 3
+   * @param card card position index
+   * @return quandrant index; 0 - 3
    */
-  _quandrantForCard(card: number) {
+  _quandrantForCard(card: number): number {
     return Math.floor(card / (this.cardsPerColumn * 2));
   }
   /** api call to send card selection */
@@ -773,10 +681,18 @@ export class MatchApp extends GameBaseApp {
     }
   }
   /** create html template for card
-   * @param { any } cardInfo card meta data
-   * @return { string } html data
+   * @param cardInfo card meta data
+   * @return html data
    */
-  _cardTemplate(cardInfo: any) {
+  _cardTemplate(cardInfo: any): string {
     return `<span class="card_inner" data-bkg="${btoa(cardInfo.image)}"></span>`;
   }
+    /** gets card meta and totals for a card (based on shuffled deck order)
+   * @return { any } meta data for a specific card
+   */
+    getLastCardMeta(): any {
+      let deckIndex = 0;
+      if (this.gameData.lastMatchIndex) deckIndex = this.gameData.lastMatchIndex;
+      return this.getCardMeta(deckIndex);
+    }
 }

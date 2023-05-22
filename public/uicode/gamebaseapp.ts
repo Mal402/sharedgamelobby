@@ -54,6 +54,19 @@ export default class GameBaseApp extends BaseApp {
   visibility_select: any = document.querySelector(".visibility_select");
   seat_count_select: any = document.querySelector(".seat_count_select");
 
+  tag_inner: any = document.querySelectorAll(".tag_inner");
+  tag_description: any = document.querySelectorAll(".tag_description");
+  match_result_message: any = document.querySelector(".match_result_message");
+  seat0_total: any = document.querySelector(".seat0_results .score_total");
+  seat1_total: any = document.querySelector(".seat1_results .score_total");
+  seat2_total: any = document.querySelector(".seat2_results .score_total");
+  seat3_total: any = document.querySelector(".seat3_results .score_total");
+  seat0_results: any = document.querySelector(".seat0_results");
+  seat1_results: any = document.querySelector(".seat1_results");
+  seat2_results: any = document.querySelector(".seat2_results");
+  seat3_results: any = document.querySelector(".seat3_results");
+  match_end_display_promo: any = document.querySelector(".match_end_display_promo");
+
   send_message_list_button: any = document.querySelector(".send_message_list_button");
   message_list_input: any = document.querySelector(".message_list_input");
   messages_list: any = document.querySelector(".messages_list");
@@ -166,7 +179,7 @@ export default class GameBaseApp extends BaseApp {
 
     this.mute_button = document.querySelector(".mute_button");
     this.mute_button.addEventListener("click", (e: any) => this.muteClick(e));
-    
+
     this.send_message_list_button.addEventListener("click", () => this.sendGameMessage());
     this.message_list_input.addEventListener("keyup", (e: any) => {
       if (e.key === "Enter") this.sendGameMessage();
@@ -764,5 +777,88 @@ export default class GameBaseApp extends BaseApp {
       return;
     }
     this.matchBoardRendered = false;
+  }
+  /** paint game finished display (if needed) */
+  _updateFinishStatus() {
+    if (this.gameData.mode !== "end") return;
+
+    let msg = "Game ended early - no winner";
+    if (this.gameData.gameFinished) {
+      msg = "";
+    }
+
+    let name = this.gameData.memberNames[this.gameData.seat0];
+    if (!name) name = "Anonymous";
+
+    this.seat0_results.classList.remove("winner");
+    this.seat1_results.classList.remove("winner");
+    this.seat2_results.classList.remove("winner");
+    this.seat3_results.classList.remove("winner");
+
+    let wIndex = this.gameData.winningSeatIndex;
+    if (!wIndex) wIndex = 0;
+    (<any>document.querySelector(`.seat${wIndex}_results`)).classList.add("winner");
+
+    this.match_result_message.innerHTML = msg;
+    this.seat0_total.innerHTML = `<span class="score_name">${name}</span>
+      <span class="score_points">${this.gameData.seatPoints0} pts</span>`;
+
+    if (this.gameData.runningNumberOfSeats > 1) {
+      let name = this.gameData.memberNames[this.gameData.seat1];
+      if (!name) name = "Anonymous";
+      this.seat1_total.innerHTML = `<span class="score_name">${name}</span>
+        <span class="score_points">${this.gameData.seatPoints1} pts</span>`;
+    } else {
+      this.seat1_total.innerHTML = "";
+    }
+
+    if (this.gameData.runningNumberOfSeats > 2) {
+      let name = this.gameData.memberNames[this.gameData.seat2];
+      if (!name) name = "Anonymous";
+
+      this.seat2_total.innerHTML = `<span class="score_name">${name}</span>
+        <span class="score_points">${this.gameData.seatPoints2} pts</span>`;
+    } else {
+      this.seat2_total.innerHTML = "";
+    }
+
+    if (this.gameData.runningNumberOfSeats > 3) {
+      let name = this.gameData.memberNames[this.gameData.seat3];
+      if (!name) name = "Anonymous";
+
+      this.seat3_total.innerHTML = `<span class="score_name">${name}</span>
+        <span class="score_points">${this.gameData.seatPoints3} pts</span>`;
+    } else {
+      this.seat3_total.innerHTML = "";
+    }
+
+    const cardMeta = this.getLastCardMeta();
+    this.match_end_display_promo.querySelector(".beer_image").style.backgroundImage = `url(${cardMeta.img})`;
+    this.match_end_display_promo.querySelector(".beer_name").innerHTML = cardMeta.fullName;
+    this.match_end_display_promo.querySelector(".beer_name_anchor").setAttribute("href",
+      "https://locate.beer/" + cardMeta.beerSlug.replace(":", "/"));
+
+    const tagData = this.calcBeerTags(cardMeta.beerSlug);
+    if (tagData.tags) {
+      for (let c = 0; c < 4; c++) {
+        const inner = this.tag_inner[c];
+        const outer = this.tag_description[c];
+
+        let desc = tagData.tags[c];
+        if (!desc) desc = "";
+
+        outer.innerHTML = "&nbsp;<span>" + desc + "</span>";
+        inner.innerHTML = "&nbsp;<span>" + desc + "</span>";
+        inner.style.backgroundColor = tagData.backgroundColors[c];
+        inner.style.color = tagData.colors[c];
+        inner.style.width = (100.0 * tagData.levels[c]).toFixed(2) + "%";
+      }
+    }
+  }
+  /** gets card meta and totals for a card (based on shuffled deck order)
+   * @return { any } meta data for a specific card
+   */
+  getLastCardMeta(): any {
+    return {};
   }
 }

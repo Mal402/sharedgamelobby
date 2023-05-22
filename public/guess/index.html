@@ -225,14 +225,85 @@
               </div>
             </div>
           </div>
-            <button style="display:none" class="match_finish">Finish Match!</button>
         </div>
 
         <div class="mode_end_view">
-          <br><br>
-          End display
-          <br>
-          <button class="match_reset">Reset Match!</button>
+          <div class="admin_only">
+            <button class="match_reset admin_only game primary" style="margin:15px">Next Match!</button>
+          </div>
+          <div class="match_result_message"></div>
+          <div class="match_end_display_promo">
+            <div style="margin-bottom: 6px;">
+              <a class="beer_name_anchor" target="_blank"><span class="beer_name impact-font"></span> <i class="material-icons impact-font" style="top:4px;font-size:28px;position:relative;">open_in_new</i></a>
+            </div>
+            <div class="beer_description">
+              <div class="beer_image"></div>
+              <div class="tag_wrapper beer_tags">
+                <div class="tag_filter_item">
+                  <div class="tag_description"></div>
+                  <div class="tag_inner"></div>
+                </div>
+                <div class="tag_filter_item">
+                  <div class="tag_description"></div>
+                  <div class="tag_inner"></div>
+                </div>
+                <div class="tag_filter_item">
+                  <div class="tag_description"></div>
+                  <div class="tag_inner"></div>
+                </div>
+                <div class="tag_filter_item">
+                  <div class="tag_description"></div>
+                  <div class="tag_inner"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="match_end_result">
+            <div class="seat0_results">
+              <div class="dock_container dock_pos_0">
+                <div class="dock_seat0 game_user_wrapper seat_color_0">
+                  <span></span>
+                  <span></span>
+                  <span class="online_status"></span>
+                </div>
+              </div>
+              <div class="score_total">
+              </div>
+            </div>
+            <div class="seat1_results">
+              <div class="dock_container dock_pos_1">
+                <div class="dock_seat1 game_user_wrapper seat_color_1">
+                  <span></span>
+                  <span></span>
+                  <span class="online_status"></span>
+                </div>
+              </div>
+              <div class="score_total">
+              </div>
+            </div>
+            <div class="seat2_results">
+              <div class="dock_container dock_pos_2">
+                <div class="dock_seat2 game_user_wrapper seat_color_2">
+                  <span></span>
+                  <span></span>
+                  <span class="online_status"></span>
+                </div>
+              </div>
+              <div class="score_total">
+              </div>
+            </div>
+            <div class="seat3_results">
+              <div class="dock_container dock_pos_3">
+                <div class="dock_seat3 game_user_wrapper seat_color_3">
+                  <span></span>
+                  <span></span>
+                  <span class="online_status"></span>
+                </div>
+              </div>
+              <div class="score_total">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -320,7 +391,11 @@
         <select class="seats_per_user_select">
           <option value="one">One</option>
           <option value="none">None</option>
-        </select>
+        </select>        
+        <div style="text-align:center">
+          <button class="match_finish admin_only game">End Match Now!</button>
+        </div>
+
       </div>
     </div>
     <div style="margin-top:15px;">

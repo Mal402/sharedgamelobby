@@ -262,6 +262,7 @@ export class GuessApp extends GameBaseApp {
         this.turnphase_span.innerHTML = this.gameData.turnPhase;
         this.paintOptions();
         this.paintDock();
+        this._paintDockSeats(".match_end_result ");
         document.body.classList.remove("turnphase_spin");
         document.body.classList.remove("turnphase_letter");
         document.body.classList.remove("wheel_done_spinning");
@@ -309,6 +310,7 @@ export class GuessApp extends GameBaseApp {
         this.updateKeyboardStatus();
         this._updateGameMembersList();
         this._updateWheelSpin();
+        this._updateFinishStatus();
         this.updateUserPresence();
     }
     /** html frag for beer title */
@@ -364,6 +366,19 @@ export class GuessApp extends GameBaseApp {
         }
         if (e)
             e.preventDefault();
+    }
+    /** gets card meta and totals
+    * @return meta data for beer
+    */
+    getLastCardMeta() {
+        const beerSlug = this.gameData.beerSlug;
+        const beerData = window.allBeers[beerSlug];
+        const fullName = this.gameData.solutionText;
+        return {
+            img: beerData.mapImage,
+            fullName,
+            beerSlug
+        };
     }
 }
 //# sourceMappingURL=guessapp.js.map

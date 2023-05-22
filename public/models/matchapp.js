@@ -18,6 +18,8 @@ export class MatchApp extends GameBaseApp {
         this.tracer_line_0 = document.querySelector(".tracer_line_0");
         this.tracer_line_1 = document.querySelector(".tracer_line_1");
         this.members_header_toggle_button = document.querySelector(".members_header_toggle_button");
+        this.cardDeckCached = "none";
+        this.cardDeckCacheDom = document.querySelector('.card_deck_cache');
         this.matchCards = [];
         this.zoom_out_beer_cards = [];
         this.cardsPerColumn = 0;
@@ -79,12 +81,23 @@ export class MatchApp extends GameBaseApp {
         await super.load();
     }
     /** gets array of cards for a deck - unshuffled
-     * @return { any } array of cards for active deck
+     * @return { Array<any> } array of cards for active deck
      */
     getCardDeck() {
         if (this.gameData.cardDeck === "zipline")
             return window.ziplineCardDeck;
         return window.empyreanCardDeck;
+    }
+    /** cache card deck images in dom for fast UI load */
+    _cacheCardDeckImages() {
+        if (this.cardDeckCached === this.gameData.cardDeck)
+            return;
+        this.cardDeckCacheDom.innerHTML = '';
+        this.getCardDeck().forEach((card) => {
+            const img = document.createElement('img');
+            img.src = card.mapImage;
+            this.cardDeckCacheDom.appendChild(img);
+        });
     }
     /** gets card meta and totals for a card (based on shuffled deck order)
      * @param { number } cardIndex 0 based index of a card for the deck
@@ -126,6 +139,7 @@ export class MatchApp extends GameBaseApp {
         if (!window.beerTotals)
             return;
         document.body.classList.add("game_loaded");
+        this._cacheCardDeckImages();
         this.queryStringPaintProcess();
         this.paintOptions();
         this.card_deck_display.innerHTML = this.gameData.cardDeck;

@@ -4,24 +4,26 @@ declare var firebase: any;
 
 /** Match game UI app */
 export class MatchApp extends GameBaseApp {
-  currentplayer_score_dock:any = document.querySelector(".currentplayer_score_dock");
-  match_board_wrapper:any = document.querySelector(".match_board_wrapper");
-  card_deck_display:any = document.querySelector(".card_deck_display");
-  card_deck_select:any = document.querySelector(".card_deck_select");
-  scoring_system_display:any = document.querySelector(".scoring_system_display");
-  scoring_system_select:any = document.querySelector(".scoring_system_select");
-  turn_number_div:any = document.querySelector(".turn_number_div");
-  player_total_points:any = document.querySelector(".player_total_points");
-  player_total_for_turn:any = document.querySelector(".player_total_for_turn");
-  player_dock_prompt:any = document.querySelector(".player_dock_prompt");
-  game_feed_list_toggle:any = document.querySelector(".game_feed_list_toggle");
-  tracer_line_0:any = document.querySelector(".tracer_line_0");
-  tracer_line_1:any = document.querySelector(".tracer_line_1");
-  members_header_toggle_button:any = document.querySelector(".members_header_toggle_button");
+  currentplayer_score_dock: any = document.querySelector(".currentplayer_score_dock");
+  match_board_wrapper: any = document.querySelector(".match_board_wrapper");
+  card_deck_display: any = document.querySelector(".card_deck_display");
+  card_deck_select: any = document.querySelector(".card_deck_select");
+  scoring_system_display: any = document.querySelector(".scoring_system_display");
+  scoring_system_select: any = document.querySelector(".scoring_system_select");
+  turn_number_div: any = document.querySelector(".turn_number_div");
+  player_total_points: any = document.querySelector(".player_total_points");
+  player_total_for_turn: any = document.querySelector(".player_total_for_turn");
+  player_dock_prompt: any = document.querySelector(".player_dock_prompt");
+  game_feed_list_toggle: any = document.querySelector(".game_feed_list_toggle");
+  tracer_line_0: any = document.querySelector(".tracer_line_0");
+  tracer_line_1: any = document.querySelector(".tracer_line_1");
+  members_header_toggle_button: any = document.querySelector(".members_header_toggle_button");
   upperRightDisplayCard: any;
   upperLeftDisplayCard: any;
   lowerLeftDisplayCard: any;
   lowerRightDisplayCard: any;
+  cardDeckCached = "none";
+  cardDeckCacheDom: any = document.querySelector('.card_deck_cache');
 
   matchCards: any = [];
   zoom_out_beer_cards: any = [];
@@ -95,11 +97,21 @@ export class MatchApp extends GameBaseApp {
     await super.load();
   }
   /** gets array of cards for a deck - unshuffled
-   * @return { any } array of cards for active deck
+   * @return { Array<any> } array of cards for active deck
    */
-  getCardDeck() {
+  getCardDeck(): Array<any> {
     if (this.gameData.cardDeck === "zipline") return window.ziplineCardDeck;
     return window.empyreanCardDeck;
+  }
+  /** cache card deck images in dom for fast UI load */
+  _cacheCardDeckImages() {
+    if (this.cardDeckCached === this.gameData.cardDeck) return;
+    this.cardDeckCacheDom.innerHTML = '';
+    this.getCardDeck().forEach((card: any) => {
+      const img = document.createElement('img');
+      img.src = card.mapImage;
+      this.cardDeckCacheDom.appendChild(img);
+    });
   }
   /** gets card meta and totals for a card (based on shuffled deck order)
    * @param { number } cardIndex 0 based index of a card for the deck
@@ -141,6 +153,8 @@ export class MatchApp extends GameBaseApp {
     if (!window.beerTotals) return;
 
     document.body.classList.add("game_loaded");
+
+    this._cacheCardDeckImages();
 
     this.queryStringPaintProcess();
     this.paintOptions();
@@ -687,12 +701,12 @@ export class MatchApp extends GameBaseApp {
   _cardTemplate(cardInfo: any): string {
     return `<span class="card_inner" data-bkg="${btoa(cardInfo.image)}"></span>`;
   }
-    /** gets card meta and totals for a card (based on shuffled deck order)
-   * @return { any } meta data for a specific card
-   */
-    getLastCardMeta(): any {
-      let deckIndex = 0;
-      if (this.gameData.lastMatchIndex) deckIndex = this.gameData.lastMatchIndex;
-      return this.getCardMeta(deckIndex);
-    }
+  /** gets card meta and totals for a card (based on shuffled deck order)
+ * @return { any } meta data for a specific card
+ */
+  getLastCardMeta(): any {
+    let deckIndex = 0;
+    if (this.gameData.lastMatchIndex) deckIndex = this.gameData.lastMatchIndex;
+    return this.getCardMeta(deckIndex);
+  }
 }

@@ -109,7 +109,7 @@ export class MatchApp extends GameBaseApp {
     this.cardDeckCacheDom.innerHTML = '';
     this.getCardDeck().forEach((card: any) => {
       const img = document.createElement('img');
-      img.src = card.mapImage;
+      img.src = this.allBeers[card.beerSlug].mapImage;
       this.cardDeckCacheDom.appendChild(img);
     });
   }

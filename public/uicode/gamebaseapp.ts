@@ -255,7 +255,7 @@ export default class GameBaseApp extends BaseApp {
       gameNumber,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + "webPage/games/join", {
+    const fResult = await fetch(this.basePath + "lobbyApi/games/join", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -295,7 +295,7 @@ export default class GameBaseApp extends BaseApp {
       seatIndex,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + "webPage/games/sit", {
+    const fResult = await fetch(this.basePath + "lobbyApi/games/sit", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -321,7 +321,7 @@ export default class GameBaseApp extends BaseApp {
       seatIndex,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + "webPage/games/stand", {
+    const fResult = await fetch(this.basePath + "lobbyApi/games/stand", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -362,7 +362,7 @@ export default class GameBaseApp extends BaseApp {
     }
 
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + "webPage/games/options", {
+    const fResult = await fetch(this.basePath + "lobbyApi/games/options", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -449,7 +449,7 @@ export default class GameBaseApp extends BaseApp {
       messageId,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + "webPage/games/message/delete", {
+    const fResult = await fetch(this.basePath + "lobbyApi/games/message/delete", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -521,7 +521,7 @@ export default class GameBaseApp extends BaseApp {
       message,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + "webPage/games/message", {
+    const fResult = await fetch(this.basePath + "lobbyApi/games/message", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -698,7 +698,7 @@ export default class GameBaseApp extends BaseApp {
       action,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+    const fResult = await fetch(this.basePath + `lobbyApi/${this.apiType}/action`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -728,7 +728,7 @@ export default class GameBaseApp extends BaseApp {
       action,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+    const fResult = await fetch(this.basePath + `lobbyApi/${this.apiType}/action`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -758,7 +758,7 @@ export default class GameBaseApp extends BaseApp {
       action,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+    const fResult = await fetch(this.basePath + `lobbyApi/${this.apiType}/action`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",

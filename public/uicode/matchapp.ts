@@ -576,7 +576,7 @@ export class MatchApp extends GameBaseApp {
       selectedCards,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+    const fResult = await fetch(this.basePath + `lobbyApi/${this.apiType}/action`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -606,7 +606,7 @@ export class MatchApp extends GameBaseApp {
       previousCard0: this.gameData.previousCard0,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+    const fResult = await fetch(this.basePath + `lobbyApi/${this.apiType}/action`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -634,7 +634,7 @@ export class MatchApp extends GameBaseApp {
       action,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+    const fResult = await fetch(this.basePath + `lobbyApi/${this.apiType}/action`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -662,7 +662,7 @@ export class MatchApp extends GameBaseApp {
       action,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + `webPage/${this.apiType}/action`, {
+    const fResult = await fetch(this.basePath + `lobbyApi/${this.apiType}/action`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",

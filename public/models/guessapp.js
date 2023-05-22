@@ -67,7 +67,7 @@ export class GuessApp extends GameBaseApp {
             guessLetter,
         };
         const token = await firebase.auth().currentUser.getIdToken();
-        const fResult = await fetch(this.basePath + "webPage/guess/action", {
+        const fResult = await fetch(this.basePath + "lobbyApi/guess/action", {
             method: "POST",
             mode: "cors",
             cache: "no-cache",
@@ -212,7 +212,7 @@ export class GuessApp extends GameBaseApp {
             action,
         };
         const token = await firebase.auth().currentUser.getIdToken();
-        const fResult = await fetch(this.basePath + "webPage/guess/action", {
+        const fResult = await fetch(this.basePath + "lobbyApi/guess/action", {
             method: "POST",
             mode: "cors",
             cache: "no-cache",

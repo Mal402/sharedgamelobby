@@ -1,4 +1,5 @@
 import BaseApp from "./baseapp.js";
+import Utility from "./utility.js";
 declare var window: any;
 declare var firebase: any;
 
@@ -18,6 +19,8 @@ export class ProfileApp extends BaseApp {
   file_upload_input: any = document.querySelector(".file_upload_input");
   profile_display_image_clear: any = document.querySelector(".profile_display_image_clear");
   profile_display_image_preset: any = document.querySelector(".profile_display_image_preset");
+  randomize_name: any = document.querySelector(".randomize_name");
+  login_email: any = document.querySelector(".login_email");
   lastNameChange = 0;
 
   /** */
@@ -26,8 +29,6 @@ export class ProfileApp extends BaseApp {
 
     this.login_google.addEventListener("click", (e: any) => this.authGoogleSignIn(e));
     this.login_email_anchor.addEventListener("click", (e: any) => this.signInByEmail(e));
-
-    this.login_email = document.querySelector(".login_email");
     this.anon_login_anchor.addEventListener("click", (e: any) => this.signInAnon(e));
 
     this.sign_out_button.addEventListener("click", (e: any) => {
@@ -35,13 +36,10 @@ export class ProfileApp extends BaseApp {
       e.preventDefault();
       return false;
     });
-
     this.night_mode_radios.forEach((ctl: any, index: number) => ctl.addEventListener("input", (e: any) => {
       this.updateProfileNightMode(ctl, index, e);
     }));
-
     this.mute_audio_radios.forEach((ctl: any, index: number) => ctl.addEventListener("input", () => this.updateProfileAudioMode(index)));
-
     this.reset_profile.addEventListener("click", (e: any) => {
       if (confirm("Are you sure you want to clear out all reviews and profile data?")) {
         this._authCreateDefaultProfile();
@@ -51,14 +49,11 @@ export class ProfileApp extends BaseApp {
     });
 
     this.profile_display_name.addEventListener("input", () => this.displayNameChange());
-
     this.profile_display_image_upload.addEventListener("click", () => this.uploadProfileImage());
-
     this.file_upload_input.addEventListener("input", () => this.fileUploadSelected());
-
     this.profile_display_image_clear.addEventListener("click", () => this.clearProfileImage());
-
     this.profile_display_image_preset.addEventListener("input", () => this.selectedProfilePreset());
+    this.randomize_name.addEventListener("click", () => this.randomizeProfileName());
 
     this.initPresetLogos();
   }
@@ -140,7 +135,7 @@ export class ProfileApp extends BaseApp {
       return;
     }
     let email = firebase.auth().currentUser.email;
-    if (!email) email = "Anonymous Login";
+    if (!email) email = "Logged in as: Anonymous";
 
     this.logged_in_status.innerHTML = email;
 
@@ -216,5 +211,15 @@ export class ProfileApp extends BaseApp {
       muteState: (index === 0),
     };
     if (this.fireToken) await firebase.firestore().doc(`Users/${this.uid}`).update(updatePacket);
+  }
+  /** generate a random "safe" name */
+  async randomizeProfileName(): Promise<void> {
+    let updates = {
+      displayName: Utility.generateName()
+    };
+
+    await firebase.firestore().doc(`Users/${this.uid}`).set(updates, {
+      merge: true
+    });
   }
 }

@@ -146,7 +146,7 @@ class BaseApp {
             excludeBeer: {},
             excludeStore: {},
             excludeBrewery: {},
-            displayName: "",
+            displayName: "Anonymous",
             displayImage: "",
         };
         await firebase.firestore().doc(`Users/${this.uid}`).set(this.profile);

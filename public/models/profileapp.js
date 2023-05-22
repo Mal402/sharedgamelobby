@@ -1,4 +1,5 @@
 import BaseApp from "./baseapp.js";
+import Utility from "./utility.js";
 /** app class for profile page */
 export class ProfileApp extends BaseApp {
     /** */
@@ -18,10 +19,11 @@ export class ProfileApp extends BaseApp {
         this.file_upload_input = document.querySelector(".file_upload_input");
         this.profile_display_image_clear = document.querySelector(".profile_display_image_clear");
         this.profile_display_image_preset = document.querySelector(".profile_display_image_preset");
+        this.randomize_name = document.querySelector(".randomize_name");
+        this.login_email = document.querySelector(".login_email");
         this.lastNameChange = 0;
         this.login_google.addEventListener("click", (e) => this.authGoogleSignIn(e));
         this.login_email_anchor.addEventListener("click", (e) => this.signInByEmail(e));
-        this.login_email = document.querySelector(".login_email");
         this.anon_login_anchor.addEventListener("click", (e) => this.signInAnon(e));
         this.sign_out_button.addEventListener("click", (e) => {
             this.authSignout(e);
@@ -44,6 +46,7 @@ export class ProfileApp extends BaseApp {
         this.file_upload_input.addEventListener("input", () => this.fileUploadSelected());
         this.profile_display_image_clear.addEventListener("click", () => this.clearProfileImage());
         this.profile_display_image_preset.addEventListener("input", () => this.selectedProfilePreset());
+        this.randomize_name.addEventListener("click", () => this.randomizeProfileName());
         this.initPresetLogos();
     }
     /** load the team logos <select> */
@@ -123,7 +126,7 @@ export class ProfileApp extends BaseApp {
         }
         let email = firebase.auth().currentUser.email;
         if (!email)
-            email = "Anonymous Login";
+            email = "Logged in as: Anonymous";
         this.logged_in_status.innerHTML = email;
         if (!this.profile.nightModeState)
             this.profile.nightModeState = 0;
@@ -198,6 +201,15 @@ export class ProfileApp extends BaseApp {
         };
         if (this.fireToken)
             await firebase.firestore().doc(`Users/${this.uid}`).update(updatePacket);
+    }
+    /** generate a random "safe" name */
+    async randomizeProfileName() {
+        let updates = {
+            displayName: Utility.generateName()
+        };
+        await firebase.firestore().doc(`Users/${this.uid}`).set(updates, {
+            merge: true
+        });
     }
 }
 //# sourceMappingURL=profileapp.js.map

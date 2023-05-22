@@ -159,7 +159,7 @@ class BaseApp {
       excludeBeer: {},
       excludeStore: {},
       excludeBrewery: {},
-      displayName: "",
+      displayName: "Anonymous",
       displayImage: "",
     };
 

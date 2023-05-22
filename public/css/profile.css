@@ -7,22 +7,20 @@
   padding: .75em;
 }
 
-.tag_header_label {
+h3 {
   display: block;
   margin: 0;
-  padding: 0;
-  pointer-events: none;
-}
-
-.tag_body {
+  padding: 0px 15px;
   text-align: left;
+  display: block;
 }
 
 .logged_in_status {
   text-align: center;
   white-space: nowrap;
-  margin-bottom: .5em;
-  overflow: hidden;
+  padding: 10px;
+  font-size: 20px;
+  text-align: left;
 }
 
 .list_center_row {
@@ -119,12 +117,13 @@ h3.impact-font {
   text-align: center;
 }
 
-.settings_panel h3 {
-  text-align: center;
+.settings_panel label {
+  font-size: 25px;
 }
 
-.settings_panel label {
-  font-size: 20px;
+.settings_panel input,
+ .settings_panel select {
+  font-size: 25px;
 }
 
 .settings_panel label input[type="radio"] {
@@ -167,5 +166,9 @@ h2.collapse_header {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
-  padding-top: 20px;
+  margin-right: 20px;
+}
+
+button {
+  font-size: 25px;
 }

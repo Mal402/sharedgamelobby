@@ -32,10 +32,6 @@
   display: block;
 }
 
-.show_join_games_view .join_game_view {
-  display: block;
-}
-
 .game_history_view {
   display: none;
 }
@@ -139,8 +135,6 @@ button.create_new_game_btn {
   display: inline-block;
 }
 
-.game_list_user {}
-
 .match_additional_options {
   display: none;
 }
@@ -216,6 +210,7 @@ a.game_number_open {
 .show_seats .gamefeed_members_list, .show_seats .gamefeed_owners_panel {
   max-height: 180px;
   opacity: 1;
+  overflow: visible;
 }
 
 .gameitem_running.gamelist_item.gameplayer_turn_next {

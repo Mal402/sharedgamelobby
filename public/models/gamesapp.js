@@ -129,9 +129,6 @@ export class GamesApp extends GameBaseApp {
         document.body.classList.remove("newgametype_match");
         const gameType = this.gametype_select.value;
         document.body.classList.add("newgametype_" + gameType);
-        this.basic_options.classList.remove("gametype_guess");
-        this.basic_options.classList.remove("gametype_match");
-        this.basic_options.classList.add("gametype_" + gameType);
         const gameMeta = this.gameTypeMetaData[gameType];
         this.create_new_game_btn.innerHTML = "Create " + gameMeta.name;
     }

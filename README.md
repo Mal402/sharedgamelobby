@@ -21,11 +21,6 @@ Hosted: [sharedgamelobby.web.app](https://sharedgamelobby.web.app/) \
 
 
 
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image1.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image1.png "image_tooltip")
-
 
 Real-time updates play a crucial role in creating an immersive gaming experience. The Shared Game Lobby leverages Firebase's real-time database to provide instantaneous updates whenever a user performs an action, such as sitting, standing, deleting, or sending messages. With the help of Firebase's real-time synchronization capabilities, users can see live updates reflected in the lobby, ensuring a seamless and engaging gameplay environment.
 
@@ -35,24 +30,10 @@ Transactions are used extensively in the Shared Game Lobby to ensure data consis
  \
 
 
-
-
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image2.png "image_tooltip")
-
-
 **REST API for Seamless Integration**
 
 The Shared Game Lobby leverages NoSQL indexing techniques to efficiently manage real-time feeds and game listings. By utilizing a deep path structure in the database, the lobby ensures efficient indexing and retrieval of game-related information. For example, when a user performs the 'sit' action to join a game, the lobby leverages the following technique:
 
-
-
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image3.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image3.png "image_tooltip")
 
 
 This code snippet demonstrates how the lobby communicates with the backend using a RESTful API endpoint to perform the 'sit' action. The endpoint, /webPage/games/sit, handles the request and updates the corresponding game data on the Firesbase Database document, allowing the user to join the game. The use of Firebase authentication ensures secure access to the API endpoint, while the response provides feedback on the success of the action.
@@ -169,20 +150,6 @@ We have omitted the detailed explanation of the 'guessapp.ts' and 'matchapp.ts' 
  \
 
 
-<p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image4.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image4.png "image_tooltip")
-
-
-
-
-<p id="gdcalert5" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image5.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert6">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image5.png "image_tooltip")
-
-
  gamebaseapp.js
 
 This code snippet enables real-time updates of user status using **Firebase Realtime Database** (RTDB). It ensures that the user's online status is accurately reflected, even when they disconnect abruptly or use multiple browsers or tabs.
@@ -206,10 +173,6 @@ By structuring game and user information in Firestore documents, it provides a s
 
 
 
-<p id="gdcalert6" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image6.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert7">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image6.png "image_tooltip")
 
 
 Guess Collection, Games Document on Firebase
@@ -229,10 +192,7 @@ Once you are up and running, go through the Firebase and look at through the col
 
 
 
-<p id="gdcalert7" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image7.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert8">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
-
-![alt_text](images/image7.png "image_tooltip")
 
 
 Users Collection on Firebase

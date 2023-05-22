@@ -59,8 +59,8 @@ export class GuessApp extends GameBaseApp {
     });
 
     this.spin_wheel.addEventListener("click", () => this.startSpin());
-    this.game_feed_list_toggle.addEventListener("click", (e: any) => this.toggleTabView(e));
-    this.toggleTabView(null);
+    this.game_feed_list_toggle.addEventListener("click", (e: any) => this.toggleOptionsView(e));
+    this.toggleOptionsView(null);
   }
   /** handles keyboard click by user
    * @param { any } ctl dom button clicked
@@ -373,7 +373,7 @@ export class GuessApp extends GameBaseApp {
   /** show/hide members list
    * @param { any } e event to prevent default
    */
-  toggleTabView(e: any) {
+  toggleOptionsView(e: any) {
     if (document.body.classList.contains("show_game_table")) {
       document.body.classList.remove("show_game_table");
       document.body.classList.add("show_game_members");

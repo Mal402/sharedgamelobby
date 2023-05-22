@@ -106,18 +106,18 @@ export class GamesApp extends GameBaseApp {
    * @param { any } e dom event (preventDefault called if passed)
    * @return { boolean } true to stop anchor navigation
   */
-  toggleAddGameView(e: any) {
+  toggleAddGameView(e: any): boolean {
     if (document.body.classList.contains("show_games_view")) {
       document.body.classList.remove("show_games_view");
       document.body.classList.add("show_new_game");
-      this.gamelist_header_toggle_button.innerHTML = "<i class=\"material-icons\">games</i>";
+      this.gamelist_header_toggle_button.innerHTML = "<i class=\"material-icons\">list</i>";
     } else {
       document.body.classList.add("show_games_view");
       document.body.classList.remove("show_new_game");
       this.gamelist_header_toggle_button.innerHTML = "<i class=\"material-icons\">add</i>";
     }
 
-    e.preventDefault();
+    if (e) e.preventDefault();
     return true;
   }
   /** swaps between feeds of games where you're a member of and public games with open sees
@@ -128,12 +128,13 @@ export class GamesApp extends GameBaseApp {
     if (document.body.classList.contains("show_public_games_view")) {
       document.body.classList.remove("show_public_games_view");
       document.body.classList.add("show_profile_games");
-      this.game_feed_toggle_button.innerHTML = "<i class=\"material-icons\">search</i>";
+      this.game_feed_toggle_button.innerHTML = "<span class=\"material-symbols-outlined\">person_play</span>";
     } else {
       document.body.classList.add("show_public_games_view");
       document.body.classList.remove("show_profile_games");
       this.game_feed_toggle_button.innerHTML = "<i class=\"material-icons\">history</i>";
     }
+    if (document.body.classList.contains("show_new_game")) this.toggleAddGameView(null);
 
     this._updateFeedToggleButtonStatus();
 

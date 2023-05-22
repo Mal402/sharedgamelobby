@@ -7,9 +7,6 @@
 
   <link rel="shortcut icon" href="/images/logo64.png">
 
-  <link rel="stylesheet" href="/css/base.css" />
-  <link rel="stylesheet" href="/css/gamebase.css" />
-  <link rel="stylesheet" href="/css/games.css" />
   <!-- Firebase links -->
   <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-database.js"></script>
@@ -20,7 +17,11 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/gamebase.css" />
+  <link rel="stylesheet" href="/css/games.css" />
   <script>
     window.addEventListener('load', async (event) => {
       let module = await import('/models/gamesapp.js');
@@ -38,14 +39,14 @@
           <i class="material-icons">add</i>
         </a>
         <a class="game_feed_toggle_button" href="#">
-          <i class="material-icons">search</i>
+          <span class="material-symbols-outlined">person_play</span>
         </a>
         <a class="night_mode_toggle" href="/">
           <i class="material-icons mode_day">light_mode</i>
           <i class="material-icons mode_night">mode_night</i>
         </a>
         <a class="profile_menu_anchor" href="/profile">
-          <i class="material-icons">person</i>
+          <i class="material-icons">account_circle</i>
         </a>
         <button class="feed_expand_all">
           <span class="icon">&#9660;</span>

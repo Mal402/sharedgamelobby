@@ -208,13 +208,7 @@
 
 .members_header_toggle_button span {
   font-size: 30px;
-  transform: rotate(90deg);
-  transition: transform .5s;
   display: inline-block;
-}
-
-.members_expanded .members_header_toggle_button span {
-  transform: rotate(0);
 }
 
 .members_list {

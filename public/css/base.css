@@ -314,3 +314,8 @@ a.mute_button i {
 .game_feed_list_toggle {
   padding: 12px;
 }
+
+a .material-symbols-outlined,
+button .material-symbols-outlined {
+  font-size: 40px;
+}

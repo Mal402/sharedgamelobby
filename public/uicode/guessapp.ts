@@ -12,7 +12,6 @@ export class GuessApp extends GameBaseApp {
   keyboard_container: any = document.querySelector(".keyboard_container");
   keyboard_keys: any = document.querySelectorAll(".keys");
   action_desc: any = document.querySelector(".action_desc");
-  buy_vowel_button: any = document.querySelector(".buy_vowel_button");
   match_start: any = document.querySelector(".match_start");
   turn_number_div: any = document.querySelector(".turn_number_div");
   turn_player_number_div: any = document.querySelector(".turn_player_number_div");
@@ -46,7 +45,6 @@ export class GuessApp extends GameBaseApp {
 
     this._initGameCommon();
     this.keyboard_keys.forEach((ctl: any) => ctl.addEventListener("click", () => this.keypressHandler(ctl)));
-    this.buy_vowel_button.addEventListener("click", () => this.showVowel());
     this.match_start.addEventListener("click", () => this.startGame());
 
     this.prevButton.addEventListener("click", () => {
@@ -90,10 +88,6 @@ export class GuessApp extends GameBaseApp {
     });
     const json = await fResult.json();
     if (!json.success) console.log("pick letter failed", json);
-  }
-  /** paint vowel */
-  showVowel() {
-    document.body.classList.toggle("turnphase_buyVowel");
   }
   /** paint wheel done spinning */
   wheelSpinDone() {
@@ -154,7 +148,7 @@ export class GuessApp extends GameBaseApp {
       const sector = this.gameData.sectors[this.wheelSector()];
       ctx.canvas.style.transform = `rotate(${this.wheelPosition - PI / 2}rad)`;
       elSpin.textContent = !angVel ? "SPIN" : sector.label;
-      elSpin.style.background = sector.color;
+      elSpin.style.background = !angVel ? "rgb(100,100,100)" : sector.color;
     };
 
     const frame = () => {
@@ -285,7 +279,6 @@ export class GuessApp extends GameBaseApp {
 
     document.body.classList.remove("turnphase_spin");
     document.body.classList.remove("turnphase_letter");
-    document.body.classList.remove("turnphase_buyVowel");
     document.body.classList.remove("wheel_done_spinning");
 
     const cSeat = this.gameData.currentSeat;

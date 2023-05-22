@@ -11,7 +11,7 @@ export default class GuessAPI {
   /** get compiled beer data
    * @return { Promise<any> } seoData compiled blob
    */
-  static async getMainData() {
+  static async getMainData(): Promise<any> {
     const response: any = await fetch(`https://${process.env.GCLOUD_PROJECT}.web.app/data/seodatablob.json`);
     return await response.json();
   }
@@ -20,7 +20,7 @@ export default class GuessAPI {
    * @param { any } beerData
    * @return { string } full beer name
    */
-  static gameNameForBeer(brewery: any, beerData: any) {
+  static gameNameForBeer(brewery: any, beerData: any): string {
     let name = beerData.name;
     if (!name) name = "Missing Name";
     let bName = brewery.name;
@@ -34,42 +34,44 @@ export default class GuessAPI {
    * @param { string } letter true to init points
    */
   static _updatePoints(gameData: any, updatePacket: any, letter: string) {
+    if (gameData.correctLetters.indexOf(letter) !== -1)
+      throw "Letter already selected";
+    updatePacket.correctLetters = gameData.correctLetters;
+
     const seatIndex = gameData.currentSeat.toString();
     const currentPts = gameData["seatPoints" + seatIndex];
 
     let pts = 0;
     const isVowel = GuessAPI.vowelLetters.indexOf(letter.toUpperCase()) !== -1;
+    const solutionText = gameData.solutionText.replaceAll(" ", "").replaceAll("'", "").toUpperCase();
+    const correctLetterChars: Array<string> = Array.from(solutionText);
+    const selectedLetterCounts: any = {};
+    correctLetterChars.forEach((char: any) => {
+      if (char !== " ") {
+        char = char.toUpperCase();
+        if (!selectedLetterCounts[char]) {
+          selectedLetterCounts[char] = 0;
+        }
+        selectedLetterCounts[char]++;
+      }
+    });
 
-
-    const solutionText = gameData.solutionText.toUpperCase();
     if (solutionText.indexOf(letter.toUpperCase()) !== -1) {
-      updatePacket.correctLetters = gameData.correctLetters + letter;
+      updatePacket.correctLetters += letter;
 
       const sectorIndex = gameData.turnSpinResults[(gameData.turnNumber).toString()];
-
-      const correctLetterChars = Array.from(gameData.solutionText);
-      const letterCounts: any = {};
-      correctLetterChars.forEach((char: any) => {
-        if (char !== " ") {
-          char = char.toUpperCase();
-          if (!letterCounts[char]) {
-            letterCounts[char] = 0;
-          }
-          letterCounts[char]++;
-        }
-      });
       if (!isVowel && letter) {
-        pts = letterCounts[letter] * gameData.sectors[sectorIndex].points;
+        pts = selectedLetterCounts[letter] * gameData.sectors[sectorIndex].points;
       }
-      const allCorrectLetters = Object.keys(letterCounts);
-      console.log(allCorrectLetters, updatePacket.correctLetters);
-      if (allCorrectLetters.length === updatePacket.correctLetters.length) {
-        updatePacket.mode = "end";
-        updatePacket.gameFinished = true;
-      }
-    } else {
-      updatePacket.correctLetters = gameData.correctLetters;
     }
+
+    GuessAPI.checkForOnlyVowelsLeft(updatePacket, correctLetterChars);
+    const allCorrectLetters = Object.keys(selectedLetterCounts);
+    if (allCorrectLetters.length === updatePacket.correctLetters.length) {
+      updatePacket.mode = "end";
+      updatePacket.gameFinished = true;
+    }
+
     if (isVowel && currentPts > 150) {
       pts -= 150;
     }
@@ -78,12 +80,36 @@ export default class GuessAPI {
     }
     updatePacket["seatPoints" + seatIndex] = currentPts + pts;
   }
+  /** test to see if only vowels remain (game is completed)
+   * @param updatePacket
+   * @param correctLetterChars
+   */
+  static checkForOnlyVowelsLeft(updatePacket: any, correctLetterChars: Array<string>) {
+    const vowels = GuessAPI.vowelLetters.split("");
+    let onlyVowels = true;
+    let vowelsUsed = "";
+    for (let c: number = 0; c < correctLetterChars.length; c++) {
+      const letter = correctLetterChars[c];
+      if (updatePacket.correctLetters.indexOf(letter) === -1) { // not selected
+        if (vowels.indexOf(letter) === -1) {
+          onlyVowels = false;
+          break;
+        } else if (vowelsUsed.indexOf(letter) === -1) {
+          vowelsUsed += letter;
+        } 
+      }
+    }
+
+    if (onlyVowels) {
+      updatePacket.correctLetters += vowelsUsed;
+    }
+  }
   /** calculates how much to spin the wheel from storage data
    *
    * @param { any } gameData game storage object
    * @return { number } ending position in radians to spin the wheel
    */
-  static _calculateWheelAdvance(gameData: any) {
+  static _calculateWheelAdvance(gameData: any): number {
     const angVelMax = gameData.randomSpin;
     let ang = gameData.wheelPosition;
     let angVel = 0;
@@ -118,7 +144,8 @@ export default class GuessAPI {
    * @param { string } guessLetter
    * @return { any } updatePacket to apply to storage object
    */
-  static async _processGuessAction(gameData: any, uid: string, localInstance: any, action: string, guessLetter: string) {
+  static async _processGuessAction(gameData: any, uid: string, localInstance: any, 
+    action: string, guessLetter: string): Promise<any> {
     const updatePacket: any = {};
 
     if (action === "startGame") {
@@ -237,6 +264,9 @@ export default class GuessAPI {
           updatePacket.turnNumber = turnNumber;
           updatePacket.turnPhase = "spin";
           updatePacket.currentSeat = updatePacket.turnNumber % gameData.runningNumberOfSeats;
+
+
+
         }
       } else {
         throw new Error("Not players turn for letter pick");

@@ -13,7 +13,6 @@ export class GuessApp extends GameBaseApp {
         this.keyboard_container = document.querySelector(".keyboard_container");
         this.keyboard_keys = document.querySelectorAll(".keys");
         this.action_desc = document.querySelector(".action_desc");
-        this.buy_vowel_button = document.querySelector(".buy_vowel_button");
         this.match_start = document.querySelector(".match_start");
         this.turn_number_div = document.querySelector(".turn_number_div");
         this.turn_player_number_div = document.querySelector(".turn_player_number_div");
@@ -40,7 +39,6 @@ export class GuessApp extends GameBaseApp {
         this.hasSpun = {};
         this._initGameCommon();
         this.keyboard_keys.forEach((ctl) => ctl.addEventListener("click", () => this.keypressHandler(ctl)));
-        this.buy_vowel_button.addEventListener("click", () => this.showVowel());
         this.match_start.addEventListener("click", () => this.startGame());
         this.prevButton.addEventListener("click", () => {
             const slideWidth = this.slide.clientWidth;
@@ -82,10 +80,6 @@ export class GuessApp extends GameBaseApp {
         const json = await fResult.json();
         if (!json.success)
             console.log("pick letter failed", json);
-    }
-    /** paint vowel */
-    showVowel() {
-        document.body.classList.toggle("turnphase_buyVowel");
     }
     /** paint wheel done spinning */
     wheelSpinDone() {
@@ -144,7 +138,7 @@ export class GuessApp extends GameBaseApp {
             const sector = this.gameData.sectors[this.wheelSector()];
             ctx.canvas.style.transform = `rotate(${this.wheelPosition - PI / 2}rad)`;
             elSpin.textContent = !angVel ? "SPIN" : sector.label;
-            elSpin.style.background = sector.color;
+            elSpin.style.background = !angVel ? "rgb(100,100,100)" : sector.color;
         };
         const frame = () => {
             if (this.wheelPosition === -1)
@@ -270,7 +264,6 @@ export class GuessApp extends GameBaseApp {
         this.paintDock();
         document.body.classList.remove("turnphase_spin");
         document.body.classList.remove("turnphase_letter");
-        document.body.classList.remove("turnphase_buyVowel");
         document.body.classList.remove("wheel_done_spinning");
         const cSeat = this.gameData.currentSeat;
         this.player_name.innerHTML = this.gameData.memberNames[this.gameData["seat" + cSeat]];

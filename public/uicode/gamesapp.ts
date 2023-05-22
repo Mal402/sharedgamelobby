@@ -498,7 +498,7 @@ export class GamesApp extends GameBaseApp {
     };
 
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + "webPage/games/create", {
+    const fResult = await fetch(this.basePath + "lobbyApi/games/create", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -538,7 +538,7 @@ export class GamesApp extends GameBaseApp {
       gameNumber,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + "webPage/games/delete", {
+    const fResult = await fetch(this.basePath + "lobbyApi/games/delete", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -570,7 +570,7 @@ export class GamesApp extends GameBaseApp {
       gameNumber,
     };
     const token = await firebase.auth().currentUser.getIdToken();
-    const fResult = await fetch(this.basePath + "webPage/games/leave", {
+    const fResult = await fetch(this.basePath + "lobbyApi/games/leave", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",

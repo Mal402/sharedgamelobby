@@ -34,8 +34,7 @@ export default class GuessAPI {
    * @param { string } letter true to init points
    */
   static _updatePoints(gameData: any, updatePacket: any, letter: string) {
-    if (gameData.correctLetters.indexOf(letter) !== -1)
-      throw "Letter already selected";
+    if (gameData.correctLetters.indexOf(letter) !== -1) throw new Error("Letter already selected");
     updatePacket.correctLetters = gameData.correctLetters;
 
     const seatIndex = gameData.currentSeat.toString();
@@ -81,14 +80,14 @@ export default class GuessAPI {
     updatePacket["seatPoints" + seatIndex] = currentPts + pts;
   }
   /** test to see if only vowels remain (game is completed)
-   * @param updatePacket
-   * @param correctLetterChars
+   * @param { any } updatePacket delta to apply to game record
+   * @param { Array<string> } correctLetterChars already guessed letters
    */
   static checkForOnlyVowelsLeft(updatePacket: any, correctLetterChars: Array<string>) {
     const vowels = GuessAPI.vowelLetters.split("");
     let onlyVowels = true;
     let vowelsUsed = "";
-    for (let c: number = 0; c < correctLetterChars.length; c++) {
+    for (let c = 0; c < correctLetterChars.length; c++) {
       const letter = correctLetterChars[c];
       if (updatePacket.correctLetters.indexOf(letter) === -1) { // not selected
         if (vowels.indexOf(letter) === -1) {
@@ -96,7 +95,7 @@ export default class GuessAPI {
           break;
         } else if (vowelsUsed.indexOf(letter) === -1) {
           vowelsUsed += letter;
-        } 
+        }
       }
     }
 
@@ -144,7 +143,7 @@ export default class GuessAPI {
    * @param { string } guessLetter
    * @return { any } updatePacket to apply to storage object
    */
-  static async _processGuessAction(gameData: any, uid: string, localInstance: any, 
+  static async _processGuessAction(gameData: any, uid: string, localInstance: any,
     action: string, guessLetter: string): Promise<any> {
     const updatePacket: any = {};
 
@@ -264,9 +263,6 @@ export default class GuessAPI {
           updatePacket.turnNumber = turnNumber;
           updatePacket.turnPhase = "spin";
           updatePacket.currentSeat = updatePacket.turnNumber % gameData.runningNumberOfSeats;
-
-
-
         }
       } else {
         throw new Error("Not players turn for letter pick");

@@ -40,7 +40,6 @@ export class GuessApp extends GameBaseApp {
         this.hasSpun = {};
         this._initGameCommon();
         this.keyboard_keys.forEach((ctl) => ctl.addEventListener("click", () => this.keypressHandler(ctl)));
-        this.match_start.addEventListener("click", () => this.startGame());
         this.prevButton.addEventListener("click", () => {
             const slideWidth = this.slide.clientWidth;
             this.slidesContainer.scrollLeft -= slideWidth;
@@ -112,7 +111,7 @@ export class GuessApp extends GameBaseApp {
     wheelSpinDone() {
         setTimeout(() => {
             document.body.classList.add("wheel_done_spinning");
-        }, 2000);
+        }, 500);
     }
     /** calculate wheel sector from position
      * @return { number }
@@ -216,7 +215,7 @@ export class GuessApp extends GameBaseApp {
             this.hasSpun = {};
             return;
         }
-        if (this.gameData.turnPhase !== "letter" && this.gameData.turnPhase !== "skip")
+        if (this.gameData.turnPhase !== "letter" && this.gameData.turnPhase !== "turnover")
             return;
         const turnSpinKey = this.gameData.turnNumber.toString();
         if (this.isSpinning)
@@ -284,10 +283,8 @@ export class GuessApp extends GameBaseApp {
         if (this.wheelPosition === -1 && this.gameData.wheelPosition)
             this.wheelPosition = this.gameData.wheelPosition;
         if (this.gameData.turnPhase === "spin" && this.gameData.turnNumber === 0) {
-            console.log(this.wheelPosition, this.renderedWheelPosition);
             this.wheelPosition = this.gameData.wheelPosition;
         }
-        this.wheelUI();
         this.queryStringPaintProcess();
         this.turnindex_span.innerHTML = this.gameData.turnNumber.toString();
         this.turnphase_span.innerHTML = this.gameData.turnPhase;
@@ -306,6 +303,7 @@ export class GuessApp extends GameBaseApp {
         document.body.classList.add("turnphase_" + phase);
         let phaseDesc = "";
         if (this.gameData.turnPhase === "spin") {
+            this.wheelPosition = this.gameData.wheelPosition;
             phaseDesc = "Spin Wheel";
             const turnSpinKey = this.gameData.turnNumber.toString();
             this.turnsSpun[turnSpinKey] = false;
@@ -341,6 +339,7 @@ export class GuessApp extends GameBaseApp {
         this.currentplayer_score_dock.classList.remove("seat_color_3");
         //  this.match_board_outer.classList.add("seat_color_" + seatIndex);
         this.currentplayer_score_dock.classList.add("seat_color_" + seatIndex);
+        this.wheelUI();
         this.htmlForBeerTitle();
         this.gamePaintSeats();
         this.updateKeyboardStatus();

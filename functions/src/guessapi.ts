@@ -262,7 +262,8 @@ export default class GuessAPI {
       let turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);
 
       if (gameData.turnPhase !== "turnover") throw new Error("Turn state not in turn over");
-
+      updatePacket.wheelPosition = gameData.nextWheelPosition;
+          
       updatePacket.turnNumber = turnNumber + 1;
       updatePacket.turnPhase = "spin";
     }
@@ -285,7 +286,6 @@ export default class GuessAPI {
         updatePacket.turnSpinResults = {
           [gameData.turnNumber]: turnSector,
         };
-        console.log(turnSector, gameData.sectors);
         if (gameData.sectors[turnSector].points === -1) {
           updatePacket.turnPhase = "turnover";
         }

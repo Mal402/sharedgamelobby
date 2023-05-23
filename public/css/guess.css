@@ -13,6 +13,15 @@
   pointer-events: auto;
 }
 
+.turnphase_turnover.wheel_done_spinning .custom_container .front {
+  transform: rotateX(0deg);
+}
+
+.turnphase_turnover.wheel_done_spinning .custom_container .rear {
+  transform: rotateX(90deg);
+}
+
+
 .turnover_section {
   z-index: 10000;
   position: absolute;
@@ -26,7 +35,7 @@
   display: none;
 }
 
-.turnphase_turnover .turnover_section {
+.turnphase_turnover.wheel_done_spinning .turnover_section {
   display: block;
 }
 

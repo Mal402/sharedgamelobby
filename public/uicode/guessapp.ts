@@ -47,7 +47,6 @@ export class GuessApp extends GameBaseApp {
 
     this._initGameCommon();
     this.keyboard_keys.forEach((ctl: any) => ctl.addEventListener("click", () => this.keypressHandler(ctl)));
-    this.match_start.addEventListener("click", () => this.startGame());
 
     this.prevButton.addEventListener("click", () => {
       const slideWidth = this.slide.clientWidth;
@@ -121,7 +120,7 @@ export class GuessApp extends GameBaseApp {
   wheelSpinDone() {
     setTimeout(() => {
       document.body.classList.add("wheel_done_spinning");
-    }, 2000);
+    }, 500);
   }
   /** calculate wheel sector from position
    * @return { number }
@@ -230,7 +229,7 @@ export class GuessApp extends GameBaseApp {
       this.hasSpun = {};
       return;
     }
-    if (this.gameData.turnPhase !== "letter" && this.gameData.turnPhase !== "skip") return;
+    if (this.gameData.turnPhase !== "letter" && this.gameData.turnPhase !== "turnover") return;
     const turnSpinKey = this.gameData.turnNumber.toString();
 
     if (this.isSpinning) return;
@@ -295,11 +294,8 @@ export class GuessApp extends GameBaseApp {
 
     if (this.wheelPosition === -1 && this.gameData.wheelPosition) this.wheelPosition = this.gameData.wheelPosition;
     if (this.gameData.turnPhase === "spin" && this.gameData.turnNumber === 0) {
-      console.log(this.wheelPosition, this.renderedWheelPosition);
       this.wheelPosition = this.gameData.wheelPosition;
     }
-
-    this.wheelUI();
 
     this.queryStringPaintProcess();
 
@@ -324,6 +320,8 @@ export class GuessApp extends GameBaseApp {
 
     let phaseDesc = "";
     if (this.gameData.turnPhase === "spin") {
+      this.wheelPosition = this.gameData.wheelPosition;
+    
       phaseDesc = "Spin Wheel";
       const turnSpinKey = this.gameData.turnNumber.toString();
       this.turnsSpun[turnSpinKey] = false;
@@ -365,6 +363,8 @@ export class GuessApp extends GameBaseApp {
     //  this.match_board_outer.classList.add("seat_color_" + seatIndex);
     this.currentplayer_score_dock.classList.add("seat_color_" + seatIndex);
 
+    this.wheelUI();
+
     this.htmlForBeerTitle();
     this.gamePaintSeats();
     this.updateKeyboardStatus();
@@ -377,7 +377,6 @@ export class GuessApp extends GameBaseApp {
   htmlForBeerTitle() {
     this.word_progress_display.innerHTML = "";
     if (!this.gameData) return;
-
     this.correctLetters = "";
     let html = "";
     const gName = this.gameData.solutionText;

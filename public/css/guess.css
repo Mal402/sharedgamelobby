@@ -21,6 +21,13 @@
   transform: rotateX(90deg);
 }
 
+.next_turn_button {
+  display: none;
+}
+
+.current_users_turn  .next_turn_button {
+  display: inline-block;
+}
 
 .turnover_section {
   z-index: 10000;

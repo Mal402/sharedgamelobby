@@ -174,7 +174,8 @@ export class GuessApp extends GameBaseApp {
     const rotate = () => {
       const sector = this.gameData.sectors[this.wheelSector()];
       ctx.canvas.style.transform = `rotate(${this.wheelPosition - PI / 2}rad)`;
-      elSpin.textContent = !angVel ? "SPIN" : sector.label;
+      const spinLabel = this.currentUserTurn ? "SPIN" : "";
+      elSpin.textContent = !angVel ? spinLabel : sector.label;
       elSpin.style.background = !angVel ? "rgb(100,100,100)" : sector.color;
     };
 

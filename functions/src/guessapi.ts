@@ -149,6 +149,8 @@ export default class GuessAPI {
 
     if (action === "startGame") {
       if (GameAPI._emptySeat(gameData)) throw new Error("Can't start with empty seats");
+      if (gameData.mode === "running") throw new Error("Game already running");
+      if (gameData.createUser !== uid) throw new Error("Must be creator to start");
 
       const beerData = await GuessAPI.getMainData();
 
@@ -216,9 +218,11 @@ export default class GuessAPI {
       ];
     }
     if (action === "endGame") {
+      if (gameData.createUser !== uid) throw new Error("Must be creator to end");
       updatePacket.mode = "end";
     }
     if (action === "resetGame") {
+      if (gameData.createUser !== uid) throw new Error("Must be creator to reset");
       updatePacket.mode = "ready";
     }
     if (action === "playturn") {
@@ -260,10 +264,15 @@ export default class GuessAPI {
     }
     if (action === "nextturn") {
       const turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);
+      const currentSeat = turnNumber % gameData.runningNumberOfSeats;
+      const seatKey = "seat" + currentSeat.toString();
+      const playerUid = gameData[seatKey];
+      if (playerUid !== uid) throw new Error("Must be current player to next turn");
 
       if (gameData.turnPhase !== "turnover") throw new Error("Turn state not in turn over");
       updatePacket.wheelPosition = gameData.nextWheelPosition;
       updatePacket.turnNumber = turnNumber + 1;
+      updatePacket.currentSeat = updatePacket.turnNumber % gameData.runningNumberOfSeats;
       updatePacket.turnPhase = "spin";
     }
     if (action === "spin") {

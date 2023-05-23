@@ -18,6 +18,7 @@ export default class GameBaseApp extends BaseApp {
         this.alertErrors = false;
         this.matchBoardRendered = false;
         this.messageListRendered = false;
+        this.currentUserTurn = false;
         this.seat0_name = document.querySelector(".seat0_name");
         this.seat1_name = document.querySelector(".seat1_name");
         this.seat2_name = document.querySelector(".seat2_name");
@@ -571,7 +572,8 @@ export default class GameBaseApp extends BaseApp {
             document.body.classList.add("current_user_seated");
         else
             document.body.classList.remove("current_user_seated");
-        if (this.uid === this.gameData["seat" + this.gameData.currentSeat])
+        this.currentUserTurn = (this.uid === this.gameData["seat" + this.gameData.currentSeat]);
+        if (this.currentUserTurn)
             document.body.classList.add("current_users_turn");
         else
             document.body.classList.remove("current_users_turn");

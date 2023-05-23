@@ -294,6 +294,10 @@ export class GuessApp extends GameBaseApp {
     if (!this.allBeers) return;
 
     if (this.wheelPosition === -1 && this.gameData.wheelPosition) this.wheelPosition = this.gameData.wheelPosition;
+    if (this.gameData.turnPhase === "spin" && this.gameData.turnNumber === 0) {
+      console.log(this.wheelPosition, this.renderedWheelPosition);
+      this.wheelPosition = this.gameData.wheelPosition;
+    }
 
     this.wheelUI();
 
@@ -325,6 +329,10 @@ export class GuessApp extends GameBaseApp {
       this.turnsSpun[turnSpinKey] = false;
       this.wheel_wrapper.style.display = "inline-flex";
       this.player_total_for_turn.innerHTML = "Ready to Spin";
+    }
+    if (this.gameData.turnPhase === "turnover") {
+      phaseDesc = "Turn Over";
+//      this.wheelPosition
     }
 
     const sectors = this.gameData.sectors;

@@ -372,6 +372,7 @@ export class GuessApp extends GameBaseApp {
                 const audio = this.audios.get("wheelspin");
                 audio.currentTime = 0;
                 this.playAudio(audio);
+                setTimeout(() => audio.pause(), 5000);
             }
         }
         this.soundGameStateCache.currentUserTurn = this.currentUserTurn;
@@ -381,7 +382,7 @@ export class GuessApp extends GameBaseApp {
     /** override and add a sound */
     loadAudios() {
         super.loadAudios();
-        this.audios.set("wheelspin", new Audio('/images/wheelspin.mp3'));
+        this.addAudio("wheelspin", "/images/wheelspin.mp3");
     }
     /** html frag for beer title */
     htmlForBeerTitle() {

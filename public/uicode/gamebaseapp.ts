@@ -164,9 +164,9 @@ export default class GameBaseApp extends BaseApp {
   }
   /** init sounds ready to play */
   loadAudios() {
-    this.audios.set("gamestart", new Audio('/images/gamestart.mp3'));
-    this.audios.set("gameover", new Audio('/images/gameover.mp3'));
-    this.audios.set("turnstart", new Audio('/images/turnstart.mp3'));
+    this.addAudio("gamestart", "/images/gamestart.mp3");
+    this.addAudio("gameover", "/images/gameover.mp3");
+    this.addAudio("turnstart", "/images/turnstart.mp3");
   }
   /** paint users online status */
   updateUserPresence() {

@@ -466,6 +466,15 @@ class BaseApp {
   playAudio(audio: any) {
     audio.play().then(null, (e: any) => console.log("audio play error", e));
   }
+  /** add audio file 
+   * @param { string } name name to map
+   * @param { string } path url to audio
+  */
+  addAudio(name: string, path: string) {
+    const audio = new Audio(path);
+    this.audios.set(name, audio);
+    audio.load();
+  }
 }
 
 export default BaseApp;

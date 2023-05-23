@@ -164,7 +164,7 @@ export class GuessApp extends GameBaseApp {
             const sector = this.gameData.sectors[this.wheelSector()];
             ctx.canvas.style.transform = `rotate(${this.wheelPosition - PI / 2}rad)`;
             const spinLabel = this.currentUserTurn ? "SPIN" : "";
-            elSpin.textContent = !angVel ? spinLabel : sector.label;
+            this.spin_wheel.textContent = !angVel ? spinLabel : sector.label;
             elSpin.style.background = !angVel ? "rgb(100,100,100)" : sector.color;
         };
         const frame = () => {
@@ -296,6 +296,8 @@ export class GuessApp extends GameBaseApp {
         document.body.classList.remove("turnphase_turnover");
         document.body.classList.remove("turnphase_letter");
         document.body.classList.remove("wheel_done_spinning");
+        const spinLabel = this.currentUserTurn ? "SPIN" : "";
+        this.spin_wheel.textContent = spinLabel;
         const cSeat = this.gameData.currentSeat;
         this.player_name.innerHTML = this.gameData.memberNames[this.gameData["seat" + cSeat]];
         let phase = "Spin";

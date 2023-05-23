@@ -190,8 +190,8 @@ export default class GuessAPI {
       updatePacket.spinTimeDate = new Date().toISOString();
       updatePacket.sectors = [{
         color: "#f82",
-        label: "100",
-        points: 100,
+        label: "Next",
+        points: -1,
       },
       {
         color: "#0bf",
@@ -209,19 +209,9 @@ export default class GuessAPI {
         points: 300,
       },
       {
-        color: "#b0f",
-        label: "200",
-        points: 200,
-      },
-      {
         color: "#f0b",
         label: "400",
         points: 400,
-      },
-      {
-        color: "#bf0",
-        label: "500",
-        points: 500,
       },
       ];
     }
@@ -270,7 +260,7 @@ export default class GuessAPI {
     }
 
     if (action === "spin") {
-      const turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);
+      let turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);
 
       if (gameData.turnPhase !== "spin") throw new Error("Turn state not in spin");
 
@@ -288,6 +278,11 @@ export default class GuessAPI {
         updatePacket.turnSpinResults = {
           [gameData.turnNumber]: turnSector,
         };
+        console.log(turnSector, gameData.sectors);
+        if (gameData.sectors[turnSector].points === -1) {
+          turnNumber++;
+          updatePacket.turnPhase = "spin";
+        }
         updatePacket.turnNumber = turnNumber;
       } else {
         throw new Error("Not players turn for spin");

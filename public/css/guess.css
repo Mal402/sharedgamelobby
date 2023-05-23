@@ -308,7 +308,6 @@
   box-sizing: border-box;
   transition: all 0.3s ease;
   height: 270px;
-  background-color: lightblue;
 }
 
 .custom_container .front {
@@ -408,27 +407,15 @@
   border-top: none;
 }
 
-.guess_score_bank {
-  display: flex;
-  flex-direction: column;
-  place-content: center;
-  border: 2px solid black;
-  margin: 6px 0px;
-}
-
 .player_score_container {
-  background-color: red;
   display: flex;
   place-content: center;
 }
 
 .player_score_container .player_total_points,
 .player_score_container .player_name {
-  background-color: black;
-  color: white;
   margin: 4px 0;
   border-radius: 4px;
-  border: 2px inset gray;
 }
 
 .player_score_container .player_total_points {
@@ -436,8 +423,6 @@
   font-size: 28px;
   font-weight: bold;
   padding: 2px 24px;
-  border-left: 4px inset gray;
-  border-right: 4px inset rgb(100, 100, 100);
 }
 
 .player_score_container .player_name {
@@ -453,4 +438,8 @@
 
 .messages_list {
   display: block;
+}
+
+h2 {
+  margin: 6px;
 }

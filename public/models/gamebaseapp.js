@@ -116,6 +116,9 @@ export default class GameBaseApp extends BaseApp {
             });
         }
     }
+    /** detect and play sounds for game */
+    paintSounds() {
+    }
     /** paint users online status */
     updateUserPresence() {
         document.querySelectorAll(".member_online_status")
@@ -178,11 +181,11 @@ export default class GameBaseApp extends BaseApp {
     get gameTypeMetaData() {
         return {
             guess: {
-                name: "Guess?",
+                name: "Guess",
                 icon: "/images/logo_guess.png",
             },
             match: {
-                name: "Match!",
+                name: "Match",
                 icon: "/images/logo_match.png",
             },
         };

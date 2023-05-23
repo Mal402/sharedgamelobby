@@ -352,6 +352,28 @@ export class GuessApp extends GameBaseApp {
         this._updateFinishStatus();
         this.updateUserPresence();
     }
+    /** override to add turn phase sounds */
+    paintSounds() {
+        super.paintSounds();
+        if (!this.gameData)
+            return;
+        if (!this.muted) {
+            if (this.currentUserTurn) {
+                if (this.soundGameStateCache.turnNumber !== this.gameData.turnNumber &&
+                    this.gameData.mode === "running" &&
+                    this.gameData.turnNumber !== 0) {
+                    console.log(this.gameData, this.soundGameStateCache);
+                    const audio = this.audios.get("turnstart");
+                    audio.currentTime = 0;
+                    audio.play();
+                    setTimeout(() => audio.pause(), 1000);
+                }
+            }
+        }
+        this.soundGameStateCache.currentUserTurn = this.currentUserTurn;
+        this.soundGameStateCache.turnNumber = this.gameData.turnNumber;
+        this.soundGameStateCache.turnPhase = this.gameData.turnPhase;
+    }
     /** html frag for beer title */
     htmlForBeerTitle() {
         this.word_progress_display.innerHTML = "";

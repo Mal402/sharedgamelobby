@@ -120,20 +120,31 @@ export default class GameBaseApp extends BaseApp {
     paintSounds() {
         if (!this.gameData)
             return;
-        if (this.gameData.mode === "running") {
-            if (this.soundGameStateCache.mode === "ready") {
-                const gameStartAudio = this.audios.get("gamestart");
-                gameStartAudio.currentTime = 0;
-                gameStartAudio.play();
-                setTimeout(() => gameStartAudio.pause(), 2000);
+        if (!this.muted) {
+            if (this.gameData.mode === "running") {
+                if (this.soundGameStateCache.mode === "ready") {
+                    const audio = this.audios.get("gamestart");
+                    audio.currentTime = 0;
+                    audio.play();
+                    setTimeout(() => audio.pause(), 2000);
+                }
+            }
+            if (this.gameData.mode === "end") {
+                if (this.soundGameStateCache.mode === "running") {
+                    const audio = this.audios.get("gameover");
+                    audio.currentTime = 0;
+                    audio.play();
+                    setTimeout(() => audio.pause(), 2000);
+                }
             }
         }
         this.soundGameStateCache.mode = this.gameData.mode;
-        //console.log(this.gameData.mode);
     }
     /** init sounds ready to play */
     loadAudios() {
         this.audios.set("gamestart", new Audio('/images/gamestart.mp3'));
+        this.audios.set("gameover", new Audio('/images/gameover.mp3'));
+        this.audios.set("turnstart", new Audio('/images/turnstart.mp3'));
     }
     /** paint users online status */
     updateUserPresence() {

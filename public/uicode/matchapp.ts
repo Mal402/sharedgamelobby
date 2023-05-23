@@ -142,6 +142,28 @@ export class MatchApp extends GameBaseApp {
 
     return cardInfo;
   }
+  /** override to add turn phase sounds */
+  paintSounds(): void {
+    super.paintSounds();
+    if (!this.gameData) return;
+    if (!this.muted) {
+      if (this.currentUserTurn) {
+        if (this.soundGameStateCache.turnNumber !== this.gameData.turnNumber &&
+          this.gameData.mode === "running" && 
+          this.gameData.turnNumber !== 0) {
+          console.log(this.gameData, this.soundGameStateCache);
+          const audio = this.audios.get("turnstart");
+          audio.currentTime = 0;
+          audio.play();
+          setTimeout(() => audio.pause(), 1000);
+        }
+      }
+    }
+
+    this.soundGameStateCache.currentUserTurn = this.currentUserTurn;
+    this.soundGameStateCache.turnNumber = this.gameData.turnNumber;
+    this.soundGameStateCache.turnPhase = this.gameData.turnPhase;
+  }
   /** paint game data
    * @param { any } gameDoc firestore game query result document
   */
@@ -704,8 +726,8 @@ export class MatchApp extends GameBaseApp {
     return `<span class="card_inner" data-bkg="${btoa(cardInfo.image)}"></span>`;
   }
   /** gets card meta and totals for a card (based on shuffled deck order)
- * @return { any } meta data for a specific card
- */
+  * @return { any } meta data for a specific card
+  */
   getLastCardMeta(): any {
     let deckIndex = 0;
     if (this.gameData.lastMatchIndex) deckIndex = this.gameData.lastMatchIndex;

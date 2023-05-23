@@ -308,7 +308,7 @@ export class GuessApp extends GameBaseApp {
     this._paintDockSeats(".match_end_result ");
 
     this.paintSounds();
-    
+
     document.body.classList.remove("turnphase_spin");
     document.body.classList.remove("turnphase_turnover");
     document.body.classList.remove("turnphase_letter");
@@ -316,7 +316,7 @@ export class GuessApp extends GameBaseApp {
 
     const spinLabel = this.currentUserTurn ? "SPIN" : "";
     this.spin_wheel.textContent = spinLabel;
-    
+
     const cSeat = this.gameData.currentSeat;
     this.player_name.innerHTML = this.gameData.memberNames[this.gameData["seat" + cSeat]];
 
@@ -327,7 +327,7 @@ export class GuessApp extends GameBaseApp {
     let phaseDesc = "";
     if (this.gameData.turnPhase === "spin") {
       this.wheelPosition = this.gameData.wheelPosition;
-    
+
       phaseDesc = "Spin Wheel";
       const turnSpinKey = this.gameData.turnNumber.toString();
       this.turnsSpun[turnSpinKey] = false;
@@ -336,7 +336,7 @@ export class GuessApp extends GameBaseApp {
     }
     if (this.gameData.turnPhase === "turnover") {
       phaseDesc = "Turn Over";
-//      this.wheelPosition
+      //      this.wheelPosition
     }
 
     const sectors = this.gameData.sectors;
@@ -378,6 +378,28 @@ export class GuessApp extends GameBaseApp {
     this._updateWheelSpin();
     this._updateFinishStatus();
     this.updateUserPresence();
+  }
+  /** override to add turn phase sounds */
+  paintSounds(): void {
+    super.paintSounds();
+    if (!this.gameData) return;
+    if (!this.muted) {
+      if (this.currentUserTurn) {
+        if (this.soundGameStateCache.turnNumber !== this.gameData.turnNumber &&
+          this.gameData.mode === "running" &&
+          this.gameData.turnNumber !== 0) {
+          console.log(this.gameData, this.soundGameStateCache);
+          const audio = this.audios.get("turnstart");
+          audio.currentTime = 0;
+          audio.play();
+          setTimeout(() => audio.pause(), 1000);
+        }
+      }
+    }
+
+    this.soundGameStateCache.currentUserTurn = this.currentUserTurn;
+    this.soundGameStateCache.turnNumber = this.gameData.turnNumber;
+    this.soundGameStateCache.turnPhase = this.gameData.turnPhase;
   }
   /** html frag for beer title */
   htmlForBeerTitle() {

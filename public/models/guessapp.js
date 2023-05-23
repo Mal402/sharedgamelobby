@@ -28,6 +28,7 @@ export class GuessApp extends GameBaseApp {
         this.slide = document.querySelector(".slide");
         this.prevButton = document.querySelector(".slide-arrow-prev");
         this.nextButton = document.querySelector(".slide-arrow-next");
+        this.next_turn_button = document.querySelector(".next_turn_button");
         this.wheelPosition = -1; // 0.5 * Math.PI;
         this.renderedWheelPosition = -1;
         this.spin_wheel = document.querySelector(".spin_wheel");
@@ -51,6 +52,32 @@ export class GuessApp extends GameBaseApp {
         this.spin_wheel.addEventListener("click", () => this.startSpin());
         this.game_feed_list_toggle.addEventListener("click", (e) => this.toggleOptionsView(e));
         this.toggleOptionsView(null);
+        this.next_turn_button.addEventListener("click", () => this.nextTurn());
+    }
+    /** advance game to next turn */
+    async nextTurn() {
+        if (this.gameData.turnPhase !== "turnover")
+            return;
+        const action = "nextturn";
+        const body = {
+            gameId: this.currentGame,
+            uid: this.uid,
+            action,
+        };
+        const token = await firebase.auth().currentUser.getIdToken();
+        const fResult = await fetch(this.basePath + "lobbyApi/guess/action", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+                token,
+            },
+            body: JSON.stringify(body),
+        });
+        const json = await fResult.json();
+        if (!json.success)
+            console.log("next turn action failed", json);
     }
     /** handles keyboard click by user
      * @param { any } ctl dom button clicked
@@ -264,6 +291,7 @@ export class GuessApp extends GameBaseApp {
         this.paintDock();
         this._paintDockSeats(".match_end_result ");
         document.body.classList.remove("turnphase_spin");
+        document.body.classList.remove("turnphase_turnover");
         document.body.classList.remove("turnphase_letter");
         document.body.classList.remove("wheel_done_spinning");
         const cSeat = this.gameData.currentSeat;

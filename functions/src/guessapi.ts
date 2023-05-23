@@ -258,7 +258,14 @@ export default class GuessAPI {
         throw new Error("Not players turn for letter pick");
       }
     }
+    if (action === "nextturn") {
+      let turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);
 
+      if (gameData.turnPhase !== "turnover") throw new Error("Turn state not in turn over");
+
+      updatePacket.turnNumber = turnNumber + 1;
+      updatePacket.turnPhase = "spin";
+    }
     if (action === "spin") {
       let turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);
 
@@ -280,8 +287,7 @@ export default class GuessAPI {
         };
         console.log(turnSector, gameData.sectors);
         if (gameData.sectors[turnSector].points === -1) {
-          turnNumber++;
-          updatePacket.turnPhase = "spin";
+          updatePacket.turnPhase = "turnover";
         }
         updatePacket.turnNumber = turnNumber;
       } else {

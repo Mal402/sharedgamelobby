@@ -9,6 +9,27 @@
   pointer-events: auto;
 }
 
+.turnphase_turnover .wheel_wrapper {
+  pointer-events: auto;
+}
+
+.turnover_section {
+  z-index: 10000;
+  position: absolute;
+  background:rgba(255,255,255,0.75);
+  padding: 20px;
+  width: 220px;
+  height: 300px;
+}
+
+.turnover_section {
+  display: none;
+}
+
+.turnphase_turnover .turnover_section {
+  display: block;
+}
+
 .turnphase_spin .keyboard_container {
   display: none;
 }

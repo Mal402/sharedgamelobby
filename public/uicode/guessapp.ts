@@ -307,6 +307,8 @@ export class GuessApp extends GameBaseApp {
     this.paintDock();
     this._paintDockSeats(".match_end_result ");
 
+    this.paintSounds();
+    
     document.body.classList.remove("turnphase_spin");
     document.body.classList.remove("turnphase_turnover");
     document.body.classList.remove("turnphase_letter");

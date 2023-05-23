@@ -118,6 +118,22 @@ export default class GameBaseApp extends BaseApp {
     }
     /** detect and play sounds for game */
     paintSounds() {
+        if (!this.gameData)
+            return;
+        if (this.gameData.mode === "running") {
+            if (this.soundGameStateCache.mode === "ready") {
+                const gameStartAudio = this.audios.get("gamestart");
+                gameStartAudio.currentTime = 0;
+                gameStartAudio.play();
+                setTimeout(() => gameStartAudio.pause(), 2000);
+            }
+        }
+        this.soundGameStateCache.mode = this.gameData.mode;
+        //console.log(this.gameData.mode);
+    }
+    /** init sounds ready to play */
+    loadAudios() {
+        this.audios.set("gamestart", new Audio('/images/gamestart.mp3'));
     }
     /** paint users online status */
     updateUserPresence() {
@@ -174,6 +190,7 @@ export default class GameBaseApp extends BaseApp {
         if (this.code_link_copy)
             this.code_link_copy.addEventListener("click", () => this.copyGameLinkToClipboard());
         this.initGameMessageFeed();
+        this.loadAudios();
     }
     /** static data for guess and match (name, logo)
      * @return { any } map for lookup game details

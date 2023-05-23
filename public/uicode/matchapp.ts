@@ -168,6 +168,8 @@ export class MatchApp extends GameBaseApp {
     this.paintDock();
     this._paintDockSeats(".match_end_result ");
 
+    this.paintSounds();
+
     if (this.gameData.mode === this.previousMode) this.matchBoardRendered = false;
     this.previousMode = this.gameData.mode;
 

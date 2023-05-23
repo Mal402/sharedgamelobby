@@ -25,6 +25,9 @@ class BaseApp {
   nightModeCurrent = false;
   mute_button: any = null;
 
+  soundGameStateCache: any = {};
+  audios = new Map();
+
   pickAudio: any = null;
   downAudio: any = null;
   upAudio: any = null;
@@ -223,6 +226,8 @@ class BaseApp {
       if (this.upAudio) this.upAudio.pause();
       if (this.lockAudio) this.lockAudio.pause();
 
+      this.audios.forEach(audio => audio.pause());
+
       muted = true;
     } else {
       this.mute_button.children[0].innerHTML = "volume_up";
@@ -362,11 +367,14 @@ class BaseApp {
     }
     return array;
   }
+    /** init sounds ready to play */
+    loadAudios() {
+    }
   /** returns text value for time since Now, i.e. 3 mins ago
    * @param { Date } date value to format
    * @return { string } formatted string value for time since
    */
-  timeSince(date: Date) {
+  timeSince(date: Date): string {
     const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
 
     let interval = seconds / 31536000;

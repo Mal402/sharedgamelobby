@@ -23,6 +23,8 @@ class BaseApp {
         this.profileInited = false;
         this.nightModeCurrent = false;
         this.mute_button = null;
+        this.soundGameStateCache = {};
+        this.audios = new Map();
         this.pickAudio = null;
         this.downAudio = null;
         this.upAudio = null;
@@ -217,6 +219,7 @@ class BaseApp {
                 this.upAudio.pause();
             if (this.lockAudio)
                 this.lockAudio.pause();
+            this.audios.forEach(audio => audio.pause());
             muted = true;
         }
         else {
@@ -351,6 +354,9 @@ class BaseApp {
             ];
         }
         return array;
+    }
+    /** init sounds ready to play */
+    loadAudios() {
     }
     /** returns text value for time since Now, i.e. 3 mins ago
      * @param { Date } date value to format

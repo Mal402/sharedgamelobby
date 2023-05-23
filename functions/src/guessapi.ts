@@ -259,16 +259,15 @@ export default class GuessAPI {
       }
     }
     if (action === "nextturn") {
-      let turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);
+      const turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);
 
       if (gameData.turnPhase !== "turnover") throw new Error("Turn state not in turn over");
       updatePacket.wheelPosition = gameData.nextWheelPosition;
-          
       updatePacket.turnNumber = turnNumber + 1;
       updatePacket.turnPhase = "spin";
     }
     if (action === "spin") {
-      let turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);
+      const turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);
 
       if (gameData.turnPhase !== "spin") throw new Error("Turn state not in spin");
 

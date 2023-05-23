@@ -462,6 +462,10 @@ class BaseApp {
       tags: returnTags,
     };
   }
+  /** play audio with try catch to wrap no user interaction error */
+  playAudio(audio: any) {
+    audio.play().then(null, (e: any) => console.log("audio play error", e));
+  }
 }
 
 export default BaseApp;

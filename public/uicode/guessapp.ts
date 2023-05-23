@@ -384,22 +384,32 @@ export class GuessApp extends GameBaseApp {
     super.paintSounds();
     if (!this.gameData) return;
     if (!this.muted) {
-      if (this.currentUserTurn) {
+      if (this.currentUserTurn && this.gameData.mode === "running") {
         if (this.soundGameStateCache.turnNumber !== this.gameData.turnNumber &&
-          this.gameData.mode === "running" &&
           this.gameData.turnNumber !== 0) {
-          console.log(this.gameData, this.soundGameStateCache);
           const audio = this.audios.get("turnstart");
           audio.currentTime = 0;
-          audio.play();
+          this.playAudio(audio);
           setTimeout(() => audio.pause(), 1000);
         }
+      }
+
+      if ((this.gameData.turnPhase === "letter" || this.gameData.turnPhase === "turnover") &&
+        (this.gameData.turnPhase !== this.soundGameStateCache.turnPhase)) {
+        const audio = this.audios.get("wheelspin");
+        audio.currentTime = 0;
+        this.playAudio(audio);
       }
     }
 
     this.soundGameStateCache.currentUserTurn = this.currentUserTurn;
     this.soundGameStateCache.turnNumber = this.gameData.turnNumber;
     this.soundGameStateCache.turnPhase = this.gameData.turnPhase;
+  }
+  /** override and add a sound */
+  loadAudios() {
+    super.loadAudios();
+    this.audios.set("wheelspin", new Audio('/images/wheelspin.mp3'));
   }
   /** html frag for beer title */
   htmlForBeerTitle() {

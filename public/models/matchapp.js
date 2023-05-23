@@ -139,7 +139,7 @@ export class MatchApp extends GameBaseApp {
                     console.log(this.gameData, this.soundGameStateCache);
                     const audio = this.audios.get("turnstart");
                     audio.currentTime = 0;
-                    audio.play();
+                    this.playAudio(audio);
                     setTimeout(() => audio.pause(), 1000);
                 }
             }

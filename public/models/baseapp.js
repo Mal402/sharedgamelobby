@@ -449,6 +449,10 @@ class BaseApp {
             tags: returnTags,
         };
     }
+    /** play audio with try catch to wrap no user interaction error */
+    playAudio(audio) {
+        audio.play().then(null, (e) => console.log("audio play error", e));
+    }
 }
 export default BaseApp;
 //# sourceMappingURL=baseapp.js.map

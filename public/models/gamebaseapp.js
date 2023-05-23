@@ -125,7 +125,7 @@ export default class GameBaseApp extends BaseApp {
                 if (this.soundGameStateCache.mode === "ready") {
                     const audio = this.audios.get("gamestart");
                     audio.currentTime = 0;
-                    audio.play();
+                    this.playAudio(audio);
                     setTimeout(() => audio.pause(), 2000);
                 }
             }
@@ -133,7 +133,7 @@ export default class GameBaseApp extends BaseApp {
                 if (this.soundGameStateCache.mode === "running") {
                     const audio = this.audios.get("gameover");
                     audio.currentTime = 0;
-                    audio.play();
+                    this.playAudio(audio);
                     setTimeout(() => audio.pause(), 2000);
                 }
             }

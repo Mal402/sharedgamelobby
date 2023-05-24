@@ -121,16 +121,6 @@ class BaseApp {
       document.body.classList.remove("app_signed_out");
       if (this.fireUser.isAnonymous) document.body.classList.add("signed_in_anonymous");
 
-      try {
-        let loginResult = await firebase.auth().getRedirectResult();
-        if (loginResult.operationType === 'signIn') {
-          window.location = '/profile/'
-        }
-      } catch (error: any) {
-        alert(error.message);
-        console.log('loginerror', error)
-      }
-
       await this._authInitProfile();
     } else {
       this.fireToken = null;
@@ -255,10 +245,7 @@ class BaseApp {
     provider.setCustomParameters({
       "prompt": "select_account",
     });
-    await firebase.auth().signInWithRedirect(provider);
-    setTimeout(() => {
-      location.href = "/";
-    }, 1);
+    await firebase.auth().signInWithPopup(provider);
   }
   /** anonymous sign in handler
    * @param { any } e dom event - preventDefault is called if passed

@@ -108,6 +108,16 @@ class BaseApp {
             document.body.classList.remove("app_signed_out");
             if (this.fireUser.isAnonymous)
                 document.body.classList.add("signed_in_anonymous");
+            try {
+                let loginResult = await firebase.auth().getRedirectResult();
+                if (loginResult.operationType === 'signIn') {
+                    window.location = '/profile/';
+                }
+            }
+            catch (error) {
+                alert(error.message);
+                console.log('loginerror', error);
+            }
             await this._authInitProfile();
         }
         else {
@@ -236,9 +246,9 @@ class BaseApp {
         e.preventDefault();
         const provider = new firebase.auth.GoogleAuthProvider();
         provider.setCustomParameters({
-            "display": "popup",
+            "prompt": "select_account",
         });
-        await firebase.auth().signInWithPopup(provider);
+        await firebase.auth().signInWithRedirect(provider);
         setTimeout(() => {
             location.href = "/";
         }, 1);

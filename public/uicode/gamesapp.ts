@@ -15,6 +15,7 @@ export class GamesApp extends GameBaseApp {
   feed_expand_all: any = document.querySelector(".feed_expand_all");
   new_game_type_wrappers: any = document.querySelectorAll(".new_game_type_wrapper");
   basic_options: any = document.querySelector(".basic_options");
+  userprofile_description: any = document.querySelector(".userprofile_description");
   recentExpanded: any = {};
   gameFeedSubscription: any;
   publicFeedSubscription: any;
@@ -154,9 +155,9 @@ export class GamesApp extends GameBaseApp {
   }
   /** handle gameid passed as query string and navigate to game
    * @param { string } gameId storage record id of game to load
-   * @return { boolean } true if navigating, false if invalid game id
+   * @return { Promise<boolean> } true if navigating, false if invalid game id
    */
-  async _handlePassedInGameID(gameId: any) {
+  async _handlePassedInGameID(gameId: any): Promise<boolean> {
     const gameQuery = await firebase.firestore().doc(`Games/${gameId}`).get();
     const gameData = gameQuery.data();
 
@@ -177,6 +178,15 @@ export class GamesApp extends GameBaseApp {
     super.authUpdateStatusUI();
     this.initGameFeeds();
     this.initRTDBPresence();
+
+    if (this.profile) {
+      let name = this.profile.displayName;
+      let img = this.profile.displayImage;
+      if (!name) name = "Anonymous";
+      if (!img) img = "/images/defaultprofile.png";
+      this.userprofile_description.innerHTML = this.__getUserTemplate("", name, img);
+    }
+
   }
   /** init listening events on games store to populate feeds in realtime */
   async initGameFeeds() {
@@ -261,7 +271,7 @@ export class GamesApp extends GameBaseApp {
   */
   __getUserTemplate(member: string, name: string, img: string, onlineStatus = false, impact = false) {
     const impactFont = impact ? " impact-font" : "";
-    let innerHTML = `<span style="background-image:url(${img});width: 30px;display: inline-block;"></span>
+    let innerHTML = `<span style="background-image:url(${img});display: inline-block;"></span>
       <span class="name${impactFont}">${name}</span>`;
     if (onlineStatus) {
       this.addUserPresenceWatch(member);

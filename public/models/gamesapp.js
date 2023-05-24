@@ -14,6 +14,7 @@ export class GamesApp extends GameBaseApp {
         this.feed_expand_all = document.querySelector(".feed_expand_all");
         this.new_game_type_wrappers = document.querySelectorAll(".new_game_type_wrapper");
         this.basic_options = document.querySelector(".basic_options");
+        this.userprofile_description = document.querySelector(".userprofile_description");
         this.recentExpanded = {};
         this.gameFeedInited = false;
         this.create_new_game_btn.addEventListener("click", () => this.createNewGame());
@@ -137,7 +138,7 @@ export class GamesApp extends GameBaseApp {
     }
     /** handle gameid passed as query string and navigate to game
      * @param { string } gameId storage record id of game to load
-     * @return { boolean } true if navigating, false if invalid game id
+     * @return { Promise<boolean> } true if navigating, false if invalid game id
      */
     async _handlePassedInGameID(gameId) {
         const gameQuery = await firebase.firestore().doc(`Games/${gameId}`).get();
@@ -157,6 +158,15 @@ export class GamesApp extends GameBaseApp {
         super.authUpdateStatusUI();
         this.initGameFeeds();
         this.initRTDBPresence();
+        if (this.profile) {
+            let name = this.profile.displayName;
+            let img = this.profile.displayImage;
+            if (!name)
+                name = "Anonymous";
+            if (!img)
+                img = "/images/defaultprofile.png";
+            this.userprofile_description.innerHTML = this.__getUserTemplate("", name, img);
+        }
     }
     /** init listening events on games store to populate feeds in realtime */
     async initGameFeeds() {
@@ -236,7 +246,7 @@ export class GamesApp extends GameBaseApp {
     */
     __getUserTemplate(member, name, img, onlineStatus = false, impact = false) {
         const impactFont = impact ? " impact-font" : "";
-        let innerHTML = `<span style="background-image:url(${img});width: 30px;display: inline-block;"></span>
+        let innerHTML = `<span style="background-image:url(${img});display: inline-block;"></span>
       <span class="name${impactFont}">${name}</span>`;
         if (onlineStatus) {
             this.addUserPresenceWatch(member);

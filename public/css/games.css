@@ -102,10 +102,6 @@ button.logout_game {
   background: rgba(0, 255, 255, .2);
 }
 
-.feed_game_owner.gamelist_item {}
-
-.gamelist_item .game_date {}
-
 .gamelist_item .game_status {
   clear: both;
 }
@@ -323,10 +319,6 @@ button.game.sit_button {
   background: none;
 }
 
-.public_game_view button.game.sit_button {}
-
-a.game_number_open {}
-
 .public_game_view .next_player_wrapper {
   visibility: hidden;
 }
@@ -484,3 +476,40 @@ a.gamelist_header_toggle_button, a.game_feed_toggle_button {
   padding: 12px 12px;
 }
 
+.lobby_user_description {
+  display: none;
+}
+
+.app_signed_in .lobby_user_description {
+  display: block;
+}
+
+
+.userprofile_description span:nth-child(1) {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 6px;
+}
+
+.userprofile_description span:nth-child(2) {
+  white-space: nowrap;
+  font-size: 24px;
+  line-height: 32px;
+  position: relative;
+  top: -5px;
+}
+
+.userprofile_description {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.profile_menu_anchor .name {
+  text-decoration: underline;
+  color: blue;
+}

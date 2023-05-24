@@ -6,6 +6,7 @@
   <title>Shared Games Lobby</title>
 
   <link rel="shortcut icon" href="/images/logo64.png">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
   <!-- Firebase links -->
   <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
@@ -45,8 +46,8 @@
           <i class="material-icons mode_day">light_mode</i>
           <i class="material-icons mode_night">mode_night</i>
         </a>
-        <a class="profile_menu_anchor" href="/profile">
-          <i class="material-icons">account_circle</i>
+        <a class="info_anchor" href="https://github.com/HuskerSam/sharedgamelobby">
+          <i class="material-icons">info</i>
         </a>
         <button class="feed_expand_all">
           <span class="icon">&#9660;</span>
@@ -55,9 +56,11 @@
     </div>
     <div class="game_lobby">
       <br><br><br><br>
-      <a href="https://github.com/HuskerSam/sharedgamelobby" style="font-size: 25px;display:block;padding-bottom:10px;text-decoration: none;">
-        <span style="text-decoration: underline;">Open Source</span> <i class="material-icons" style="position: relative;top: 6px;">open_in_new</i>
-      </a>
+      <div class="lobby_user_description">
+        <a class="profile_menu_anchor" href="/profile">
+          <span class="userprofile_description"></span>
+        </a>
+      </div>
       <div class="game_signin_create_panel">
         <div class="new_game_view">
           <div class="basic_options">

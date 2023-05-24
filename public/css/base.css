@@ -227,9 +227,9 @@ a.night_mode_toggle {
   padding: 12px 12px;
 }
 
-a.profile_menu_anchor, a.home_menu_anchor, a.mute_button,
+a.home_menu_anchor, a.mute_button,
 a.take_me_to_location_button, a.anchor_button, a.brews_button,
-a.games_menu_anchor {
+a.games_menu_anchor, a.info_anchor {
   border: none;
   background: none;
   display: inline-block;

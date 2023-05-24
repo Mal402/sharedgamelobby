@@ -124,6 +124,7 @@ h3.impact-font {
 .settings_panel input,
  .settings_panel select {
   font-size: 25px;
+  max-width: 90%;
 }
 
 .settings_panel label input[type="radio"] {

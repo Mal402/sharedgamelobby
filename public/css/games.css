@@ -40,7 +40,7 @@
   display: none;
 }
 
-.show_games_view .games_view_wrapper {
+.show_games_view.app_signed_in .games_view_wrapper {
   display: block;
 }
 

@@ -1,3 +1,4 @@
+import Utility from "./utility.js";
 /** Base class for all pages - handles authorization and low level routing for api calls, etc */
 class BaseApp {
     /** constructor  */
@@ -139,17 +140,13 @@ class BaseApp {
     }
     /** create default user profile record and overwrite to database without merge (reset) */
     async _authCreateDefaultProfile() {
+        await this.readJSONFile(`/profile/logos.json`, "profileLogos");
+        const keys = Object.keys(window.profileLogos);
+        const imageIndex = Math.floor(Math.random() * keys.length);
+        const logoName = keys[imageIndex];
         this.profile = {
-            points: 0,
-            locationTrack: false,
-            favoriteBeer: null,
-            favoriteStore: null,
-            favoriteBrewery: null,
-            excludeBeer: {},
-            excludeStore: {},
-            excludeBrewery: {},
-            displayName: "Anonymous",
-            displayImage: "",
+            displayName: Utility.generateName(),
+            displayImage: window.profileLogos[logoName],
         };
         await firebase.firestore().doc(`Users/${this.uid}`).set(this.profile);
     }

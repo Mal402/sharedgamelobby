@@ -45,7 +45,7 @@ export class ProfileApp extends BaseApp {
         this.profile_display_image_upload.addEventListener("click", () => this.uploadProfileImage());
         this.file_upload_input.addEventListener("input", () => this.fileUploadSelected());
         this.profile_display_image_clear.addEventListener("click", () => this.clearProfileImage());
-        this.profile_display_image_preset.addEventListener("input", () => this.selectedProfilePreset());
+        this.profile_display_image_preset.addEventListener("input", () => this.handleImagePresetChange());
         this.randomize_name.addEventListener("click", () => this.randomizeProfileName());
         this.initPresetLogos();
     }
@@ -60,7 +60,7 @@ export class ProfileApp extends BaseApp {
         this.profile_display_image_preset.innerHTML = html;
     }
     /** team image <select> change handler */
-    async selectedProfilePreset() {
+    async handleImagePresetChange() {
         if (this.profile_display_image_preset.selectedIndex > 0) {
             const updatePacket = {
                 rawImage: this.profile_display_image_preset.value,

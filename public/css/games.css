@@ -511,5 +511,9 @@ a.gamelist_header_toggle_button, a.game_feed_toggle_button {
 
 .profile_menu_anchor .name {
   text-decoration: underline;
-  color: blue;
+}
+
+.create_game_afterfeed_button, .create_game_backtofeed_button {
+  margin-top: 15px;
+  font-size: 25px;
 }

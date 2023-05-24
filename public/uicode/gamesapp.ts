@@ -9,7 +9,8 @@ export class GamesApp extends GameBaseApp {
   public_game_view: any = document.querySelector(".public_game_view");
   join_game_btn: any = document.querySelector(".join_game_btn");
   gametype_select: any = document.querySelector(".gametype_select");
-
+  create_game_afterfeed_button: any = document.querySelector(".create_game_afterfeed_button");
+  create_game_backtofeed_button: any = document.querySelector(".create_game_backtofeed_button");
   gamelist_header_toggle_button: any = document.querySelector(".gamelist_header_toggle_button");
   game_feed_toggle_button: any = document.querySelector(".game_feed_toggle_button");
   feed_expand_all: any = document.querySelector(".feed_expand_all");
@@ -30,7 +31,8 @@ export class GamesApp extends GameBaseApp {
     this.create_new_game_btn.addEventListener("click", () => this.createNewGame());
     this.join_game_btn.addEventListener("click", () => this.joinGame(null));
     this.gametype_select.addEventListener("input", () => this.updateNewGameType());
-
+    this.create_game_afterfeed_button.addEventListener("click", (e: any) => this.toggleAddGameView(e));
+    this.create_game_backtofeed_button.addEventListener("click", (e: any) => this.toggleAddGameView(e));
     this.gamelist_header_toggle_button.addEventListener("click", (e: any) => this.toggleAddGameView(e));
     this.game_feed_toggle_button.addEventListener("click", (e: any) => this.toggleFeedView(e));
     this.feed_expand_all.addEventListener("click", () => this.toggleFeedMembers());

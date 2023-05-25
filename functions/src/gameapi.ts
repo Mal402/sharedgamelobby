@@ -289,9 +289,9 @@ export default class GameAPI {
     const updatePacket: any = {};
     if (req.body.visibility) {
       const visibility = req.body.visibility;
-      if (gameData.visbility !== visibility) {
+      if (gameData.visibility !== visibility) {
         updatePacket.visibility = visibility;
-        gameData.visbility = visibility;
+        gameData.visibility = visibility;
       }
     }
 

@@ -24,15 +24,16 @@
   display: none;
 }
 
-.public_games_wrapper {
+.public_games_wrapper, .public_games_header {
   display: none;
 }
 
-.show_public_games_view .public_games_wrapper {
+.show_public_games_view .public_games_wrapper,
+.show_public_games_view .public_games_header {
   display: block;
 }
 
-.game_history_view {
+.game_history_view, .history_header {
   display: none;
 }
 
@@ -44,7 +45,7 @@
   display: block;
 }
 
-.show_profile_games .game_history_view {
+.show_profile_games .game_history_view, .show_profile_games .history_header {
   display: block;
 }
 

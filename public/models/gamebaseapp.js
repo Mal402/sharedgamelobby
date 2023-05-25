@@ -32,7 +32,6 @@ export default class GameBaseApp extends BaseApp {
         this.seat2_sitdown_btn = document.querySelector(".seat2_sitdown_btn");
         this.seat3_sitdown_btn = document.querySelector(".seat3_sitdown_btn");
         this.gameid_span = document.querySelector(".gameid_span");
-        this.turnindex_span = document.querySelector(".turnindex_span");
         this.turnphase_span = document.querySelector(".turnphase_span");
         this.members_list = document.querySelector(".members_list");
         this.visibility_display = document.querySelector(".visibility_display");
@@ -557,6 +556,10 @@ export default class GameBaseApp extends BaseApp {
         const doc = this.lastMessagesSnapshot.docs[0];
         // don"t show if msg owner
         if (doc.data().uid === this.uid)
+            return;
+        // don't show if wasn't in last 2 seconds - stops other issues
+        const whenWritten = new Date(doc.data().created);
+        if (Date.now() - whenWritten.getTime() > 2000)
             return;
         this.chat_snackbar.innerHTML = this._renderMessageFeedLine(doc, false);
         this.chat_snackbar.querySelector(".close_button").addEventListener("click", () => {

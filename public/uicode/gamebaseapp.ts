@@ -43,7 +43,6 @@ export default class GameBaseApp extends BaseApp {
   seat2_sitdown_btn: any = document.querySelector(".seat2_sitdown_btn");
   seat3_sitdown_btn: any = document.querySelector(".seat3_sitdown_btn");
   gameid_span: any = document.querySelector(".gameid_span");
-  turnindex_span: any = document.querySelector(".turnindex_span");
   turnphase_span: any = document.querySelector(".turnphase_span");
   members_list: any = document.querySelector(".members_list");
   visibility_display: any = document.querySelector(".visibility_display");

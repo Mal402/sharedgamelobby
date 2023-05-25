@@ -287,7 +287,6 @@ export class GuessApp extends GameBaseApp {
             this.wheelPosition = this.gameData.wheelPosition;
         }
         this.queryStringPaintProcess();
-        this.turnindex_span.innerHTML = this.gameData.turnNumber.toString();
         this.turnphase_span.innerHTML = this.gameData.turnPhase;
         this.paintOptions();
         this.paintDock();

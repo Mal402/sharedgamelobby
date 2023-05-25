@@ -585,6 +585,10 @@ export default class GameBaseApp extends BaseApp {
 
     // don"t show if msg owner
     if (doc.data().uid === this.uid) return;
+    
+    // don't show if wasn't in last 2 seconds - stops other issues
+    const whenWritten = new Date(doc.data().created);
+    if (Date.now() - whenWritten.getTime() > 2000) return;
 
     this.chat_snackbar.innerHTML = this._renderMessageFeedLine(doc, false);
 

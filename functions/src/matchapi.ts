@@ -189,7 +189,6 @@ export default class MatchAPI {
         }
 
         updatePacket.currentSeat = updatePacket.turnNumber % gameData.runningNumberOfSeats;
-
         const nextUser = gameData["seat" + updatePacket.currentSeat];
         if (nextUser) {
           if (!updatePacket.members) updatePacket.members = {};

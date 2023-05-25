@@ -157,10 +157,13 @@
   visibility: hidden;
   background: none;
   border: none;
+  color: inherit;
+  opacity: 0.5;
 }
 
 .messages_list .message_owner .delete_game {
   visibility: visible;
+  opacity: 1;
 }
 
 .game_owner .messages_list .delete_game {

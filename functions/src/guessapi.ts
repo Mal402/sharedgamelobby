@@ -257,6 +257,11 @@ export default class GuessAPI {
           updatePacket.turnNumber = turnNumber;
           updatePacket.turnPhase = "spin";
           updatePacket.currentSeat = updatePacket.turnNumber % gameData.runningNumberOfSeats;
+          const nextUser = gameData["seat" + updatePacket.currentSeat];
+          if (nextUser) {
+            if (!updatePacket.members) updatePacket.members = {};
+            updatePacket.members[nextUser] = new Date().toISOString();
+          }
         }
       } else {
         throw new Error("Not players turn for letter pick");
@@ -274,6 +279,11 @@ export default class GuessAPI {
       updatePacket.turnNumber = turnNumber + 1;
       updatePacket.currentSeat = updatePacket.turnNumber % gameData.runningNumberOfSeats;
       updatePacket.turnPhase = "spin";
+      const nextUser = gameData["seat" + updatePacket.currentSeat];
+      if (nextUser) {
+        if (!updatePacket.members) updatePacket.members = {};
+        updatePacket.members[nextUser] = new Date().toISOString();
+      }
     }
     if (action === "spin") {
       const turnNumber = BaseClass.getNumberOrDefault(gameData.turnNumber, 0);

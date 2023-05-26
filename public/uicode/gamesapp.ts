@@ -188,7 +188,6 @@ export class GamesApp extends GameBaseApp {
       if (!img) img = "/images/defaultprofile.png";
       this.userprofile_description.innerHTML = this.__getUserTemplate("", name, img);
     }
-
   }
   /** init listening events on games store to populate feeds in realtime */
   async initGameFeeds() {

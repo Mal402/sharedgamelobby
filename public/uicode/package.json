@@ -10,6 +10,7 @@
   },
   "main": "./../public/models/baseapp.js",
   "devDependencies": {
+    "@types/node": "^20.2.4",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "eslint": "^8.9.0",

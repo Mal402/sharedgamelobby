@@ -629,8 +629,10 @@ export default class GameBaseApp extends BaseApp {
         document.body.classList.remove("current_seat_3");
         document.body.classList.add("current_seat_" + this.gameData.currentSeat.toString());
     }
-    /** paint user editable game options */
-    paintOptions() {
+    /** paint user editable game options
+     * @param { boolean } defaultOptions initalizes game options
+    */
+    paintOptions(defaultOptions = true) {
         if (this.gameData.createUser === this.uid)
             document.body.classList.add("game_owner");
         else
@@ -642,14 +644,16 @@ export default class GameBaseApp extends BaseApp {
         if (!mode)
             mode = "ready";
         document.body.classList.add("mode_" + mode);
-        this.visibility_display.innerHTML = this.gameData.visibility;
-        this.visibility_select.value = this.gameData.visibility;
-        this.seat_count_display.innerHTML = this.gameData.numberOfSeats.toString() + " seats";
-        this.seat_count_select.value = this.gameData.numberOfSeats;
-        this.message_level_display.innerHTML = this.gameData.messageLevel;
-        this.message_level_select.value = this.gameData.messageLevel;
-        this.seats_per_user_display.innerHTML = this.gameData.seatsPerUser;
-        this.seats_per_user_select.value = this.gameData.seatsPerUser;
+        if (defaultOptions) {
+            this.visibility_display.innerHTML = this.gameData.visibility;
+            this.visibility_select.value = this.gameData.visibility;
+            this.seat_count_display.innerHTML = this.gameData.numberOfSeats.toString() + " seats";
+            this.seat_count_select.value = this.gameData.numberOfSeats;
+            this.message_level_display.innerHTML = this.gameData.messageLevel;
+            this.message_level_select.value = this.gameData.messageLevel;
+            this.seats_per_user_display.innerHTML = this.gameData.seatsPerUser;
+            this.seats_per_user_select.value = this.gameData.seatsPerUser;
+        }
         if (this.code_link_href) {
             const path = window.location.href;
             this.code_link_href.setAttribute("href", path);

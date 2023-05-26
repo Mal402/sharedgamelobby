@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>AI Chat</title>
+ 
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="shortcut icon" href="/images/logo_aichat.png">
+
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/gamebase.css" />
+  <link rel="stylesheet" href="/css/aichat.css" />
+
+  <!-- Firebase links -->
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/init.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script>
+    window.addEventListener('load', async (event) => {
+      let module = await import('/models/aichatapp.js');
+
+      window.GuessApp = new module.AIChatApp();
+    });
+  </script>
+</head>
+
+
+<body class="basic_beer_body hangbeer_page">
+  <div class="basic_page_wrapper app_panel">
+    <div class="base_menu_panel_wrapper">
+      <div class="base_menu_panel">
+        <a class="game_feed_list_toggle" href="show_details"><i class="material-icons">menu</i></a>
+        <a class="night_mode_toggle" href="/">
+          <i class="material-icons mode_day">light_mode</i>
+          <i class="material-icons mode_night">mode_night</i>
+        </a>
+        <a class="games_menu_anchor" href="/">
+          <i class="material-icons">home</i>
+        </a>
+      </div>
+    </div>
+    <br><br><br><br>
+    <div class="game_table_view">
+      AI Chat UI
+    </div>
+
+    <div class="game_members_view">
+      <div class="seating_options">
+        <div class="seat_wrapper seat_0_wrapper">
+          <span class="span_label">1</span>
+          <div class="seat_button_wrapper">
+            <button class="seat0_sitdown_btn game"></button>
+          </div>
+          <div class="game_user_wrapper">
+            <span class="seat0_img"></span>
+            <span class="seat0_name"></span>
+          </div>
+        </div>
+        <div class="seat_wrapper seat_1_wrapper">
+          <span class="span_label">2</span>
+          <div class="seat_button_wrapper">
+            <button class="seat1_sitdown_btn game"></button>
+          </div>
+          <div class="game_user_wrapper">
+            <span class="seat1_img"></span>
+            <span class="seat1_name"></span>
+          </div>
+        </div>
+        <div class="seat_wrapper seat_2_wrapper">
+          <span class="span_label">3</span>
+          <div class="seat_button_wrapper">
+            <button class="seat2_sitdown_btn game"></button>
+          </div>
+          <div class="game_user_wrapper">
+            <span class="seat2_img"></span>
+            <span class="seat2_name"></span>
+          </div>
+        </div>
+        <div class="seat_wrapper seat_3_wrapper">
+          <span class="span_label">4</span>
+          <div class="seat_button_wrapper">
+            <button class="seat3_sitdown_btn game"></button>
+          </div>
+          <div class="game_user_wrapper">
+            <span class="seat3_img"></span>
+            <span class="seat3_name"></span>
+          </div>
+        </div>
+      </div>
+      <div class="basic_options">
+        <span class="span_label">Code</span>
+        <span class="gameid_span"></span>
+        <a href="#" style="display:none;" class="code_link_href">URL</a>
+        <button class="code_link_copy game"><i class="material-icons">content_copy</i> <span>url</span></button>
+        <br>
+        <span class="span_label">Phase</span>
+        <span class="turnphase_span"></span>
+        <br>
+        <span class="span_label">Visibility</span>
+        <span class="visibility_display"></span>
+        <select class="visibility_select">
+          <option>public</option>
+          <option>private</option>
+        </select>
+        <br>
+        <div style="text-align:center">
+          <button class="match_finish admin_only game">End Game</button>
+        </div>
+
+      </div>
+    </div>
+    <div style="margin-top:15px;">
+      <h2 class="impact-font">Members</h2>
+      <div class="members_list"></div>
+      <div class="game_loading_display">
+        <h1>Loading...</h1>
+      </div>
+    </div>
+    <div style="flex:1"></div>
+  </div>
+</body>
+
+</html>

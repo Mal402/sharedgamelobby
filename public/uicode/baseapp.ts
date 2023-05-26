@@ -1,6 +1,6 @@
 import Utility from "./utility.js";
-declare var firebase: any;
-declare var window: any;
+declare const firebase: any;
+declare const window: any;
 
 /** Base class for all pages - handles authorization and low level routing for api calls, etc */
 class BaseApp {
@@ -223,7 +223,7 @@ class BaseApp {
       if (this.upAudio) this.upAudio.pause();
       if (this.lockAudio) this.lockAudio.pause();
 
-      this.audios.forEach(audio => audio.pause());
+      this.audios.forEach((audio: any) => audio.pause());
 
       muted = true;
     } else {

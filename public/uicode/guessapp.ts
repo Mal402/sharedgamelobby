@@ -91,7 +91,7 @@ export class GuessApp extends GameBaseApp {
   /** handles keyboard click by user
    * @param { any } ctl dom button clicked
    */
-  async keypressHandler(ctl: any) {
+  async keypressHandler(ctl: any): Promise<void> {
     if (this.gameData.turnPhase !== "letter") return;
 
     const guessLetter = ctl.dataset.key;

@@ -31,6 +31,7 @@ module.exports = {
     "import/no-unresolved": 0,
     "@typescript-eslint/no-explicit-any": "off",
     "indent": 0,
+    "linebreak-style": 0,
     "max-len": ["error", {
       code: 140,
     }],

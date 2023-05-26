@@ -351,6 +351,7 @@ class BaseApp {
     }
     /** init sounds ready to play */
     loadAudios() {
+        return;
     }
     /** returns text value for time since Now, i.e. 3 mins ago
      * @param { Date } date value to format

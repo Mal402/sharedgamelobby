@@ -19,7 +19,7 @@ export class MatchApp extends GameBaseApp {
         this.tracer_line_1 = document.querySelector(".tracer_line_1");
         this.members_header_toggle_button = document.querySelector(".members_header_toggle_button");
         this.cardDeckCached = "none";
-        this.cardDeckCacheDom = document.querySelector('.card_deck_cache');
+        this.cardDeckCacheDom = document.querySelector(".card_deck_cache");
         this.matchCards = [];
         this.zoom_out_beer_cards = [];
         this.cardsPerColumn = 0;
@@ -92,9 +92,9 @@ export class MatchApp extends GameBaseApp {
     _cacheCardDeckImages() {
         if (this.cardDeckCached === this.gameData.cardDeck)
             return;
-        this.cardDeckCacheDom.innerHTML = '';
+        this.cardDeckCacheDom.innerHTML = "";
         this.getCardDeck().forEach((card) => {
-            const img = document.createElement('img');
+            const img = document.createElement("img");
             img.src = this.allBeers[card.beerSlug].mapImage;
             this.cardDeckCacheDom.appendChild(img);
         });
@@ -584,8 +584,8 @@ export class MatchApp extends GameBaseApp {
         }
     }
     /** return quandrant for card index (0 - 3)
-     * @param card card position index
-     * @return quandrant index; 0 - 3
+     * @param { number } card card position index
+     * @return { number } quandrant index; 0 - 3
      */
     _quandrantForCard(card) {
         return Math.floor(card / (this.cardsPerColumn * 2));
@@ -707,8 +707,8 @@ export class MatchApp extends GameBaseApp {
         }
     }
     /** create html template for card
-     * @param cardInfo card meta data
-     * @return html data
+     * @param { any } cardInfo card meta data
+     * @return { any } html data
      */
     _cardTemplate(cardInfo) {
         return `<span class="card_inner" data-bkg="${btoa(cardInfo.image)}"></span>`;

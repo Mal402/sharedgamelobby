@@ -1,6 +1,6 @@
 import GameBaseApp from "./gamebaseapp.js";
-declare var firebase: any;
-declare var window: any;
+declare const firebase: any;
+declare const window: any;
 
 /** Guess app class */
 export class GuessApp extends GameBaseApp {
@@ -459,7 +459,7 @@ export class GuessApp extends GameBaseApp {
     if (e) e.preventDefault();
   }
   /** gets card meta and totals
-  * @return meta data for beer
+  * @return { any } meta data for beer
   */
   getLastCardMeta(): any {
     const beerSlug = this.gameData.beerSlug;
@@ -468,7 +468,7 @@ export class GuessApp extends GameBaseApp {
     return {
       img: beerData.mapImage,
       fullName,
-      beerSlug
+      beerSlug,
     };
   }
 }

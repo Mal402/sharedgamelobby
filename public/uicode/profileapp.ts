@@ -1,7 +1,7 @@
 import BaseApp from "./baseapp.js";
 import Utility from "./utility.js";
-declare var window: any;
-declare var firebase: any;
+declare const window: any;
+declare const firebase: any;
 
 /** app class for profile page */
 export class ProfileApp extends BaseApp {
@@ -214,12 +214,12 @@ export class ProfileApp extends BaseApp {
   }
   /** generate a random "safe" name */
   async randomizeProfileName(): Promise<void> {
-    let updates = {
-      displayName: Utility.generateName()
+    const updates = {
+      displayName: Utility.generateName(),
     };
 
     await firebase.firestore().doc(`Users/${this.uid}`).set(updates, {
-      merge: true
+      merge: true,
     });
   }
 }

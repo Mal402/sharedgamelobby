@@ -216,7 +216,7 @@ class BaseApp {
                 this.upAudio.pause();
             if (this.lockAudio)
                 this.lockAudio.pause();
-            this.audios.forEach(audio => audio.pause());
+            this.audios.forEach((audio) => audio.pause());
             muted = true;
         }
         else {
@@ -443,7 +443,9 @@ class BaseApp {
             tags: returnTags,
         };
     }
-    /** play audio with try catch to wrap no user interaction error */
+    /** play audio with try catch to wrap no user interaction error
+     * @param { any } audio plays audio file
+     */
     playAudio(audio) {
         audio.play().then(null, (e) => console.log("audio play error", e));
     }

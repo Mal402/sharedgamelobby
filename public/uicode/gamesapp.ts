@@ -1,6 +1,6 @@
 import GameBaseApp from "./gamebaseapp.js";
-declare var window: any;
-declare var firebase: any;
+declare const window: any;
+declare const firebase: any;
 
 /** Game Lobby App - for listing, joining and creating games  */
 export class GamesApp extends GameBaseApp {

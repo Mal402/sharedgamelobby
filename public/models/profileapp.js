@@ -204,11 +204,11 @@ export class ProfileApp extends BaseApp {
     }
     /** generate a random "safe" name */
     async randomizeProfileName() {
-        let updates = {
-            displayName: Utility.generateName()
+        const updates = {
+            displayName: Utility.generateName(),
         };
         await firebase.firestore().doc(`Users/${this.uid}`).set(updates, {
-            merge: true
+            merge: true,
         });
     }
 }

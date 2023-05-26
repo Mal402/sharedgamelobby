@@ -1,6 +1,6 @@
 import BaseApp from "./baseapp.js";
-declare var window: any;
-declare var firebase: any;
+declare const window: any;
+declare const firebase: any;
 
 /** common logic for game apps and game lobby */
 export default class GameBaseApp extends BaseApp {
@@ -148,7 +148,7 @@ export default class GameBaseApp extends BaseApp {
           setTimeout(() => audio.pause(), 2000);
         }
       }
-  
+
       if (this.gameData.mode === "end") {
         if (this.soundGameStateCache.mode === "running") {
           const audio = this.audios.get("gameover");
@@ -157,7 +157,7 @@ export default class GameBaseApp extends BaseApp {
           setTimeout(() => audio.pause(), 2000);
         }
       }
-    } 
+    }
 
     this.soundGameStateCache.mode = this.gameData.mode;
   }
@@ -584,7 +584,7 @@ export default class GameBaseApp extends BaseApp {
 
     // don"t show if msg owner
     if (doc.data().uid === this.uid) return;
-    
+
     // don't show if wasn't in last 2 seconds - stops other issues
     const whenWritten = new Date(doc.data().created);
     if (Date.now() - whenWritten.getTime() > 2000) return;
@@ -699,22 +699,22 @@ export default class GameBaseApp extends BaseApp {
     for (let c = 0; c < 4; c++) {
       const key = "seat" + c.toString();
       if (this.gameData[key]) {
-        (<any>this)[key + "_name"].innerHTML = this._gameMemberData(this.gameData[key]).name;
-        (<any>this)[key + "_img"].style.backgroundImage = "url(" + this._gameMemberData(this.gameData[key]).img + ")";
+        (<any> this)[key + "_name"].innerHTML = this._gameMemberData(this.gameData[key]).name;
+        (<any> this)[key + "_img"].style.backgroundImage = "url(" + this._gameMemberData(this.gameData[key]).img + ")";
       } else {
-        (<any>this)[key + "_name"].innerHTML = "";
-        (<any>this)[key + "_img"].style.backgroundImage = "";
+        (<any> this)[key + "_name"].innerHTML = "";
+        (<any> this)[key + "_img"].style.backgroundImage = "";
       }
 
-      (<any>this)[key + "_sitdown_btn"].classList.remove("admin_only");
+      (<any> this)[key + "_sitdown_btn"].classList.remove("admin_only");
       if (this.gameData[key] === this.uid) {
-        (<any>this)[key + "_sitdown_btn"].innerHTML = "Stand";
+        (<any> this)[key + "_sitdown_btn"].innerHTML = "Stand";
       } else {
         if (this.gameData[key]) {
-          (<any>this)[key + "_sitdown_btn"].innerHTML = "Boot";
-          (<any>this)[key + "_sitdown_btn"].classList.add("admin_only");
+          (<any> this)[key + "_sitdown_btn"].innerHTML = "Boot";
+          (<any> this)[key + "_sitdown_btn"].classList.add("admin_only");
         } else {
-          (<any>this)[key + "_sitdown_btn"].innerHTML = "Sit";
+          (<any> this)[key + "_sitdown_btn"].innerHTML = "Sit";
         }
       }
     }

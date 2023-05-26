@@ -438,7 +438,7 @@ export class GuessApp extends GameBaseApp {
             e.preventDefault();
     }
     /** gets card meta and totals
-    * @return meta data for beer
+    * @return { any } meta data for beer
     */
     getLastCardMeta() {
         const beerSlug = this.gameData.beerSlug;
@@ -447,7 +447,7 @@ export class GuessApp extends GameBaseApp {
         return {
             img: beerData.mapImage,
             fullName,
-            beerSlug
+            beerSlug,
         };
     }
 }

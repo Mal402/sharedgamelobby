@@ -1,6 +1,6 @@
 import GameBaseApp from "./gamebaseapp.js";
-declare var window: any;
-declare var firebase: any;
+declare const window: any;
+declare const firebase: any;
 
 /** Match game UI app */
 export class MatchApp extends GameBaseApp {
@@ -23,7 +23,7 @@ export class MatchApp extends GameBaseApp {
   lowerLeftDisplayCard: any;
   lowerRightDisplayCard: any;
   cardDeckCached = "none";
-  cardDeckCacheDom: any = document.querySelector('.card_deck_cache');
+  cardDeckCacheDom: any = document.querySelector(".card_deck_cache");
 
   matchCards: any = [];
   zoom_out_beer_cards: any = [];
@@ -106,9 +106,9 @@ export class MatchApp extends GameBaseApp {
   /** cache card deck images in dom for fast UI load */
   _cacheCardDeckImages() {
     if (this.cardDeckCached === this.gameData.cardDeck) return;
-    this.cardDeckCacheDom.innerHTML = '';
+    this.cardDeckCacheDom.innerHTML = "";
     this.getCardDeck().forEach((card: any) => {
-      const img = document.createElement('img');
+      const img = document.createElement("img");
       img.src = this.allBeers[card.beerSlug].mapImage;
       this.cardDeckCacheDom.appendChild(img);
     });
@@ -149,7 +149,7 @@ export class MatchApp extends GameBaseApp {
     if (!this.muted) {
       if (this.currentUserTurn) {
         if (this.soundGameStateCache.turnNumber !== this.gameData.turnNumber &&
-          this.gameData.mode === "running" && 
+          this.gameData.mode === "running" &&
           this.gameData.turnNumber !== 0) {
           console.log(this.gameData, this.soundGameStateCache);
           const audio = this.audios.get("turnstart");
@@ -595,8 +595,8 @@ export class MatchApp extends GameBaseApp {
     }
   }
   /** return quandrant for card index (0 - 3)
-   * @param card card position index
-   * @return quandrant index; 0 - 3
+   * @param { number } card card position index
+   * @return { number } quandrant index; 0 - 3
    */
   _quandrantForCard(card: number): number {
     return Math.floor(card / (this.cardsPerColumn * 2));
@@ -719,8 +719,8 @@ export class MatchApp extends GameBaseApp {
     }
   }
   /** create html template for card
-   * @param cardInfo card meta data
-   * @return html data
+   * @param { any } cardInfo card meta data
+   * @return { any } html data
    */
   _cardTemplate(cardInfo: any): string {
     return `<span class="card_inner" data-bkg="${btoa(cardInfo.image)}"></span>`;

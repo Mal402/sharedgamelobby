@@ -456,11 +456,13 @@ class BaseApp {
       tags: returnTags,
     };
   }
-  /** play audio with try catch to wrap no user interaction error */
+  /** play audio with try catch to wrap no user interaction error
+   * @param { any } audio plays audio file
+   */
   playAudio(audio: any) {
     audio.play().then(null, (e: any) => console.log("audio play error", e));
   }
-  /** add audio file 
+  /** add audio file
    * @param { string } name name to map
    * @param { string } path url to audio
   */

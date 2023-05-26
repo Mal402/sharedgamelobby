@@ -140,6 +140,15 @@ button.create_new_game_btn {
   display: block;
 }
 
+.game_basic_options {
+  display: none;
+}
+
+.newgametype_match .game_basic_options,
+.newgametype_guess .game_basic_options {
+  display: block;
+}
+
 .game_type_image {
   background-repeat: no-repeat;
   background-position: center 40%;

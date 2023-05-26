@@ -135,6 +135,7 @@ export class GamesApp extends GameBaseApp {
     updateNewGameType() {
         document.body.classList.remove("newgametype_guess");
         document.body.classList.remove("newgametype_match");
+        document.body.classList.remove("newgametype_aichat");
         const gameType = this.gametype_select.value;
         document.body.classList.add("newgametype_" + gameType);
         const gameMeta = this.gameTypeMetaData[gameType];

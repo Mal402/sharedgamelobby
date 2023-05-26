@@ -238,6 +238,10 @@ export default class GameBaseApp extends BaseApp {
         name: "Match",
         icon: "/images/logo_match.png",
       },
+      aichat: {
+        name: "AI Chat",
+        icon: "/images/logo_aichat.png",
+      },
     };
   }
   /** paint game members list */

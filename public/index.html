@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Shared Games Lobby</title>
 
-  <link rel="shortcut icon" href="/images/logo64.png">
+  <link rel="shortcut icon" href="/images/logo64.png" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
   <!-- Firebase links -->
@@ -16,16 +16,16 @@
   <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-firestore.js"></script>
   <script src="/__/firebase/init.js"></script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/gamebase.css" />
   <link rel="stylesheet" href="/css/games.css" />
   <script>
-    window.addEventListener('load', async (event) => {
-      let module = await import('/models/gamesapp.js');
+    window.addEventListener("load", async (event) => {
+      let module = await import("/models/gamesapp.js");
 
       window.GamesApp = new module.GamesApp();
     });
@@ -64,52 +64,61 @@
       <div class="game_signin_create_panel">
         <div class="new_game_view">
           <div class="basic_options">
-            <div style="display:flex;flex-direction:row">
+            <div style="display: flex; flex-direction: row">
               <button class="new_game_type_wrapper game selected" value="match">
-                <div class="new_game_type_image" style="background-image:url(/images/logo_match.png)"></div>
+                <div class="new_game_type_image" style="background-image: url(/images/logo_match.png)"></div>
                 <div class="new_game_type_name">Match</div>
               </button>
               <button class="new_game_type_wrapper game" value="guess">
-                <div class="new_game_type_image" style="background-image:url(/images/logo_guess.png)"></div>
+                <div class="new_game_type_image" style="background-image: url(/images/logo_guess.png)"></div>
                 <div class="new_game_type_name">Guess</div>
               </button>
+              <button class="new_game_type_wrapper game" value="aichat">
+                <div class="new_game_type_image" style="background-image: url(/images/logo_aichat.png)"></div>
+                <div class="new_game_type_name">AI Chat</div>
+              </button>
             </div>
-            <div style="text-align:center;padding: 1em">
-              <button class="create_new_game_btn game primary" style="width:75%">Create Game</button>
+            <div style="text-align: center; padding: 1em">
+              <button class="create_new_game_btn game primary" style="width: 75%">
+                Create Game
+              </button>
             </div>
 
-            <div style="display:none">
+            <div style="display: none">
               <span class="span_label">Type</span>
               <select class="gametype_select">
                 <option value="guess">Guess</option>
                 <option selected value="match">Match</option>
+                <option value="aichat">AI Chat</option>
               </select>
               <br>
             </div>
-            <span class="span_label">Visibility</span>
-            <select class="visibility_select">
-              <option selected>public</option>
-              <option>private</option>
-            </select>
-            <br>
-            <span class="span_label">Seats</span>
-            <select class="seat_count_select">
-              <option selected value="2">2 seats</option>
-              <option value="3">3 seats</option>
-              <option value="4">4 seats</option>
-            </select>
-            <br>
-            <span class="span_label">Messaging</span>
-            <select class="message_level_select">
-              <option value="seated">Seated</option>
-              <option value="all">All</option>
-            </select>
-            <br>
-            <span class="span_label">Seat Limit</span>
-            <select class="seats_per_user_select">
-              <option value="none">None</option>
-              <option value="one">One</option>
-            </select>
+            <div class="game_basic_options">
+              <span class="span_label">Visibility</span>
+              <select class="visibility_select">
+                <option selected>public</option>
+                <option>private</option>
+              </select>
+              <br>
+              <span class="span_label">Seats</span>
+              <select class="seat_count_select">
+                <option selected value="2">2 seats</option>
+                <option value="3">3 seats</option>
+                <option value="4">4 seats</option>
+              </select>
+              <br>
+              <span class="span_label">Messaging</span>
+              <select class="message_level_select">
+                <option value="seated">Seated</option>
+                <option value="all">All</option>
+              </select>
+              <br>
+              <span class="span_label">Seat Limit</span>
+              <select class="seats_per_user_select">
+                <option value="none">None</option>
+                <option value="one">One</option>
+              </select>
+            </div>
             <br>
             <div class="match_additional_options">
               <span class="span_label">Card Deck</span>
@@ -127,8 +136,10 @@
               <br>
             </div>
 
-            <div style="text-align:center">
-              <button class="create_game_backtofeed_button game">Back to Feed</button>
+            <div style="text-align: center">
+              <button class="create_game_backtofeed_button game">
+                Back to Feed
+              </button>
             </div>
           </div>
         </div>
@@ -136,10 +147,12 @@
           <h2 class="history_header impact-font">Game History</h2>
           <div class="game_history_view"></div>
           <div class="join_game_view">
-            <div style="line-height: 40px;font-size: 25px;padding: 5px;">
+            <div style="line-height: 40px; font-size: 25px; padding: 5px">
               <span>Code</span>
-              <input class="game_code_start" style="font-size:25px;width:150px;flex:1">
-              <button class="join_game_btn" style="font-size:25px">Join</button>
+              <input class="game_code_start" style="font-size: 25px; width: 150px; flex: 1" />
+              <button class="join_game_btn" style="font-size: 25px">
+                Join
+              </button>
             </div>
           </div>
           <h2 class="public_games_header impact-font">Open Games</h2>
@@ -148,7 +161,9 @@
           </div>
           <br>
           <div class="create_new_game_view">
-            <button class="create_game_afterfeed_button game primary">Create Game</button>
+            <button class="create_game_afterfeed_button game primary">
+              Create Game
+            </button>
           </div>
         </div>
       </div>
@@ -156,7 +171,7 @@
         <h3>Please <a href="/profile">Sign In</a> to play</h3>
       </div>
     </div>
-    <div style="flex:1"></div>
+    <div style="flex: 1"></div>
   </div>
   <style id="laststyleblock"></style>
 </body>

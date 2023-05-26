@@ -76,7 +76,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"gameNumber\": \"12typ\"\r\n}",
+					"raw": "{\r\n    \"gameNumber\": \"iyqq3\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -96,6 +96,53 @@
 						"lobbyApi",
 						"games",
 						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "guess/action",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"gameId\": \"ffct4\",\r\n    \"action\": \"playturn\",\r\n    \"guessLetter\": \"R\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5001/{{projectId}}/us-central1/lobbyApi/guess/action",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"{{projectId}}",
+						"us-central1",
+						"lobbyApi",
+						"guess",
+						"action"
 					]
 				}
 			},
@@ -123,7 +170,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"gameNumber\": \"12typ\"\r\n}",
+					"raw": "{\r\n    \"gameNumber\": \"tthhv\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -170,7 +217,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"gameNumber\": \"12typ\"\r\n}",
+					"raw": "{\r\n    \"gameNumber\": \"iyqq3\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -190,6 +237,148 @@
 						"lobbyApi",
 						"games",
 						"leave"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "match/action",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"gameId\": \"tthhv\",\r\n    \"action\": \"sendSelection\",\r\n    \"previousCard0\": 0,\r\n    \"previousCard1\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5001/{{projectId}}/us-central1/lobbyApi/match/action",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"{{projectId}}",
+						"us-central1",
+						"lobbyApi",
+						"match",
+						"action"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "message",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"gameNumber\": \"tthhv\",\r\n    \"message\": \"My message\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5001/{{projectId}}/us-central1/lobbyApi/games/message",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"{{projectId}}",
+						"us-central1",
+						"lobbyApi",
+						"games",
+						"message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "message/delete",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"gameNumber\": \"tthhv\",\r\n    \"messageId\": \"l4Wdc7nVI6UJvYRTTFeQ\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5001/{{projectId}}/us-central1/lobbyApi/games/message/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"{{projectId}}",
+						"us-central1",
+						"lobbyApi",
+						"games",
+						"message",
+						"delete"
 					]
 				}
 			},
@@ -365,7 +554,7 @@
 		},
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwZTFkMjM5MDllNzZmZjRhNzJlZTA4ODUxOWM5M2JiOTg4ZjE4NDUiLCJ0eXAiOiJKV1QifQ.eyJwcm92aWRlcl9pZCI6ImFub255bW91cyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9zaGFyZWRnYW1lbG9iYnkiLCJhdWQiOiJzaGFyZWRnYW1lbG9iYnkiLCJhdXRoX3RpbWUiOjE2ODQ5ODYxNzAsInVzZXJfaWQiOiIwMExVOXE1cE9VV29najNPRHNLM09ER21KY3oxIiwic3ViIjoiMDBMVTlxNXBPVVdvZ2ozT0RzSzNPREdtSmN6MSIsImlhdCI6MTY4NTEzMDQwNCwiZXhwIjoxNjg1MTM0MDA0LCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7fSwic2lnbl9pbl9wcm92aWRlciI6ImFub255bW91cyJ9fQ.UlrWH1iLcShXGM0eIlIOgDVq8HARxchK-xFQtNyZa5ogqXzaUs9Ho31tK1kj8POQJq2Pz4U_Fj07qrY58h90xAEqbcKKF3qRZOGRvPi1XewZ94mdhUi_wZBfM52YHsRNlS1uTz3V-dDdVulQVwqj0pIxPeVFNcqG7J1scZcN2cJJWIQpuK-ACjs2Be3yV7DqUduVbfYcUztK4P0EYvRrfsad2L3z08G0UNQMIvcaX5AUCxZRnmq3H__RJIpmAaG_66JGGzCICTRnrQbncc1-Iz1au-S2c7wpuF50VCHrD7uLn3ANg3JEEmAMZ5_gephw97O0BjUjMrciZLbEApEnNA",
+			"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwZTFkMjM5MDllNzZmZjRhNzJlZTA4ODUxOWM5M2JiOTg4ZjE4NDUiLCJ0eXAiOiJKV1QifQ.eyJwcm92aWRlcl9pZCI6ImFub255bW91cyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9zaGFyZWRnYW1lbG9iYnkiLCJhdWQiOiJzaGFyZWRnYW1lbG9iYnkiLCJhdXRoX3RpbWUiOjE2ODQ5ODYxNzAsInVzZXJfaWQiOiIwMExVOXE1cE9VV29najNPRHNLM09ER21KY3oxIiwic3ViIjoiMDBMVTlxNXBPVVdvZ2ozT0RzSzNPREdtSmN6MSIsImlhdCI6MTY4NTEzNDE3MCwiZXhwIjoxNjg1MTM3NzcwLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7fSwic2lnbl9pbl9wcm92aWRlciI6ImFub255bW91cyJ9fQ.G6FVcotUn4sNe2x5ey7nvV0lr0UBLPfidiaooyTXhElESx9n1tucYzsikyT9LtWtmPuyIXKYX9OtKqDve8ycpCqlc_XVF2V2ye2CDsvqDFWLCIPj0cC_m2u8blFp8ShxBSJUC6t06DAdJPRqfckG0WH6qCdgsjMx3MK2unP7KNHjHfKQ_aJd7-bSggHEMPvrgkSWRZX7LeiAatfL8bokyQ3DjPevEJZSvWf_8ZE30PmeLB6fI3wNhYwbnwxWfTFBjoGRIh3NZHf4aIb2sv6ikOoFTeIlEp1XKZULAzm2Ba-m-QpIaoPp94poRBrrmKphjp0J2jwKIugc9tlQvbMYIg",
 			"type": "string"
 		}
 	]

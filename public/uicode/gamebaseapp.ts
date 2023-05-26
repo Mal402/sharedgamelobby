@@ -657,8 +657,10 @@ export default class GameBaseApp extends BaseApp {
 
     document.body.classList.add("current_seat_" + this.gameData.currentSeat.toString());
   }
-  /** paint user editable game options */
-  paintOptions() {
+  /** paint user editable game options 
+   * @param { boolean } defaultOptions initalizes game options
+  */
+  paintOptions(defaultOptions: boolean = true) {
     if (this.gameData.createUser === this.uid) document.body.classList.add("game_owner");
     else document.body.classList.remove("game_owner");
 
@@ -669,14 +671,16 @@ export default class GameBaseApp extends BaseApp {
     if (!mode) mode = "ready";
     document.body.classList.add("mode_" + mode);
 
-    this.visibility_display.innerHTML = this.gameData.visibility;
-    this.visibility_select.value = this.gameData.visibility;
-    this.seat_count_display.innerHTML = this.gameData.numberOfSeats.toString() + " seats";
-    this.seat_count_select.value = this.gameData.numberOfSeats;
-    this.message_level_display.innerHTML = this.gameData.messageLevel;
-    this.message_level_select.value = this.gameData.messageLevel;
-    this.seats_per_user_display.innerHTML = this.gameData.seatsPerUser;
-    this.seats_per_user_select.value = this.gameData.seatsPerUser;
+    if (defaultOptions) {
+      this.visibility_display.innerHTML = this.gameData.visibility;
+      this.visibility_select.value = this.gameData.visibility;
+      this.seat_count_display.innerHTML = this.gameData.numberOfSeats.toString() + " seats";
+      this.seat_count_select.value = this.gameData.numberOfSeats;
+      this.message_level_display.innerHTML = this.gameData.messageLevel;
+      this.message_level_select.value = this.gameData.messageLevel;
+      this.seats_per_user_display.innerHTML = this.gameData.seatsPerUser;
+      this.seats_per_user_select.value = this.gameData.seatsPerUser;
+    }
 
     if (this.code_link_href) {
       const path = window.location.href;
@@ -703,22 +707,22 @@ export default class GameBaseApp extends BaseApp {
     for (let c = 0; c < 4; c++) {
       const key = "seat" + c.toString();
       if (this.gameData[key]) {
-        (<any> this)[key + "_name"].innerHTML = this._gameMemberData(this.gameData[key]).name;
-        (<any> this)[key + "_img"].style.backgroundImage = "url(" + this._gameMemberData(this.gameData[key]).img + ")";
+        (<any>this)[key + "_name"].innerHTML = this._gameMemberData(this.gameData[key]).name;
+        (<any>this)[key + "_img"].style.backgroundImage = "url(" + this._gameMemberData(this.gameData[key]).img + ")";
       } else {
-        (<any> this)[key + "_name"].innerHTML = "";
-        (<any> this)[key + "_img"].style.backgroundImage = "";
+        (<any>this)[key + "_name"].innerHTML = "";
+        (<any>this)[key + "_img"].style.backgroundImage = "";
       }
 
-      (<any> this)[key + "_sitdown_btn"].classList.remove("admin_only");
+      (<any>this)[key + "_sitdown_btn"].classList.remove("admin_only");
       if (this.gameData[key] === this.uid) {
-        (<any> this)[key + "_sitdown_btn"].innerHTML = "Stand";
+        (<any>this)[key + "_sitdown_btn"].innerHTML = "Stand";
       } else {
         if (this.gameData[key]) {
-          (<any> this)[key + "_sitdown_btn"].innerHTML = "Boot";
-          (<any> this)[key + "_sitdown_btn"].classList.add("admin_only");
+          (<any>this)[key + "_sitdown_btn"].innerHTML = "Boot";
+          (<any>this)[key + "_sitdown_btn"].classList.add("admin_only");
         } else {
-          (<any> this)[key + "_sitdown_btn"].innerHTML = "Sit";
+          (<any>this)[key + "_sitdown_btn"].innerHTML = "Sit";
         }
       }
     }

@@ -54,7 +54,7 @@ export class AIChatApp extends GameBaseApp {
                 console.log(data);
                 if (data.success) {
                     if (data.assist.error) {
-                        assistSection.innerHTML = data.assist.error.message;
+                        assistSection.innerHTML = data.assist.error.code;
                     }
                     else {
                         assistSection.innerHTML = data.assist.choices["0"].message.content;

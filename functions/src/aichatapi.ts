@@ -26,14 +26,14 @@ export default class ChatAI {
             return BaseClass.respondError(res, "Game not found");
         }
 
-        const userQ = await firebaseAdmin.firestore().doc(`Users/${uid}`).get();
-        const profile = userQ.data();
-        if (!profile) {
+        const userQ = await firebaseAdmin.firestore().doc(`Users/${gameData.createUser}`).get();
+        const ownerProfile = userQ.data();
+        if (!ownerProfile) {
             return BaseClass.respondError(res, "User not found");
         }
 
         const isOwner = uid === gameData.createUser;
-        const chatGptKey = profile.chatGptKey;
+        const chatGptKey = ownerProfile.chatGptKey;
 
         const memberImage = gameData.memberImages[uid] ? gameData.memberImages[uid] : "";
         const memberName = gameData.memberNames[uid] ? gameData.memberNames[uid] : "";

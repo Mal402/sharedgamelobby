@@ -14,7 +14,6 @@ export default class ChatAI {
 
         const uid = authResults.uid;
         const gameNumber = req.body.gameNumber;
-        
         let message = BaseClass.escapeHTML(req.body.message);
         if (message.length > 1000) message = message.substr(0, 1000);
 
@@ -66,14 +65,17 @@ export default class ChatAI {
         try {
             const body = {
                 "model": "gpt-3.5-turbo",
-                "messages": [{ "role": "user", "content": ticket.message }]
+                "messages": [{
+                    "role": "user",
+                    "content": ticket.message,
+                }],
             };
 
             const response: any = await fetch(`https://api.openai.com/v1/chat/completions`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + chatGptKey,
+                    "Authorization": "Bearer " + chatGptKey,
                 },
                 body: JSON.stringify(body),
             });

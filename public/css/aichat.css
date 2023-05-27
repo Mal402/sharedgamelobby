@@ -1,3 +1,7 @@
 .game_loading_display {
     display: none;
 }
+
+.tickets_list {
+    display: block;
+}

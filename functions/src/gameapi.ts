@@ -59,8 +59,8 @@ export default class GameAPI {
    * @return { string } beerSlug
   */
   static async _getRandomBeerSlug(): Promise<string> {
-    const response = <any> await fetch(`https://${process.env.GCLOUD_PROJECT}.web.app/data/beerMap.json`);
-    const beerMap = <any> await response.json();
+    const response = <any>await fetch(`https://${process.env.GCLOUD_PROJECT}.web.app/data/beerMap.json`);
+    const beerMap = <any>await response.json();
     const beerSlugs = Object.keys(beerMap);
     const randomBeer = Math.floor(Math.random() * beerSlugs.length);
     const beerSlug = beerSlugs[randomBeer];
@@ -702,7 +702,7 @@ export default class GameAPI {
    * @param { string } uid user id
    */
   static async _updateMetaNameForUser(uid: string) {
-    const freshUser = <any> await firebaseAdmin.firestore().doc(`Users/${uid}`).get();
+    const freshUser = <any>await firebaseAdmin.firestore().doc(`Users/${uid}`).get();
 
     let name: string = freshUser.data().displayName;
     if (!name) name = "Anonymous";
@@ -710,7 +710,7 @@ export default class GameAPI {
     const gamesQuery = await firebaseAdmin.firestore().collection(`Games`)
       .where("members." + uid, ">", "").get();
 
-    const promises:Array<any> = [];
+    const promises: Array<any> = [];
     gamesQuery.docs.forEach((doc) => {
       promises.push(firebaseAdmin.firestore().collection(`Games`).doc(doc.id).set({
         memberNames: {
@@ -729,7 +729,7 @@ export default class GameAPI {
    * @param { string } uid user id
    */
   static async _updateMetaImageForUser(uid: string) {
-    const freshUser = <any> await firebaseAdmin.firestore().doc(`Users/${uid}`).get();
+    const freshUser = <any>await firebaseAdmin.firestore().doc(`Users/${uid}`).get();
 
     let image: string | null | undefined = freshUser.data().displayImage;
     if (!image) image = "/images/defaultprofile.png";
@@ -751,5 +751,55 @@ export default class GameAPI {
     await Promise.all(promises);
 
     return;
+  }
+  /** http endpoint for user posting message to table chat
+ * @param { any } req http request object
+ * @param { any } res http response object
+ */
+  static async submitTicket(req: any, res: any) {
+    const authResults = await BaseClass.validateCredentials(req.headers.token);
+    if (!authResults.success) return BaseClass.respondError(res, authResults.errorMessage);
+
+    const uid = authResults.uid;
+    const gameNumber = req.body.gameNumber;
+    let message = BaseClass.escapeHTML(req.body.message);
+    if (message.length > 1000) message = message.substr(0, 1000);
+
+    const localInstance = BaseClass.newLocalInstance();
+    await localInstance.init();
+
+    const gameQuery = await firebaseAdmin.firestore().doc(`Games/${gameNumber}`).get();
+    const gameData = gameQuery.data();
+    if (!gameData) {
+      return BaseClass.respondError(res, "Game not found");
+    }
+
+    const userQ = await firebaseAdmin.firestore().doc(`Users/${uid}`).get();
+    const profile = userQ.data();
+    if (!profile) {
+      return BaseClass.respondError(res, "User not found");
+    }
+
+    const isOwner = uid === gameData.createUser;
+    
+    const memberImage = gameData.memberImages[uid] ? gameData.memberImages[uid] : "";
+    const memberName = gameData.memberNames[uid] ? gameData.memberNames[uid] : "";
+
+    const messagePacket = {
+      uid,
+      message,
+      created: new Date().toISOString(),
+      messageType: "user",
+      gameNumber,
+      isOwner,
+      memberName,
+      memberImage,
+    };
+
+    await firebaseAdmin.firestore().collection(`Games/${gameNumber}/tickets`).add(messagePacket);
+
+    return res.status(200).send({
+      success: true,
+    });
   }
 }

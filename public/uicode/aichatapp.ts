@@ -5,15 +5,167 @@ declare const window: any;
 /** Guess app class */
 export class AIChatApp extends GameBaseApp {
   apiType = "aichat";
-  match_start: any = document.querySelector(".match_start");
   currentGame: any;
   gameSubscription: any;
+  ticketsSubscription: any;
+  tickets_list: any = document.querySelector(".tickets_list");
 
   /**  */
   constructor() {
     super();
 
+    this.send_message_list_button.addEventListener("click", () => this.postMessageAPI());
+    this.message_list_input.addEventListener("keyup", (e: any) => {
+      if (e.key === "Enter") this.postMessageAPI();
+    });
+    this.initTicketFeed();
   }
+  /** setup data listender for user messages */
+  async initTicketFeed() {
+    if (this.messageFeedRegistered) return;
+    this.messageFeedRegistered = true;
+    const gameId = this.urlParams.get("game");
+    if (!gameId) return;
+
+    if (this.ticketsSubscription) this.ticketsSubscription();
+
+    this.ticketsSubscription = firebase.firestore().collection(`Games/${gameId}/tickets`)
+      .orderBy(`created`, "desc")
+      .limit(50)
+      .onSnapshot((snapshot: any) => this.updateTicketsFeed(snapshot));
+  }
+  /** paint user message feed
+ * @param { any } snapshot firestore query data snapshot
+ */
+  updateTicketsFeed(snapshot: any) {
+    if (snapshot) this.lastMessagesSnapshot = snapshot;
+    else if (this.lastMessagesSnapshot) snapshot = this.lastMessagesSnapshot;
+    else return;
+
+    let html = "";
+    snapshot.forEach((doc: any) => html += this._renderTicketFeedLine(doc));
+
+    this.tickets_list.innerHTML = html;
+
+    if (snapshot.docs.length > 0 && this.messageListRendered) {
+      if (snapshot.docs[0].id !== this.lastShownSnackBarMessage) {
+        this.showMessageSnackbar();
+        this.lastShownSnackBarMessage = snapshot.docs[0].id;
+      }
+    }
+    this.messageListRendered = true;
+
+    this.tickets_list.querySelectorAll("button.delete_game")
+      .forEach((btn: any) => btn.addEventListener("click", (e: any) => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.deleteMessage(btn, btn.dataset.gamenumber, btn.dataset.messageid);
+      }));
+
+    this.refreshOnlinePresence();
+  }
+  /** api call for delete user message
+   * @param { any } btn dom control
+   * @param { string } gameNumber firestore game document id
+   * @param { string } messageId firestore message id
+   */
+  async deleteMessage(btn: any, gameNumber: string, messageId: string) {
+    btn.setAttribute("disabled", "true");
+
+    const body = {
+      gameNumber,
+      messageId,
+    };
+    const token = await firebase.auth().currentUser.getIdToken();
+    const fResult = await fetch(this.basePath + "lobbyApi/games/message/delete", {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        token,
+      },
+      body: JSON.stringify(body),
+    });
+
+    const result = await fResult.json();
+    if (!result.success) alert("Delete message failed");
+  }
+  /** generate html for message card
+   * @param { any } doc firestore message document
+   * @param { boolean } messageFeed if true adds delete button and clips message length to 12 (...)
+   * @return { string } html for card
+   */
+  _renderTicketFeedLine(doc: any, messageFeed = true) {
+    const data = doc.data();
+    const gameOwnerClass = data.isGameOwner ? " message_game_owner" : "";
+    const ownerClass = data.uid === this.uid ? " message_owner" : "";
+
+    let name = "Anonymous";
+    if (data.memberName) name = data.memberName;
+
+    let img = "/images/defaultprofile.png";
+    if (data.memberImage) img = data.memberImage;
+
+    let deleteHTML = "";
+    if (messageFeed) {
+      deleteHTML = `<button class="delete_game" data-gamenumber="${data.gameNumber}" data-messageid="${doc.id}">
+            <i class="material-icons">delete</i>
+            </button>`;
+    }
+
+    let memberNameHTML = "";
+    if (!messageFeed) memberNameHTML = `<span class="member_name">${name}</span> <button class="close_button">X</button>`;
+
+    let message = data.message;
+    if (!messageFeed) {
+      if (message.length > 12) message = message.substr(0, 11) + "...";
+    }
+    const timeSince = this.timeSince(new Date(data.created)).replaceAll(" ago", "");
+    return `<div class="game_message_list_item${gameOwnerClass}${ownerClass}">
+      <div style="display:flex;flex-direction:row">
+        <div class="game_user_wrapper member_desc">
+          <span style="background-image:url(${img})"></span>
+        </div>
+        <div class="message" style="flex:1">${message}</div>
+        <div class="game_date"><div style="flex:1"></div><div>${timeSince}</div><div style="flex:1"></div></div>
+        ${deleteHTML}
+      </div>
+      ${memberNameHTML}
+    </div>`;
+  }
+  /** api user send message */
+  async postMessageAPI() {
+    let message = this.message_list_input.value.trim();
+    if (message === "") {
+      alert("Please supply a message");
+      return;
+    }
+    if (message.length > 1000) message = message.substr(0, 1000);
+    this.message_list_input.value = "";
+
+    const body = {
+      gameNumber: this.currentGame,
+      message,
+    };
+    const token = await firebase.auth().currentUser.getIdToken();
+    const fResult = await fetch(this.basePath + "lobbyApi/aichat/message", {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        token,
+      },
+      body: JSON.stringify(body),
+    });
+    const json = await fResult.json();
+    if (!json.success) {
+      console.log("message post", json);
+      alert(json.errorMessage);
+    }
+  }
+
   /** BaseApp override to paint profile specific authorization parameters */
   authUpdateStatusUI() {
     super.authUpdateStatusUI();
@@ -38,12 +190,6 @@ export class AIChatApp extends GameBaseApp {
   paintGameData(gameDoc: any = null) {
     if (gameDoc) this.gameData = gameDoc.data();
     if (!this.gameData) return;
-    if (!this.allBeers) return;
-
-    if (this.wheelPosition === -1 && this.gameData.wheelPosition) this.wheelPosition = this.gameData.wheelPosition;
-    if (this.gameData.turnPhase === "spin" && this.gameData.turnNumber === 0) {
-      this.wheelPosition = this.gameData.wheelPosition;
-    }
 
     this.queryStringPaintProcess();
     this.paintOptions(false);
@@ -58,11 +204,11 @@ export class AIChatApp extends GameBaseApp {
     if (document.body.classList.contains("show_game_table")) {
       document.body.classList.remove("show_game_table");
       document.body.classList.add("show_game_members");
-      this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">close</i>";
+      //  this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">close</i>";
     } else {
       document.body.classList.add("show_game_table");
       document.body.classList.remove("show_game_members");
-      this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">menu</i>";
+      // this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">menu</i>";
     }
     if (e) e.preventDefault();
   }

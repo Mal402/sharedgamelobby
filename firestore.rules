@@ -9,6 +9,10 @@ service cloud.firestore {
       allow read: if true;
     }
 
+    match /Games/{id}/tickets/{mid} {
+      allow read: if true;
+    }
+
     match /Users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId
     }

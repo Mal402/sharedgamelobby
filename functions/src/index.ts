@@ -36,3 +36,5 @@ gameAPIApp.post("/games/stand", async (req, res) => GameAPI.stand(req, res));
 
 gameAPIApp.post("/guess/action", async (req, res) => GuessAPI.userAction(req, res));
 gameAPIApp.post("/match/action", async (req, res) => MatchAPI.userAction(req, res));
+
+gameAPIApp.post("/aichat/message", async (req, res) => GameAPI.submitTicket(req, res));

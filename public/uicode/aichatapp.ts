@@ -166,7 +166,7 @@ export class AIChatApp extends GameBaseApp {
         ${deleteHTML}
       </div>
       ${memberNameHTML}
-      <div class="assist_section"></div>
+      <div class="assist_section">pending...</div>
     </div>`;
   }
   /** api user send message */

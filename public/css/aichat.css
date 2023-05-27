@@ -6,8 +6,8 @@
   display: block;
 }
 
-.basic_page_wrapper {
-  max-width: 1000px
+.basic_page_wrapper, .base_menu_panel_wrapper {
+  max-width: unset;
 }
 
 .game_message_list_item .close_button {
@@ -19,23 +19,9 @@
   padding: 5px;
 }
 
-.message_list_input {
-  background: rgba(255, 255, 255, .5);
-  border: 4px double #cccccc;
-}
-
 .message_list_input:focus {
   background: white;
 }
-
-.messages_list {
-  display: none;
-}
-
-.game_loaded .messages_list {
-  display: block;
-}
-
 
 .message_list_send_wrapper {
   position: fixed;
@@ -51,13 +37,15 @@
   border-bottom: none;
   background: rgba(50, 100, 240, .25);
   z-index: 10000;
-  min-width: 300px;
+  width: 95%;
 }
 
 .message_list_input {
   font-size: 28px;
-  width: 180px;
+  width: 90%;
   padding: 4px;
+  background: rgba(255, 255, 255, .5);
+  border: 4px double #cccccc;
 }
 
 .document_feed_view {
@@ -74,4 +62,129 @@
 
 .show_document_options .document_options_view {
   display: block;
+}
+.game_user_wrapper span:nth-child(1) {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 6px;
+}
+
+.game_user_wrapper span:nth-child(2) {
+  white-space: nowrap;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.game_user_wrapper {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.member_list_time_since {
+  float: right;
+  clear: both;
+  line-height: 40px;
+  font-size: 18px;
+  opacity: .75;
+  padding-right: 1em;
+}
+
+.member_online_status {
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+  background: rgb(127, 127, 127);
+  border: solid 1px silver;
+  display: inline-block;
+  position: relative;
+  top: 4px;
+}
+
+.member_online_status.online {
+  background: rgb(50, 255, 50);
+}
+
+.admin_only {
+  display: none;
+}
+
+.game_owner .admin_only {
+  display: initial;
+}
+
+.game_message_list_item {
+  border-radius: 10px;
+  clear: both;
+  line-height: 30px;
+}
+
+.game_message_list_item .member_desc {
+  position: relative;
+  top: -5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.game_message_list_item .message {
+  text-align: left;
+  font-size: 22px;
+}
+
+.game_message_list_item .game_date {
+  opacity: .75;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.member_list_item {
+  text-align: left;
+  clear: both;
+}
+
+.game_message_list_item .member_online_status {
+  opacity: .75;
+  float: right;
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
+
+.tickets_list .delete_game {
+  visibility: hidden;
+  background: none;
+  border: none;
+  color: inherit;
+  opacity: 0.5;
+}
+
+.tickets_list .message_owner .delete_game {
+  visibility: visible;
+  opacity: 1;
+}
+
+.game_owner .tickets_list .delete_game {
+  visibility: visible;
+}
+
+.code_link_copy {
+  border: none;
+  background: none;
+  float: right;
+  color: inherit;
+}
+
+.assist_section {
+  text-align: left;
+  max-height: 150px;
+  overflow: auto;
+  padding: 10px;
+  padding-left: 25px;
+  padding-bottom: 25px;
 }

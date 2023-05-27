@@ -11,6 +11,7 @@ export class AIChatApp extends GameBaseApp {
   ticketsSubscription: any;
   lastAssistsSnapShot: any;
   tickets_list: any = document.querySelector(".tickets_list");
+  game_feed_list_toggle: any = document.querySelector(".game_feed_list_toggle");
 
   /**  */
   constructor() {
@@ -20,6 +21,10 @@ export class AIChatApp extends GameBaseApp {
     this.message_list_input.addEventListener("keyup", (e: any) => {
       if (e.key === "Enter") this.postMessageAPI();
     });
+    
+    this.game_feed_list_toggle.addEventListener("click", (e: any) => this.toggleOptionsView(e));
+    this.toggleOptionsView(null);
+
     this.initTicketFeed();
   }
   /** setup data listender for user messages */
@@ -82,14 +87,6 @@ export class AIChatApp extends GameBaseApp {
     snapshot.forEach((doc: any) => html += this._renderTicketFeedLine(doc));
 
     this.tickets_list.innerHTML = html;
-
-    if (snapshot.docs.length > 0 && this.messageListRendered) {
-      if (snapshot.docs[0].id !== this.lastShownSnackBarMessage) {
-        this.showMessageSnackbar();
-        this.lastShownSnackBarMessage = snapshot.docs[0].id;
-      }
-    }
-    this.messageListRendered = true;
 
     this.tickets_list.querySelectorAll("button.delete_game")
       .forEach((btn: any) => btn.addEventListener("click", (e: any) => {
@@ -239,14 +236,14 @@ export class AIChatApp extends GameBaseApp {
    * @param { any } e event to prevent default
    */
   toggleOptionsView(e: any) {
-    if (document.body.classList.contains("show_game_table")) {
-      document.body.classList.remove("show_game_table");
-      document.body.classList.add("show_game_members");
-      //  this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">close</i>";
+    if (document.body.classList.contains("show_document_feed")) {
+      document.body.classList.remove("show_document_feed");
+      document.body.classList.add("show_document_options");
+      this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">close</i>";
     } else {
-      document.body.classList.add("show_game_table");
-      document.body.classList.remove("show_game_members");
-      // this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">menu</i>";
+      document.body.classList.add("show_document_feed");
+      document.body.classList.remove("show_document_options");
+      this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">menu</i>";
     }
     if (e) e.preventDefault();
   }

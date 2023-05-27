@@ -1,17 +1,13 @@
 .game_loading_display {
-    display: none;
+  display: none;
 }
 
 .tickets_list {
-    display: block;
-}
-
-.basic_options {
-    display: none;
+  display: block;
 }
 
 .basic_page_wrapper {
-    max-width: 1000px
+  max-width: 1000px
 }
 
 .game_message_list_item .close_button {
@@ -31,6 +27,7 @@
 .message_list_input:focus {
   background: white;
 }
+
 .messages_list {
   display: none;
 }
@@ -41,24 +38,40 @@
 
 
 .message_list_send_wrapper {
-    position: fixed;
-    bottom: 0px;
-    text-align: center;
-    line-height: 35px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-block;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border: 4px double #cccccc;
-    border-bottom: none;
-    background: rgba(50, 100, 240, .25);
-    z-index: 10000;
-    min-width: 300px;
-  }
-  
-  .message_list_input {
-    font-size: 28px;
-    width: 180px;
-    padding: 4px;
-  }
+  position: fixed;
+  bottom: 0px;
+  text-align: center;
+  line-height: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-block;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border: 4px double #cccccc;
+  border-bottom: none;
+  background: rgba(50, 100, 240, .25);
+  z-index: 10000;
+  min-width: 300px;
+}
+
+.message_list_input {
+  font-size: 28px;
+  width: 180px;
+  padding: 4px;
+}
+
+.document_feed_view {
+  display: none;
+}
+
+.show_document_feed .document_feed_view {
+  display: block;
+}
+
+.document_options_view {
+  display: none;
+}
+
+.show_document_options .document_options_view {
+  display: block;
+}

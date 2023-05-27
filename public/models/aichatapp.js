@@ -6,11 +6,14 @@ export class AIChatApp extends GameBaseApp {
         super();
         this.apiType = "aichat";
         this.tickets_list = document.querySelector(".tickets_list");
+        this.game_feed_list_toggle = document.querySelector(".game_feed_list_toggle");
         this.send_message_list_button.addEventListener("click", () => this.postMessageAPI());
         this.message_list_input.addEventListener("keyup", (e) => {
             if (e.key === "Enter")
                 this.postMessageAPI();
         });
+        this.game_feed_list_toggle.addEventListener("click", (e) => this.toggleOptionsView(e));
+        this.toggleOptionsView(null);
         this.initTicketFeed();
     }
     /** setup data listender for user messages */
@@ -75,13 +78,6 @@ export class AIChatApp extends GameBaseApp {
         let html = "";
         snapshot.forEach((doc) => html += this._renderTicketFeedLine(doc));
         this.tickets_list.innerHTML = html;
-        if (snapshot.docs.length > 0 && this.messageListRendered) {
-            if (snapshot.docs[0].id !== this.lastShownSnackBarMessage) {
-                this.showMessageSnackbar();
-                this.lastShownSnackBarMessage = snapshot.docs[0].id;
-            }
-        }
-        this.messageListRendered = true;
         this.tickets_list.querySelectorAll("button.delete_game")
             .forEach((btn) => btn.addEventListener("click", (e) => {
             e.stopPropagation();
@@ -226,15 +222,15 @@ export class AIChatApp extends GameBaseApp {
      * @param { any } e event to prevent default
      */
     toggleOptionsView(e) {
-        if (document.body.classList.contains("show_game_table")) {
-            document.body.classList.remove("show_game_table");
-            document.body.classList.add("show_game_members");
-            //  this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">close</i>";
+        if (document.body.classList.contains("show_document_feed")) {
+            document.body.classList.remove("show_document_feed");
+            document.body.classList.add("show_document_options");
+            this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">close</i>";
         }
         else {
-            document.body.classList.add("show_game_table");
-            document.body.classList.remove("show_game_members");
-            // this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">menu</i>";
+            document.body.classList.add("show_document_feed");
+            document.body.classList.remove("show_document_options");
+            this.game_feed_list_toggle.innerHTML = "<i class=\"material-icons\">menu</i>";
         }
         if (e)
             e.preventDefault();

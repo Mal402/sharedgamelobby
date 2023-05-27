@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>AI Chat</title>
- 
+
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="shortcut icon" href="/images/logo_aichat.png">
 
@@ -47,10 +47,22 @@
       </div>
     </div>
     <br><br><br><br>
-    <div class="game_table_view">
-      ticket stats
+    <div class="document_feed_view">
+      <div class="game_table_view">
+        ticket stats
+      </div>
+      <div>
+        <h2 class="impact-font">AI Tickets</h2>
+      </div>
+      <div class="tickets_list"></div>
+      <div class="message_list_send_wrapper">
+        <input class="message_list_input" type="text">
+        <button class="send_message_list_button game" style="margin:0;background:none;border:none;min-width: auto">
+          <i class="material-icons impact-font"
+            style="font-size: 30px;margin-bottom: -10px;position: relative;top: 4px;">send</i></button>
+      </div>
     </div>
-    <div class="game_members_view">
+    <div class="document_options_view">
       <div class="basic_options">
         <span class="span_label">Code</span>
         <span class="gameid_span"></span>
@@ -58,7 +70,6 @@
         <button class="code_link_copy game"><i class="material-icons">content_copy</i> <span>url</span></button>
         <br>
         <span class="span_label">Phase</span>
-        <span class="turnphase_span"></span>
         <br>
         <span class="span_label">Visibility</span>
         <span class="visibility_display"></span>
@@ -67,9 +78,6 @@
           <option>private</option>
         </select>
         <br>
-        <div style="text-align:center">
-          <button class="match_finish admin_only game">End Game</button>
-        </div>
 
       </div>
     </div>
@@ -79,15 +87,6 @@
       <div class="game_loading_display">
         <h1>Loading...</h1>
       </div>
-    </div>
-    <div>
-      <h2 class="impact-font">AI Tickets</h2>
-    </div>
-    <div class="tickets_list"></div>
-    <div class="message_list_send_wrapper">
-      <input class="message_list_input" type="text">
-      <button class="send_message_list_button game" style="margin:0;background:none;border:none;min-width: auto">
-        <i class="material-icons impact-font" style="font-size: 30px;margin-bottom: -10px;position: relative;top: 4px;">send</i></button>
     </div>
     <div style="flex:1"></div>
   </div>

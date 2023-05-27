@@ -26,12 +26,46 @@ export class AIChatApp extends GameBaseApp {
         this.ticketsSubscription = firebase.firestore().collection(`Games/${gameId}/tickets`)
             .orderBy(`created`, "desc")
             .limit(50)
-            .onSnapshot((snapshot) => this.updateTicketsFeed(snapshot));
+            .onSnapshot((snapshot) => this.updateGameMessagesFeed(snapshot));
+        if (this.assistsSubscription)
+            this.assistsSubscription();
+        this.assistsSubscription = firebase.firestore().collection(`Games/${gameId}/assists`)
+            .orderBy(`created`, "desc")
+            .limit(50)
+            .onSnapshot((snapshot) => this.updateAssistsFeed(snapshot));
     }
     /** paint user message feed
    * @param { any } snapshot firestore query data snapshot
    */
-    updateTicketsFeed(snapshot) {
+    updateAssistsFeed(snapshot) {
+        if (snapshot)
+            this.lastAssistsSnapShot = snapshot;
+        else if (this.lastAssistsSnapShot)
+            snapshot = this.lastAssistsSnapShot;
+        else
+            return;
+        snapshot.forEach((doc) => {
+            const assistSection = document.querySelector(`div[ticketid="${doc.id}"] .assist_section`);
+            if (assistSection) {
+                const data = doc.data();
+                console.log(data);
+                if (data.success) {
+                    if (data.assist.error) {
+                        assistSection.innerHTML = data.assist.error.message;
+                    }
+                    else {
+                        assistSection.innerHTML = data.assist.choices["0"].message.content;
+                    }
+                }
+                else
+                    assistSection.innerHTML = "API Error";
+            }
+        });
+    }
+    /** paint user message feed
+   * @param { any } snapshot firestore query data snapshot
+   */
+    updateGameMessagesFeed(snapshot) {
         if (snapshot)
             this.lastMessagesSnapshot = snapshot;
         else if (this.lastMessagesSnapshot)
@@ -55,6 +89,7 @@ export class AIChatApp extends GameBaseApp {
             this.deleteMessage(btn, btn.dataset.gamenumber, btn.dataset.messageid);
         }));
         this.refreshOnlinePresence();
+        this.updateAssistsFeed(null);
     }
     /** api call for delete user message
      * @param { any } btn dom control
@@ -112,7 +147,7 @@ export class AIChatApp extends GameBaseApp {
                 message = message.substr(0, 11) + "...";
         }
         const timeSince = this.timeSince(new Date(data.created)).replaceAll(" ago", "");
-        return `<div class="game_message_list_item${gameOwnerClass}${ownerClass}">
+        return `<div class="game_message_list_item${gameOwnerClass}${ownerClass}" ticketid="${doc.id}">
       <div style="display:flex;flex-direction:row">
         <div class="game_user_wrapper member_desc">
           <span style="background-image:url(${img})"></span>
@@ -122,6 +157,7 @@ export class AIChatApp extends GameBaseApp {
         ${deleteHTML}
       </div>
       ${memberNameHTML}
+      <div class="assist_section"></div>
     </div>`;
     }
     /** api user send message */

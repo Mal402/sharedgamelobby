@@ -7,7 +7,9 @@ export class AIChatApp extends GameBaseApp {
   apiType = "aichat";
   currentGame: any;
   gameSubscription: any;
+  assistsSubscription: any;
   ticketsSubscription: any;
+  lastAssistsSnapShot: any;
   tickets_list: any = document.querySelector(".tickets_list");
 
   /**  */
@@ -32,12 +34,46 @@ export class AIChatApp extends GameBaseApp {
     this.ticketsSubscription = firebase.firestore().collection(`Games/${gameId}/tickets`)
       .orderBy(`created`, "desc")
       .limit(50)
-      .onSnapshot((snapshot: any) => this.updateTicketsFeed(snapshot));
+      .onSnapshot((snapshot: any) => this.updateGameMessagesFeed(snapshot));
+
+    if (this.assistsSubscription) this.assistsSubscription();
+
+    this.assistsSubscription = firebase.firestore().collection(`Games/${gameId}/assists`)
+      .orderBy(`created`, "desc")
+      .limit(50)
+      .onSnapshot((snapshot: any) => this.updateAssistsFeed(snapshot));
   }
   /** paint user message feed
  * @param { any } snapshot firestore query data snapshot
  */
-  updateTicketsFeed(snapshot: any) {
+  updateAssistsFeed(snapshot: any) {
+    if (snapshot) this.lastAssistsSnapShot = snapshot;
+    else if (this.lastAssistsSnapShot) snapshot = this.lastAssistsSnapShot;
+    else return;
+
+    snapshot.forEach((doc: any) => {
+      const assistSection: any = document.querySelector(`div[ticketid="${doc.id}"] .assist_section`);
+
+      if (assistSection) {
+        const data: any = doc.data();
+        console.log(data);
+        if (data.success) {
+          if (data.assist.error) {
+            assistSection.innerHTML = data.assist.error.message;
+          } else {
+            assistSection.innerHTML = data.assist.choices["0"].message.content;
+          }
+        }
+        else
+          assistSection.innerHTML = "API Error";
+      }
+    });
+
+  }
+  /** paint user message feed
+ * @param { any } snapshot firestore query data snapshot
+ */
+  updateGameMessagesFeed(snapshot: any) {
     if (snapshot) this.lastMessagesSnapshot = snapshot;
     else if (this.lastMessagesSnapshot) snapshot = this.lastMessagesSnapshot;
     else return;
@@ -63,6 +99,7 @@ export class AIChatApp extends GameBaseApp {
       }));
 
     this.refreshOnlinePresence();
+    this.updateAssistsFeed(null);
   }
   /** api call for delete user message
    * @param { any } btn dom control
@@ -122,7 +159,7 @@ export class AIChatApp extends GameBaseApp {
       if (message.length > 12) message = message.substr(0, 11) + "...";
     }
     const timeSince = this.timeSince(new Date(data.created)).replaceAll(" ago", "");
-    return `<div class="game_message_list_item${gameOwnerClass}${ownerClass}">
+    return `<div class="game_message_list_item${gameOwnerClass}${ownerClass}" ticketid="${doc.id}">
       <div style="display:flex;flex-direction:row">
         <div class="game_user_wrapper member_desc">
           <span style="background-image:url(${img})"></span>
@@ -132,6 +169,7 @@ export class AIChatApp extends GameBaseApp {
         ${deleteHTML}
       </div>
       ${memberNameHTML}
+      <div class="assist_section"></div>
     </div>`;
   }
   /** api user send message */

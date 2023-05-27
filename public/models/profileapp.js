@@ -15,6 +15,7 @@ export class ProfileApp extends BaseApp {
         this.reset_profile = document.querySelector(".reset_profile");
         this.profile_display_name = document.querySelector(".profile_display_name");
         this.profile_display_image = document.querySelector(".profile_display_image");
+        this.chatgpt_key = document.querySelector(".chatgpt_key");
         this.profile_display_image_upload = document.querySelector(".profile_display_image_upload");
         this.file_upload_input = document.querySelector(".file_upload_input");
         this.profile_display_image_clear = document.querySelector(".profile_display_image_clear");
@@ -42,6 +43,7 @@ export class ProfileApp extends BaseApp {
             return true;
         });
         this.profile_display_name.addEventListener("input", () => this.displayNameChange());
+        this.chatgpt_key.addEventListener("input", () => this.chatGPTChange());
         this.profile_display_image_upload.addEventListener("click", () => this.uploadProfileImage());
         this.file_upload_input.addEventListener("input", () => this.fileUploadSelected());
         this.profile_display_image_clear.addEventListener("click", () => this.clearProfileImage());
@@ -94,6 +96,11 @@ export class ProfileApp extends BaseApp {
                 displayName = "";
             if (!this.lastNameChange || this.lastNameChange + 2000 < new Date().getTime())
                 this.profile_display_name.value = displayName;
+            let chatGptKey = this.profile.chatGptKey;
+            if (!chatGptKey)
+                chatGptKey = "";
+            if (!this.lastNameChange || this.lastNameChange + 2000 < new Date().getTime())
+                this.chatgpt_key.value = chatGptKey;
             if (this.profile.displayImage)
                 this.profile_display_image.style.backgroundImage = `url(${this.profile.displayImage})`;
             else
@@ -147,6 +154,19 @@ export class ProfileApp extends BaseApp {
             else
                 this.mute_audio_radios[1].checked = true;
         }
+    }
+    /** handle (store) change to users display name */
+    async chatGPTChange() {
+        this.profile.chatGptKey = this.chatgpt_key.value.trim();
+        const updatePacket = {
+            chatGptKey: this.profile.chatGptKey,
+        };
+        if (this.fireToken) {
+            await firebase.firestore().doc(`Users/${this.uid}`).set(updatePacket, {
+                merge: true,
+            });
+        }
+        this.lastNameChange = new Date().getTime();
     }
     /** open file picker for custom profile image upload */
     uploadProfileImage() {

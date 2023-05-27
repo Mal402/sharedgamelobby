@@ -5,3 +5,60 @@
 .tickets_list {
     display: block;
 }
+
+.basic_options {
+    display: none;
+}
+
+.basic_page_wrapper {
+    max-width: 1000px
+}
+
+.game_message_list_item .close_button {
+  float: right;
+  font-size: 1.25em;
+  color: white;
+  background: none;
+  border: none;
+  padding: 5px;
+}
+
+.message_list_input {
+  background: rgba(255, 255, 255, .5);
+  border: 4px double #cccccc;
+}
+
+.message_list_input:focus {
+  background: white;
+}
+.messages_list {
+  display: none;
+}
+
+.game_loaded .messages_list {
+  display: block;
+}
+
+
+.message_list_send_wrapper {
+    position: fixed;
+    bottom: 0px;
+    text-align: center;
+    line-height: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 4px double #cccccc;
+    border-bottom: none;
+    background: rgba(50, 100, 240, .25);
+    z-index: 10000;
+    min-width: 300px;
+  }
+  
+  .message_list_input {
+    font-size: 28px;
+    width: 180px;
+    padding: 4px;
+  }

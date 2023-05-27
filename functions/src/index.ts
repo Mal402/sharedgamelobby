@@ -8,6 +8,7 @@ const gameAPIApp = express();
 import GameAPI from "./gameapi";
 import MatchAPI from "./matchapi";
 import GuessAPI from "./guessapi";
+import ChatAI from "./aichatapi";
 
 gameAPIApp.set("views", path.join(__dirname, "views"));
 gameAPIApp.set("view engine", "ejs");
@@ -37,4 +38,4 @@ gameAPIApp.post("/games/stand", async (req, res) => GameAPI.stand(req, res));
 gameAPIApp.post("/guess/action", async (req, res) => GuessAPI.userAction(req, res));
 gameAPIApp.post("/match/action", async (req, res) => MatchAPI.userAction(req, res));
 
-gameAPIApp.post("/aichat/message", async (req, res) => GameAPI.submitTicket(req, res));
+gameAPIApp.post("/aichat/message", async (req, res) => ChatAI.submitTicket(req, res));

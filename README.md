@@ -18,7 +18,7 @@ Hosted: [sharedgamelobby.web.app](https://sharedgamelobby.web.app/)
 <h3>Getting Started</h3>
 
 
-[![IMAGE ALT TEXT](https://firebasestorage.googleapis.com/v0/b/promptplusai.appspot.com/o/images%2FSharelobbyOS%20project.jpg?alt=media&token=1f2fc4bf-1f25-4c56-8f6f-282046903e69)](https://youtu.be/kH4m2u6aoms "Shared Game Lobby - OS Project - Quick Start Installation Guide")
+[![IMAGE ALT TEXT](https://firebasestorage.googleapis.com/v0/b/promptplusai.appspot.com/o/images%2FSharelobbyOS%20project-Youtbue%20video.png?alt=media&token=8e5266f4-86ab-44fe-81e0-6c766ef9a335)](https://youtu.be/kH4m2u6aoms "Shared Game Lobby - OS Project - Quick Start Installation Guide")
 | *Watch the Installation Guide* |
 
 To begin using the Shared Game Lobby project, please follow the steps outlined below:

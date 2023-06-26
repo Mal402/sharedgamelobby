@@ -3,8 +3,6 @@
 
 Welcome to the Shared Game Lobby repo! This project showcases a game lobby with a shared state, allowing users to create and join games in a collaborative environment. It provides an immersive and dynamic gaming experience, enabling multiple users to interact and contribute to the game lobby in real-time similar to the collaborative nature of Google Docs. Powered by Firebase, Transactions, REST API, and Real-time Feeds with NoSQL Indexing, this app ensures a seamless and interactive gaming experience for all participants.
 
-[![IMAGE ALT TEXT](https://firebasestorage.googleapis.com/v0/b/promptplusai.appspot.com/o/images%2FSharelobbyOS%20project.jpg?alt=media&token=1f2fc4bf-1f25-4c56-8f6f-282046903e69)](https://youtu.be/kH4m2u6aoms "Shared Game Lobby - OS Project - Quick Start Installation Guide")
-
 Hosted: [sharedgamelobby.web.app](https://sharedgamelobby.web.app/)
 
 **Features**
@@ -34,7 +32,61 @@ This code snippet demonstrates how the lobby communicates with the backend using
 
 This technique enables the lobby to maintain a consistent and up-to-date game state, allowing users to seamlessly join games and interact with real-time data updates.
 
-<h1>Implementation Details and Components</h1>
+<h3>Getting Started</h3>
+
+
+[![IMAGE ALT TEXT](https://firebasestorage.googleapis.com/v0/b/promptplusai.appspot.com/o/images%2FSharelobbyOS%20project.jpg?alt=media&token=1f2fc4bf-1f25-4c56-8f6f-282046903e69)](https://youtu.be/kH4m2u6aoms "Shared Game Lobby - OS Project - Quick Start Installation Guide")
+| *Watch the Installation Guide* |
+
+To begin using the Shared Game Lobby project, please follow the steps outlined below:
+
+**Installation Guide:**
+
+
+
+1. Clone the project repository from the designated location.
+2. Install the necessary dependencies by running the appropriate package manager command (e.g., npm install or yarn install).
+3. Set up the required environment variables, if any, following the instructions provided in the installation guide.
+4. Ensure that you have the latest version of Node.js and npm (Node Package Manager) installed on your machine.
+5. Build the project by running the build command (e.g., npm run build or yarn build) to generate the production-ready assets.
+
+**Configuration Guide:**
+
+
+
+1. Create a Firebase project by visiting the Firebase Console (https://console.firebase.google.com/) and following the provided instructions.
+2. Configure the Firebase integration by updating the necessary configuration files with your Firebase project credentials, such as the API key, project ID, and other relevant details.
+3. If required, configure the REST API settings by specifying the desired endpoints, authentication methods, and access control rules.
+4. To set up a local instance, follow these additional steps:
+    1. Open the baseclass.ts file, which contains the source code for setting up the local instances.
+    2.  Ensure that you have the firebase-admin package installed.
+    3.  Instantiate a new LocalInstance and initialize the configuration data using the init() method.
+    4.  Customize the local instance according to your requirements, such as adding additional configuration data or modifying the validation logic.
+
+If you want to upload **custom user images** enable the extension: [Resize Images](https://extensions.dev/extensions/firebase/storage-resize-images)
+
+
+
+* Sizes of resized images: 200x200
+* Cloud Storage path for resized images (Optional): _resized
+* After creating the Firestore instance, convert it to "Native" in the google cloud console and wait a couple minutes to deploy
+* It will create a file at /_resized/pimage_200x200 (refer to profileapp.js for more)
+
+**Usage Guide:**
+
+1. Launch the application by running the appropriate command (e.g., npm start or yarn start) to start the development server.
+2. Access the application through the provided URL or by opening a web browser and navigating to the designated address.
+3. Explore the user interface and familiarize yourself with the available features, such as creating games, joining games, managing game options, sending messages, and more.
+4. Refer to the usage guide for detailed instructions, examples, and best practices on how to interact with the lobby, perform essential actions, and make the most out of the shared game experience.
+
+**For More Information:**
+
+For more in-depth information and documentation regarding Firebase integration, transactions, REST API usage, and real-time feeds with NoSQL indexing, please refer to the official Firebase documentation (https://firebase.google.com/docs) and the relevant documentation provided within the project's codebase.
+
+We hope this guide helps you get started with the Shared Game Lobby project successfully. Enjoy the collaborative gaming experience empowered by Firebase and the extensive features of the project. 
+
+
+<h2>Implementation Details and Components</h2>
 
 
 To seamlessly integrate the game lobby into your application and leverage its powerful features, it's important to understand the backend and client-side implementation. We'll explore the backend files (index.ts, gameapi.ts, and guessapi.ts) responsible for server-side operations and Firebase Realtime Database interactions. On the client side, we will look at baseapp.js and gamebaseapp.js scripts which are responsible for facilitating user interactions and UI. Firestore database documents store crucial user and game information, ensuring a seamless and synchronized experience for all participants. Let's dive into each component's details and explore their implementation aspects.
@@ -178,10 +230,6 @@ Once you are up and running, go through the Firebase and look at through the col
 
 
 
-
-
-
-
 Users Collection on Firebase
 
 **User Profile:** The user document contains all the relevant information about a user's profile, such as display name, profile image URL, mute state, and night mode state. Storing this information in a user document allows for easy retrieval and presentation of user-specific details throughout the application.
@@ -192,57 +240,6 @@ Users Collection on Firebase
 
 **Integration with Game Document: **The user document often includes references or IDs related to the games the user is associated with, such as game IDs or membership details. This integration allows for efficient cross-referencing between user profiles and game documents, enabling features like retrieving a user's active games or displaying user-specific information within a game session.
 
-<h3>Getting Started</h3>
-
-
-To begin using the Shared Game Lobby project, please follow the steps outlined below:
-
-**Installation Guide:**
-
-
-
-1. Clone the project repository from the designated location.
-2. Install the necessary dependencies by running the appropriate package manager command (e.g., npm install or yarn install).
-3. Set up the required environment variables, if any, following the instructions provided in the installation guide.
-4. Ensure that you have the latest version of Node.js and npm (Node Package Manager) installed on your machine.
-5. Build the project by running the build command (e.g., npm run build or yarn build) to generate the production-ready assets.
-
-**Configuration Guide:**
-
-
-
-1. Create a Firebase project by visiting the Firebase Console (https://console.firebase.google.com/) and following the provided instructions.
-2. Configure the Firebase integration by updating the necessary configuration files with your Firebase project credentials, such as the API key, project ID, and other relevant details.
-3. If required, configure the REST API settings by specifying the desired endpoints, authentication methods, and access control rules.
-4. To set up a local instance, follow these additional steps:
-    1. Open the baseclass.ts file, which contains the source code for setting up the local instances.
-    2.  Ensure that you have the firebase-admin package installed.
-    3.  Instantiate a new LocalInstance and initialize the configuration data using the init() method.
-    4.  Customize the local instance according to your requirements, such as adding additional configuration data or modifying the validation logic.
-
-If you want to upload **custom user images** enable the extension: [Resize Images](https://extensions.dev/extensions/firebase/storage-resize-images)
-
-
-
-* Sizes of resized images: 200x200
-* Cloud Storage path for resized images (Optional): _resized
-* After creating the Firestore instance, convert it to "Native" in the google cloud console and wait a couple minutes to deploy
-* It will create a file at /_resized/pimage_200x200 (refer to profileapp.js for more)
-
-**Usage Guide:**
-
-
-
-1. Launch the application by running the appropriate command (e.g., npm start or yarn start) to start the development server.
-2. Access the application through the provided URL or by opening a web browser and navigating to the designated address.
-3. Explore the user interface and familiarize yourself with the available features, such as creating games, joining games, managing game options, sending messages, and more.
-4. Refer to the usage guide for detailed instructions, examples, and best practices on how to interact with the lobby, perform essential actions, and make the most out of the shared game experience.
-
-**For More Information:**
-
-For more in-depth information and documentation regarding Firebase integration, transactions, REST API usage, and real-time feeds with NoSQL indexing, please refer to the official Firebase documentation (https://firebase.google.com/docs) and the relevant documentation provided within the project's codebase.
-
-We hope this guide helps you get started with the Shared Game Lobby project successfully. Enjoy the collaborative gaming experience empowered by Firebase and the extensive features of the project. 
 
 **Contact:**
 

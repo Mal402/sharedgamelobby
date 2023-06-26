@@ -15,23 +15,6 @@ Hosted: [sharedgamelobby.web.app](https://sharedgamelobby.web.app/)
 * **Game Message Feed: **communicate and exchange messages related to the game through a dedicated message feed.
 * **Real-time User Status Updates**:  track user activity and engagement in the game lobby with presence indicators
 
-**Real-time Data Updates**
-
-Real-time updates play a crucial role in creating an immersive gaming experience. The Shared Game Lobby leverages Firebase's real-time database to provide instantaneous updates whenever a user performs an action, such as sitting, standing, deleting, or sending messages. With the help of Firebase's real-time synchronization capabilities, users can see live updates reflected in the lobby, ensuring a seamless and engaging gameplay environment.
-
-**Transactions and Data Consistency**
-
-Transactions are used extensively in the Shared Game Lobby to ensure data consistency and accuracy, especially in situations where multiple users attempt to perform actions concurrently. By encapsulating critical operations within transactions, the lobby handles contested actions such as sitting contests or turn-based interactions with precision and reliability. This guarantees that critical game elements, such as inventory transactions or financial operations, are executed accurately and in a controlled manner.
-
-**REST API for Seamless Integration**
-
-The Shared Game Lobby leverages NoSQL indexing techniques to efficiently manage real-time feeds and game listings. By utilizing a deep path structure in the database, the lobby ensures efficient indexing and retrieval of game-related information. For example, when a user performs the 'sit' action to join a game, the lobby leverages the following technique:
-
-
-This code snippet demonstrates how the lobby communicates with the backend using a RESTful API endpoint to perform the 'sit' action. The endpoint, /webPage/games/sit, handles the request and updates the corresponding game data on the Firesbase Database document, allowing the user to join the game. The use of Firebase authentication ensures secure access to the API endpoint, while the response provides feedback on the success of the action.
-
-This technique enables the lobby to maintain a consistent and up-to-date game state, allowing users to seamlessly join games and interact with real-time data updates.
-
 <h3>Getting Started</h3>
 
 
@@ -79,15 +62,27 @@ If you want to upload **custom user images** enable the extension: [Resize Image
 3. Explore the user interface and familiarize yourself with the available features, such as creating games, joining games, managing game options, sending messages, and more.
 4. Refer to the usage guide for detailed instructions, examples, and best practices on how to interact with the lobby, perform essential actions, and make the most out of the shared game experience.
 
-**For More Information:**
 
-For more in-depth information and documentation regarding Firebase integration, transactions, REST API usage, and real-time feeds with NoSQL indexing, please refer to the official Firebase documentation (https://firebase.google.com/docs) and the relevant documentation provided within the project's codebase.
+<h2>Components</h2>
 
-We hope this guide helps you get started with the Shared Game Lobby project successfully. Enjoy the collaborative gaming experience empowered by Firebase and the extensive features of the project. 
+**Real-time Data Updates**
+
+Real-time updates play a crucial role in creating an immersive gaming experience. The Shared Game Lobby leverages Firebase's real-time database to provide instantaneous updates whenever a user performs an action, such as sitting, standing, deleting, or sending messages. With the help of Firebase's real-time synchronization capabilities, users can see live updates reflected in the lobby, ensuring a seamless and engaging gameplay environment.
+
+**Transactions and Data Consistency**
+
+Transactions are used extensively in the Shared Game Lobby to ensure data consistency and accuracy, especially in situations where multiple users attempt to perform actions concurrently. By encapsulating critical operations within transactions, the lobby handles contested actions such as sitting contests or turn-based interactions with precision and reliability. This guarantees that critical game elements, such as inventory transactions or financial operations, are executed accurately and in a controlled manner.
+
+**REST API for Seamless Integration**
+
+The Shared Game Lobby leverages NoSQL indexing techniques to efficiently manage real-time feeds and game listings. By utilizing a deep path structure in the database, the lobby ensures efficient indexing and retrieval of game-related information. For example, when a user performs the 'sit' action to join a game, the lobby leverages the following technique:
 
 
-<h2>Implementation Details and Components</h2>
+This code snippet demonstrates how the lobby communicates with the backend using a RESTful API endpoint to perform the 'sit' action. The endpoint, /webPage/games/sit, handles the request and updates the corresponding game data on the Firesbase Database document, allowing the user to join the game. The use of Firebase authentication ensures secure access to the API endpoint, while the response provides feedback on the success of the action.
 
+This technique enables the lobby to maintain a consistent and up-to-date game state, allowing users to seamlessly join games and interact with real-time data updates.
+
+<h2>Implementation</h2>
 
 To seamlessly integrate the game lobby into your application and leverage its powerful features, it's important to understand the backend and client-side implementation. We'll explore the backend files (index.ts, gameapi.ts, and guessapi.ts) responsible for server-side operations and Firebase Realtime Database interactions. On the client side, we will look at baseapp.js and gamebaseapp.js scripts which are responsible for facilitating user interactions and UI. Firestore database documents store crucial user and game information, ensuring a seamless and synchronized experience for all participants. Let's dive into each component's details and explore their implementation aspects.
 
@@ -159,10 +154,7 @@ Building upon the backend implementation, the frontend code plays a crucial role
 
 <h3>**‘baseapp.ts’**</h3>
 
-
 The baseapp.js model provides the basic functionality and event handling for the game lobby application. It sets up event listeners, loads data, handles user authentication, and manages user profiles.
-
-
 
 * **load**(): This method loads data from JSON files using fetch and Promise.all. It fetches data such as brewery map, beer map, beer tags, trending data, store map, and beer totals.
 * **authHandleEvent**(): This method is called when the authentication state changes. It updates the UI based on the user's authentication status.
@@ -170,8 +162,6 @@ The baseapp.js model provides the basic functionality and event handling for the
 
 
 <h3>**‘gamebaseapp.ts’**</h3>
-
-
 
 
 * The **gamebaseapp.ts** model extends the functionality of **baseapp.ts** and provides additional features and event handling specific to the game lobby.
@@ -207,12 +197,7 @@ The **updateUserPresence**() function updates the UI elements based on the user'
 
 <h2>Firestore Database Users & Games Documenst:</h2>
 
-
 By structuring game and user information in Firestore documents, it provides a scalable and efficient approach to store and retrieve data, ensuring a seamless and personalized experience for the users within the game environment. 
-
-
-
-
 
 Guess Collection, Games Document on Firebase
 
@@ -228,8 +213,6 @@ Once you are up and running, go through the Firebase and look at through the col
 
 <h3>Users</h3>
 
-
-
 Users Collection on Firebase
 
 **User Profile:** The user document contains all the relevant information about a user's profile, such as display name, profile image URL, mute state, and night mode state. Storing this information in a user document allows for easy retrieval and presentation of user-specific details throughout the application.
@@ -239,6 +222,13 @@ Users Collection on Firebase
 **Efficient Updates:** Storing user information in a single document allows for efficient updates and retrieval. When a user updates their profile or preferences, the application can perform a single database write operation to update the user document, ensuring that the changes are immediately reflected across the application.
 
 **Integration with Game Document: **The user document often includes references or IDs related to the games the user is associated with, such as game IDs or membership details. This integration allows for efficient cross-referencing between user profiles and game documents, enabling features like retrieving a user's active games or displaying user-specific information within a game session.
+
+
+**For More Information:**
+
+For more in-depth information and documentation regarding Firebase integration, transactions, REST API usage, and real-time feeds with NoSQL indexing, please refer to the official Firebase documentation (https://firebase.google.com/docs) and the relevant documentation provided within the project's codebase.
+
+We hope this guide helps you get started with the Shared Game Lobby project successfully. Enjoy the collaborative gaming experience empowered by Firebase and the extensive features of the project. 
 
 
 **Contact:**

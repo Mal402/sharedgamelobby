@@ -3,11 +3,11 @@
 
 Welcome to the Shared Game Lobby repo! This project showcases a game lobby with a shared state, allowing users to create and join games in a collaborative environment. It provides an immersive and dynamic gaming experience, enabling multiple users to interact and contribute to the game lobby in real-time similar to the collaborative nature of Google Docs. Powered by Firebase, Transactions, REST API, and Real-time Feeds with NoSQL Indexing, this app ensures a seamless and interactive gaming experience for all participants.
 
-Hosted: [sharedgamelobby.web.app](https://sharedgamelobby.web.app/) \
+[![IMAGE ALT TEXT](https://firebasestorage.googleapis.com/v0/b/promptplusai.appspot.com/o/images%2FSharelobbyOS%20project.jpg?alt=media&token=1f2fc4bf-1f25-4c56-8f6f-282046903e69)](https://youtu.be/kH4m2u6aoms "Shared Game Lobby - OS Project - Quick Start Installation Guide")
 
+Hosted: [sharedgamelobby.web.app](https://sharedgamelobby.web.app/)
 
 **Features**
-
 
 
 * **User Authentication**: create accounts and log in anonymously or with Google accounts.
@@ -19,21 +19,15 @@ Hosted: [sharedgamelobby.web.app](https://sharedgamelobby.web.app/) \
 
 **Real-time Data Updates**
 
-
-
-
 Real-time updates play a crucial role in creating an immersive gaming experience. The Shared Game Lobby leverages Firebase's real-time database to provide instantaneous updates whenever a user performs an action, such as sitting, standing, deleting, or sending messages. With the help of Firebase's real-time synchronization capabilities, users can see live updates reflected in the lobby, ensuring a seamless and engaging gameplay environment.
 
 **Transactions and Data Consistency**
 
-Transactions are used extensively in the Shared Game Lobby to ensure data consistency and accuracy, especially in situations where multiple users attempt to perform actions concurrently. By encapsulating critical operations within transactions, the lobby handles contested actions such as sitting contests or turn-based interactions with precision and reliability. This guarantees that critical game elements, such as inventory transactions or financial operations, are executed accurately and in a controlled manner. \
- \
-
+Transactions are used extensively in the Shared Game Lobby to ensure data consistency and accuracy, especially in situations where multiple users attempt to perform actions concurrently. By encapsulating critical operations within transactions, the lobby handles contested actions such as sitting contests or turn-based interactions with precision and reliability. This guarantees that critical game elements, such as inventory transactions or financial operations, are executed accurately and in a controlled manner.
 
 **REST API for Seamless Integration**
 
 The Shared Game Lobby leverages NoSQL indexing techniques to efficiently manage real-time feeds and game listings. By utilizing a deep path structure in the database, the lobby ensures efficient indexing and retrieval of game-related information. For example, when a user performs the 'sit' action to join a game, the lobby leverages the following technique:
-
 
 
 This code snippet demonstrates how the lobby communicates with the backend using a RESTful API endpoint to perform the 'sit' action. The endpoint, /webPage/games/sit, handles the request and updates the corresponding game data on the Firesbase Database document, allowing the user to join the game. The use of Firebase authentication ensures secure access to the API endpoint, while the response provides feedback on the success of the action.
@@ -57,8 +51,6 @@ The** index.ts** file serves as the entry point for the backend code. It sets up
 
 **onWrite **method:
 
-
-
 * This method is used as a Firestore trigger to execute a function whenever a document in the "Users" collection is written.
 * The function specified in the **onWrite **method is called with two parameters: **change **and **context**.
 * **change **represents the change in the document that triggered the function.
@@ -66,7 +58,6 @@ The** index.ts** file serves as the entry point for the backend code. It sets up
 * In the code snippet, the onWrite method is used to call the updateUserMetaData function from the GameAPI module whenever a document in the "Users" collection is written.
 
 **post **method:
-
 
 
 * This method defines the HTTP POST endpoints for the game lobby API.
@@ -81,7 +72,6 @@ These methods allow the backend code to respond to specific triggers and handle 
 
 
 The **gameapi.ts** file contains the implementation of various endpoints for handling game-related actions and interactions. It provides a RESTful API for creating, joining, leaving, and managing games in the shared game lobby.
-
 
 
 * **create**(req, res): This endpoint handles the creation of a new game. It receives the necessary parameters from the request (req) and sends the appropriate response (res) back to the clien**t.**
@@ -145,9 +135,6 @@ The baseapp.js model provides the basic functionality and event handling for the
 We have omitted the detailed explanation of the 'guessapp.ts' and 'matchapp.ts' client-side files from this documentation as they are game specific. These files can be explored directly within the application's source code for further understanding. 
 
 <h2>A note on achieving Real-Time User Status Updates with Firebase Realtime Database </h2>
-
-
- \
 
 
  gamebaseapp.js

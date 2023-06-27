@@ -25,8 +25,6 @@ To begin using the Shared Game Lobby project, please follow the steps outlined b
 
 **Installation Guide:**
 
-
-
 1. Clone the project repository from the designated location.
 2. Install the necessary dependencies by running the appropriate package manager command (e.g., npm install or yarn install).
 3. Set up the required environment variables, if any, following the instructions provided in the installation guide.
@@ -34,8 +32,6 @@ To begin using the Shared Game Lobby project, please follow the steps outlined b
 5. Build the project by running the build command (e.g., npm run build or yarn build) to generate the production-ready assets.
 
 **Configuration Guide:**
-
-
 
 1. Create a Firebase project by visiting the Firebase Console (https://console.firebase.google.com/) and following the provided instructions.
 2. Configure the Firebase integration by updating the necessary configuration files with your Firebase project credentials, such as the API key, project ID, and other relevant details.
@@ -47,8 +43,6 @@ To begin using the Shared Game Lobby project, please follow the steps outlined b
     4.  Customize the local instance according to your requirements, such as adding additional configuration data or modifying the validation logic.
 
 If you want to upload **custom user images** enable the extension: [Resize Images](https://extensions.dev/extensions/firebase/storage-resize-images)
-
-
 
 * Sizes of resized images: 200x200
 * Cloud Storage path for resized images (Optional): _resized
@@ -245,6 +239,6 @@ GitHub Issues: [https://github.com/HuskerSam/sharedgamelobby/issues](https://git
 
 **Donation:**
 
-If you find the Shared Game Lobby project useful and would like to support its ongoing development and maintenance, you can contribute by making a donation. To make a donation, please visit our donation page at XXXXXXXXXXXXXXXXX
+If you find the Shared Game Lobby project useful and would like to support its ongoing development and maintenance, you can contribute by making a donation. To make a donation, please visit our donation page at .....
 
 We appreciate detailed bug reports, specific feedback, and well-articulated suggestions. Your contributions help us identify and address issues promptly and enhance the overall experience for all users.

@@ -12,7 +12,7 @@ Hosted: [sharedgamelobby.web.app](https://sharedgamelobby.web.app/)
 * **Game Creation:** create new games with customizable options, including game type, visibility, number of seats, and message level.
 * **Game Joining:** join existing games in the lobby, subject to player limitations set by the game creator..
 * **User Profiles:** customize user profiles with preferences such as audio mode and night mode.
-* **Game Message Feed: **communicate and exchange messages related to the game through a dedicated message feed.
+* **Game Message Feed:** communicate and exchange messages related to the game through a dedicated message feed.
 * **Real-time User Status Updates**:  track user activity and engagement in the game lobby with presence indicators
 
 <h3>Getting Started</h3>

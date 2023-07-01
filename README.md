@@ -237,8 +237,4 @@ To submit bug reports, provide feedback, or make suggestions, please visit the p
 
 GitHub Issues: [https://github.com/HuskerSam/sharedgamelobby/issues](https://github.com/HuskerSam/sharedgamelobby/issues)
 
-**Donation:**
-
-If you find the Shared Game Lobby project useful and would like to support its ongoing development and maintenance, you can contribute by making a donation. To make a donation, please visit our donation page at .....
-
 We appreciate detailed bug reports, specific feedback, and well-articulated suggestions. Your contributions help us identify and address issues promptly and enhance the overall experience for all users.

@@ -3,7 +3,6 @@
 
 Welcome to the Shared Game Lobby repo! This project showcases a game lobby with a shared state, allowing users to create and join games in a collaborative environment. It provides an immersive and dynamic gaming experience, enabling multiple users to interact and contribute to the game lobby in real-time similar to the collaborative nature of Google Docs. Powered by Firebase, Transactions, REST API, and Real-time Feeds with NoSQL Indexing, this app ensures a seamless and interactive gaming experience for all participants.
 
-Hosted: [sharedgamelobby.web.app](https://sharedgamelobby.web.app/)
 
 **Features**
 
@@ -18,7 +17,7 @@ Hosted: [sharedgamelobby.web.app](https://sharedgamelobby.web.app/)
 <h3>Getting Started</h3>
 
 
-[![IMAGE ALT TEXT](https://firebasestorage.googleapis.com/v0/b/promptplusai.appspot.com/o/images%2FSharelobbyOS%20project-Youtbue%20video.png?alt=media&token=8e5266f4-86ab-44fe-81e0-6c766ef9a335)](https://youtu.be/kH4m2u6aoms "Shared Game Lobby - OS Project - Quick Start Installation Guide")
+[![Shared Game Lobby - OS Project - Quick Start Installation Guide](https://img.youtube.com/vi/kH4m2u6aoms/0.jpg)](https://youtu.be/kH4m2u6aoms "Shared Game Lobby - OS Project - Quick Start Installation Guide")
 | *Watch the Installation Guide* |
 
 To begin using the Shared Game Lobby project, please follow the steps outlined below:
@@ -223,18 +222,3 @@ Users Collection on Firebase
 For more in-depth information and documentation regarding Firebase integration, transactions, REST API usage, and real-time feeds with NoSQL indexing, please refer to the official Firebase documentation (https://firebase.google.com/docs) and the relevant documentation provided within the project's codebase.
 
 We hope this guide helps you get started with the Shared Game Lobby project successfully. Enjoy the collaborative gaming experience empowered by Firebase and the extensive features of the project. 
-
-
-**Contact:**
-
-We appreciate your interest in the Shared Game Lobby project! If you encounter any bugs, have feedback to share, or would like to make suggestions for improvement, we encourage you to reach out to us. We will do our best to assist you with issues you may encounter, but please note we may not always have time to do so promptly.
-
-**Bug Reports, Feedback, and Suggestions:**
-
-If you encounter any bugs while using the Shared Game Lobby or have feedback to provide, please don't hesitate to reach out to us. Additionally, if you have suggestions for enhancements or new features that you believe would benefit the project, we encourage you to share them with us.
-
-To submit bug reports, provide feedback, or make suggestions, please visit the project's GitHub Issues page:
-
-GitHub Issues: [https://github.com/HuskerSam/sharedgamelobby/issues](https://github.com/HuskerSam/sharedgamelobby/issues)
-
-We appreciate detailed bug reports, specific feedback, and well-articulated suggestions. Your contributions help us identify and address issues promptly and enhance the overall experience for all users.
